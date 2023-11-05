@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pj.sayyo.model.politician.mapper.PoliticianMapper">
+
+    <insert id="regist" parameterType="PoliticianDto">
+        INSERT INTO POLITICIAN(ID, NAME, LIKES, DISLIKE, BIRTH, GRADE)
+        VALUES (#{id}, #{name},
+                #{likes}, #{dislike}, #{birth}, #{grade})
+    </insert>
+
+    <select id="findAll"
+            resultType="PoliticianDto">
+        SELECT (ID, NAME, LIKES, DISLIKE, BIRTH, GRADE)
+        FROM
+            POLITICIAN
+    </select>
+
+    <update id="modify" parameterType="PoliticianDto">
+        UPDATE POLITICIAN
+        SET BIRTH = #{birth}, GRADE = #{grade}
+        WHERE ID = #{id}
+    </update>
+
+    <delete id="delete" parameterType="PoliticianDto">
+        DELETE POLITICIAN
+        WHERE ID = #{id}
+    </delete>
+
+    <select id="findSearch" parameterType="PoliticianDto" resultType="PoliticianDto">
+        SELECT ID, NAME, KOR_SCORE, ENG_SCORE, MATH_SCORE
+        FROM POLITICIAN
+        <if test='keyword != null and keyword != ""'>
+            WHERE ${searchCode} = #{keyword}
+        </if>
+    </select>
+</mapper>
