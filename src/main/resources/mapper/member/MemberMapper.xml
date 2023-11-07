@@ -4,21 +4,38 @@
 <mapper namespace="com.pj.sayyo.model.member.mapper.MemberMapper">
 
     <insert id="regist" parameterType="MemberDto">
-        INSERT INTO MEMBER(ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM)
+        INSERT INTO MEMBER(ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM, REPORTS)
         VALUES (#{id}, #{pw}, #{name},
-                #{nickname}, #{phone}, #{address}, #{registNum})
+                #{nickname}, #{phone}, #{address}, #{registNum}, #{reports})
     </insert>
 
-    <select id="findAll"
-            resultType="MemberDto">
-        SELECT ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM
+    <select id="findAll" resultType="MemberDto">
+        SELECT ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM, REPORTS
         FROM MEMBER
     </select>
 
+    <select id="login" parameterType="MemberDto" resultType="MemberDto">
+        SELECT ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM, REPORTS
+        FROM MEMBER
+        WHERE ID = #{id} AND PW = #{pw}
+    </select>
+
+    <update id="kakao" parameterType="MemberDto">
+        UPDATE MEMBER
+        SET NICKNAME = #{nickname}, PHONE = #{phone}, ADDRESS = #{address}, REGIST_NUM = #{registNum}
+        WHERE ID = #{id}
+    </update>
+
     <update id="modify" parameterType="MemberDto">
         UPDATE MEMBER
-        SET PW = #{pw}
+        SET PW = #{pw}, ADDRESS = #{address}
         WHERE ID = #{id}
+    </update>
+
+    <update id="report" parameterType="MemberDto">
+        UPDATE MEMBER
+        SET REPORTS = REPORTS+1
+        WHERE NICKNAME = #{nickname}
     </update>
 
     <delete id="delete" parameterType="MemberDto">
@@ -27,11 +44,9 @@
     </delete>
 
     <select id="findSearch" parameterType="MemberDto" resultType="MemberDto">
-        SELECT (ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM)
+        SELECT ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM, REPORTS
         FROM MEMBER
-        <if test='keyword != null and keyword != ""'>
-            WHERE ${searchCode} = #{keyword}
-        </if>
+        WHERE NICKNAME = #{nickname}
     </select>
 
 </mapper>

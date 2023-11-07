@@ -15,6 +15,22 @@ public class MemberDto {
     private String address;
     // 주민번호
     private String registNum;
+    // 신고횟수
+    private int reports;
+
+    @Override
+    public String toString() {
+        return "MemberDto{" +
+                "id='" + id + '\'' +
+                ", pw='" + pw + '\'' +
+                ", name='" + name + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", registNum='" + registNum + '\'' +
+                ", reports=" + reports +
+                '}';
+    }
 
     public String getId() {
         return id;
@@ -70,5 +86,13 @@ public class MemberDto {
 
     public void setRegistNum(String registNum) {
         this.registNum = registNum;
+    }
+
+    public int getReports() {
+        return reports;
+    }
+
+    public void setReports(int reports) {
+        this.reports = reports;
     }
 }

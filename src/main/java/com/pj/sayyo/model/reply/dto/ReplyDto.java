@@ -12,6 +12,8 @@ public class ReplyDto {
     private String nickname;
     // 댓글 좋아요 수
     private int likes;
+    // 댓글 싫어요 수
+    private int dislike;
     // 댓글 내용
     private String content;
     // 댓글 작성 날짜

@@ -32,6 +32,42 @@ public class MemberController {
         return mv;
     }
 
+    @PostMapping("/kakao")
+    @ResponseBody
+    private String kakao(@RequestBody MemberDto memberDto){
+        HashMap<String, Object> mv = new HashMap<>();
+
+        if(memberDto.getNickname().equals("꽥꽥이")){
+            return "다시 입력해주세요";
+        }else if(memberDto.getPhone().equals("01012341234")){
+            return "다시 입력해주세요";
+        }else if(memberDto.getAddress().equals("asd")){
+            return "다시 입력해주세요";
+        }else if(memberDto.getRegistNum().equals("1234561234567")){
+            return "다시 입력해주세요";
+        }
+        int resultCnt = memberService.kakao(memberDto);
+        mv.put("result", resultCnt);
+        System.out.println(resultCnt);
+
+        return "로그인 성공 ( by kakao )";
+    }
+
+    @PostMapping("/login")
+    @ResponseBody
+    private boolean login(@RequestBody MemberDto memberDto){
+        MemberDto m = memberService.login(memberDto);
+        if(m == null){
+            // 받아온 id와 pw에 해당하는 유저가 없을때
+            System.out.println("로그인 실패");
+            return false;
+        }
+        System.out.println(m.toString());
+        System.out.println("로그인 성공");
+
+        return true;
+    }
+
     @GetMapping("/findAll")
     @ResponseBody
     private HashMap<String, Object> findAll(){
@@ -61,9 +97,16 @@ public class MemberController {
     @ResponseBody
     public void selectFind(@RequestBody MemberDto memberDto) {
         HashMap<String, Object> mv = new HashMap<>();
-        List<MemberDto> list = memberService.findSearch(memberDto);
+        List<MemberDto> member = memberService.findSearch(memberDto);
 
-        mv.put("list", list);
+        mv.put("member", member);
+        System.out.println(mv);
     }
 
+    @PostMapping("/report")
+    @ResponseBody
+    public void report(@RequestBody MemberDto memberDto){
+        int resultCnt4 = memberService.report(memberDto);
+        System.out.println("신고 완료 여부 : " + resultCnt4);
+    }
 }

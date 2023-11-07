@@ -27,6 +27,18 @@
         WHERE ID = #{id}
     </delete>
 
+    <update id="likes" parameterType="PoliticianDto">
+        UPDATE POLITICIAN
+        SET LIKES = LIKES+1
+        WHERE ID = #{id}
+    </update>
+
+    <update id="dislike" parameterType="PoliticianDto">
+        UPDATE POLITICIAN
+        SET DISLIKE = DISLIKE+1
+        WHERE ID = #{id}
+    </update>
+
     <select id="findSearch" parameterType="PoliticianDto" resultType="PoliticianDto">
         SELECT ID, NAME, KOR_SCORE, ENG_SCORE, MATH_SCORE
         FROM POLITICIAN
