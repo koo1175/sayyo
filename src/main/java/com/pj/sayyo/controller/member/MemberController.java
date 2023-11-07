@@ -39,7 +39,7 @@ public class MemberController {
 
         if(memberDto.getNickname().equals("꽥꽥이")){
             return "다시 입력해주세요";
-        }else if(memberDto.getPhone().equals("01012341234")){
+        }else if(memberDto.getPhone().equals("01012341234") || memberDto.getPhone().equals(" ")){
             return "다시 입력해주세요";
         }else if(memberDto.getAddress().equals("asd")){
             return "다시 입력해주세요";
