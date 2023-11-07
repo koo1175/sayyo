@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pj.sayyo.model.pLike.mapper.PLikeMapper">
+
+    <insert id="like" parameterType="PLikeDto">
+        INSERT INTO P_LIKES(MEMBER_ID, POLITICIAN_NUM, LIKE_STATE)
+        VALUES (#{memberId}, #{politicianNum}, 1)
+    </insert>
+
+    <update id="polLike" parameterType="PLikeDto">
+        UPDATE POLITICIAN
+        SET LIKES = LIKES+1
+        WHERE ID = #{politicianNum}
+    </update>
+
+    <update id="cancelLike" parameterType="PLikeDto">
+        UPDATE P_LIKES
+        SET LIKE_STATE = 0
+        WHERE MEMBER_ID = #{memberId} AND POLITICIAN_NUM = #{politicianNum}
+    </update>
+
+
+    <update id="polCancelLike" parameterType="PLikeDto">
+        UPDATE POLITICIAN
+        SET LIKES = LIKES-1
+        WHERE ID = #{politicianNum}
+    </update>
+
+    <insert id="dislike" parameterType="PLikeDto">
+        INSERT INTO P_LIKES(MEMBER_ID, POLITICIAN_NUM, LIKE_STATE)
+        VALUES (#{memberId}, #{politicianNum}, 2)
+    </insert>
+
+    <insert id="polDislike" parameterType="PLikeDto">
+        UPDATE POLITICIAN
+        SET DISLIKE = DISLIKE+1
+        WHERE ID = #{politicianNum}
+    </insert>
+
+    <update id="polCancelDislike" parameterType="PLikeDto">
+        UPDATE POLITICIAN
+        SET DISLIKE = DISLIKE-1
+        WHERE ID = #{politicianNum}
+    </update>
+
+    <select id="findLike" parameterType="PLikeDto" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM P_LIKES
+        WHERE MEMBER_ID = #{memberId} AND POLITICIAN_NUM = #{politicianNum}
+    </select>
+
+
+    <select id="findState" parameterType="PLikeDto" resultType="PLikeDto">
+        SELECT LIKE_STATE
+        FROM P_LIKES
+        WHERE MEMBER_ID = #{memberId} AND POLITICIAN_NUM = #{politicianNum}
+    </select>
+
+    <delete id="deleteLike" parameterType="PLikeDto">
+        DELETE FROM P_LIKES
+        WHERE MEMBER_ID = #{memberId} AND POLITICIAN_NUM = #{politicianNum}
+    </delete>
+
+</mapper>

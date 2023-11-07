@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pj.sayyo.model.promise.mapper.PromiseMapper">
+
+    <insert id="regist" parameterType="PromiseDto">
+        INSERT INTO PROMISE(ID, NUM, CONTENT)
+        VALUES (#{id}, #{num}, #{content})
+    </insert>
+
+    <select id="findAll"
+            resultType="PromiseDto">
+        SELECT ID, NUM, CONTENT FROM PROMISE
+    </select>
+
+</mapper>
