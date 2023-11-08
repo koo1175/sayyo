@@ -12,5 +12,5 @@ public interface MemberMapper {
     int modify(MemberDto memberDto);
     int delete(MemberDto memberDto);
     List<MemberDto> findSearch(MemberDto memberDto);
-
+    MemberDto findByUserId(String userId);
 }

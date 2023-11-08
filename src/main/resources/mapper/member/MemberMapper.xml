@@ -4,15 +4,21 @@
 <mapper namespace="com.pj.sayyo.model.member.mapper.MemberMapper">
 
     <insert id="regist" parameterType="MemberDto">
-        INSERT INTO MEMBER(ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM)
-        VALUES (#{id}, #{pw}, #{name},
-                #{nickname}, #{phone}, #{address}, #{registNum})
+        INSERT INTO MEMBER(ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM, REPORTS)
+        VALUES (#{id,jdbcType=VARCHAR}, #{pw,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+                #{nickname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{registNum,jdbcType=VARCHAR}, #{reports,jdbcType=INTEGER})
     </insert>
 
     <select id="findAll"
             resultType="MemberDto">
-        SELECT ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM
+        SELECT ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM, REPORTS
         FROM MEMBER
+    </select>
+
+    <select id="login" parameterType="MemberDto" resultType="MemberDto">
+        SELECT ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM, REPORTS
+        FROM MEMBER
+        WHERE ID = #{id} AND PW = #{pw}
     </select>
 
     <update id="modify" parameterType="MemberDto">
@@ -21,17 +27,25 @@
         WHERE ID = #{id}
     </update>
 
+    <update id="report" parameterType="MemberDto">
+        UPDATE MEMBER
+        SET REPORTS = REPORTS+1
+        WHERE NICKNAME = #{nickname}
+    </update>
+
     <delete id="delete" parameterType="MemberDto">
         DELETE MEMBER
         WHERE ID = #{id}
     </delete>
 
     <select id="findSearch" parameterType="MemberDto" resultType="MemberDto">
-        SELECT (ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM)
+        SELECT ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM, REPORTS
         FROM MEMBER
-        <if test='keyword != null and keyword != ""'>
-            WHERE ${searchCode} = #{keyword}
-        </if>
+        WHERE NAME = #{username}
+    </select>
+
+    <select id="findByUserId" parameterType="MemberDto" resultType="MemberDto">
+        SELECT * FROM MEMBER WHERE ID = #{id}
     </select>
 
 </mapper>
