@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pj.sayyo.model.board.mapper.BoardMapper">
+
+    <insert id="regist" parameterType="BoardDto">
+        INSERT INTO POL_BOARD(ID, NUM, TITLE, CONTENT, CURRENT_DATE)
+        VALUES (#{id}, #{num},
+        #{title}, #{content}, #{currentDate})
+    </insert>
+
+    <select id="findAll"
+            resultType="BoardDto">
+        SELECT ID, NUM, TITLE, CONTENT, CURRENT_DATE
+        FROM POL_BOARD
+    </select>
+
+    <update id="modify" parameterType="BoardDto">
+        UPDATE POL_BOARD
+        SET TITLE = #{title}, CONTENT = #{content}
+        WHERE NUM = #{num}
+    </update>
+
+    <delete id="delete" parameterType="BoardDto">
+        DELETE POL_BOARD
+        WHERE NUM = #{num}
+    </delete>
+
+    <select id="findSearch" parameterType="BoardDto" resultType="BoardDto">
+        SELECT (ID, NUM, TITLE, CONTENT, CURRENT_DATE)
+        FROM POL_BOARD
+        <if test='keyword != null and keyword != ""'>
+            WHERE ${searchCode} = #{keyword}
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pj.sayyo.model.reply.mapper.ReplyMapper">
+
+    <insert id="regist" parameterType="ReplyDto">
+        INSERT INTO REPLY(ID, POLITICIAN_NUM, NICKNAME, CONTENT, CURRENT_DATE)
+        VALUES (#{id}, #{politicianNum},
+                #{nickname}, #{content}, #{currentDate})
+    </insert>
+
+    <select id="findAll"
+            resultType="ReplyDto">
+        SELECT ID, POLITICIAN_NUM, NICKNAME, CONTENT, CURRENT_DATE
+        FROM REPLY
+    </select>
+
+    <update id="modify" parameterType="ReplyDto">
+        UPDATE REPLY
+        SET TITLE = #{title}, CONTENT = #{content}
+        WHERE ID = #{id}
+    </update>
+
+    <delete id="delete" parameterType="ReplyDto">
+        DELETE REPLY
+        WHERE ID = #{id}
+    </delete>
+
+    <select id="findSearch" parameterType="ReplyDto" resultType="ReplyDto">
+        SELECT (ID, POLITICIAN_NUM, NICKNAME, CONTENT, CURRENT_DATE)
+        FROM REPLY
+        <if test='keyword != null and keyword != ""'>
+            WHERE ${searchCode} = #{keyword}
+        </if>
+    </select>
+
+</mapper>
