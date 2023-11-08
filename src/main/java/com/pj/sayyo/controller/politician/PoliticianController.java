@@ -57,6 +57,22 @@ public class PoliticianController {
 
     }
 
+    @PostMapping("/likes")
+    @ResponseBody
+    public void likes(@RequestBody PoliticianDto politicianDto) {
+        int resultCnt3 = politicianService.likes(politicianDto);
+        System.out.println("좋아요 완료 여부 : " + resultCnt3);
+
+    }
+
+    @PostMapping("/dislike")
+    @ResponseBody
+    public void dislike(@RequestBody PoliticianDto politicianDto) {
+        int resultCnt3 = politicianService.dislike(politicianDto);
+        System.out.println("싫어요 완료 여부 : " + resultCnt3);
+
+    }
+    
     @GetMapping("/findSearch")
     @ResponseBody
     public void selectFind(@RequestBody PoliticianDto politicianDto) {

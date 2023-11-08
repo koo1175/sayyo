@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pj.sayyo.model.rLike.mapper.RLikeMapper">
+
+    <insert id="like" parameterType="RLikeDto">
+        INSERT INTO R_LIKES(MEMBER_ID, REPLY_NUM, LIKE_STATE)
+        VALUES (#{memberId}, #{replyNum}, 1)
+    </insert>
+
+
+    <update id="reLike" parameterType="PLikeDto">
+        UPDATE REPLY
+        SET LIKES = LIKES+1
+        WHERE ID = #{replyNum}
+    </update>
+
+    <insert id="dislike" parameterType="RLikeDto">
+        INSERT INTO R_LIKES(MEMBER_ID, REPLY_NUM, LIKE_STATE)
+        VALUES (#{memberId}, #{replyNum}, 2)
+    </insert>
+
+
+    <insert id="reDislike" parameterType="PLikeDto">
+        UPDATE REPLY
+        SET DISLIKE = DISLIKE+1
+        WHERE ID = #{replyNum}
+    </insert>
+
+    <update id="cancelLike" parameterType="RLikeDto">
+        UPDATE R_LIKES
+        SET LIKE_STATE = 0
+        WHERE MEMBER_ID = #{memberId} AND REPLY_NUM = #{replyNum}
+    </update>
+
+    <update id="reCancelLike" parameterType="PLikeDto">
+        UPDATE REPLY
+        SET LIKES = LIKES-1
+        WHERE ID = #{replyNum}
+    </update>
+
+    <update id="reCancelDislike" parameterType="PLikeDto">
+        UPDATE REPLY
+        SET DISLIKE = DISLIKE-1
+        WHERE ID = #{replyNum}
+    </update>
+
+    <select id="findLike" parameterType="RLikeDto" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM R_LIKES
+        WHERE MEMBER_ID = #{memberId} AND REPLY_NUM = #{replyNum}
+    </select>
+
+
+    <select id="findState" parameterType="RLikeDto" resultType="RLikeDto">
+        SELECT LIKE_STATE
+        FROM R_LIKES
+        WHERE MEMBER_ID = #{memberId} AND REPLY_NUM = #{replyNum}
+    </select>
+
+    <delete id="deleteLike" parameterType="RLikeDto">
+        DELETE FROM R_LIKES
+        WHERE MEMBER_ID = #{memberId} AND REPLY_NUM = #{replyNum}
+    </delete>
+
+</mapper>

@@ -31,6 +31,14 @@ public class PoliticianServiceImpl implements PoliticianService {
     public int delete(PoliticianDto politicianDto) {
         return politicianMapper.delete(politicianDto);
     }
+    @Override
+    public int dislike(PoliticianDto politicianDto) {
+        return politicianMapper.dislike(politicianDto);
+    }
+    @Override
+    public int likes(PoliticianDto politicianDto) {
+        return politicianMapper.likes(politicianDto);
+    }
 
     @Override
     public List<PoliticianDto> findSearch(PoliticianDto politicianDto) {

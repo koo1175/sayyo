@@ -9,6 +9,8 @@ public interface PoliticianService {
     List<PoliticianDto> findAll();
     int modify(PoliticianDto politicianDto);
     int delete(PoliticianDto politicianDto);
+    int likes(PoliticianDto politicianDto);
+    int dislike(PoliticianDto politicianDto);
     List<PoliticianDto> findSearch(PoliticianDto politicianDto);
 
 }

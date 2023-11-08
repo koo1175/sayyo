@@ -18,6 +18,15 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public int kakao(MemberDto memberDto) {
+        return memberMapper.kakao(memberDto);
+    }
+    @Override
+    public MemberDto login(MemberDto memberDto) {
+        return memberMapper.login(memberDto);
+    }
+
+    @Override
     public List<MemberDto> findAll() {
         return memberMapper.findAll();
     }
@@ -25,6 +34,10 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public int modify(MemberDto memberDto) {
         return memberMapper.modify(memberDto);
+    }
+    @Override
+    public int report(MemberDto memberDto) {
+        return memberMapper.report(memberDto);
     }
 
     @Override
