@@ -5,8 +5,8 @@
 
     <insert id="regist" parameterType="MemberDto">
         INSERT INTO MEMBER(ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM, REPORTS)
-        VALUES (#{id}, #{pw}, #{name},
-                #{nickname}, #{phone}, #{address}, #{registNum}, #{reports})
+        VALUES (#{id,jdbcType=VARCHAR}, #{pw,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+                #{nickname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{registNum,jdbcType=VARCHAR}, #{reports,jdbcType=INTEGER})
     </insert>
 
     <select id="findAll" resultType="MemberDto">
@@ -47,6 +47,11 @@
         SELECT ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM, REPORTS
         FROM MEMBER
         WHERE NICKNAME = #{nickname}
+    </select>
+
+    <select id="findByUserId" parameterType="MemberDto" resultType="MemberDto">
+        SELECT * FROM MEMBER WHERE ID = #{id}
+
     </select>
 
 </mapper>

@@ -1,5 +1,9 @@
 package com.pj.sayyo.model.member.dto;
 
+import jdk.jshell.Snippet;
+import lombok.Builder;
+
+@Builder
 public class MemberDto {
     // 아이디
     private String id;

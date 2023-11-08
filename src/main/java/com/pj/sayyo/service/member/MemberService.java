@@ -13,4 +13,6 @@ public interface MemberService {
     int report(MemberDto memberDto);
     int delete(MemberDto memberDto);
     List<MemberDto> findSearch(MemberDto memberDto);
+
+    MemberDto findByUserId(String userId);
 }
