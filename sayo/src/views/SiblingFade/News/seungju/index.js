@@ -1,11 +1,10 @@
 import React from "react";
-import WorldPlaces from "../WorldPlaces";
 
-export default function Info() {
+export default function NewsSeung() {
 
     return (
         <div style={{marginTop:'20px'}}>
-            <WorldPlaces/>
+            승주 뉴스
         </div>
         );
 }

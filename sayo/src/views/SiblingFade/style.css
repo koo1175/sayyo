@@ -24,6 +24,13 @@ body {
   margin: auto;
 }
 
+button {
+  background-color: white;
+  border: none;
+  font-size: 1em;
+  font-weight: bolder;
+}
+
 /* Presentational Styles */
 html { display: flex; height: 100%; }
 
@@ -37,6 +44,8 @@ html { display: flex; height: 100%; }
   padding: 1em;
   flex: auto;
   margin: 0.3em;
+  display: 'flex';
+  align-content: 'center';
 }
 
 /**/

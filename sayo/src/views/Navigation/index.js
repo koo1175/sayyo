@@ -7,9 +7,23 @@ import Community from "../Community";
 import AboutUs from "../AboutUs";
 import Gyeonggi from '../Gyeonggi';
 import MockElectionComponent from '../MockElectionComponent';
-import Info from '../Info';
-import News from '../News';
-import Promise from '../Promise';
+
+import InfoSu from '../SiblingFade/Info/suchan';
+import PromiseSu from '../SiblingFade/Promise/suchan';
+import NewsSu from '../SiblingFade/News/suchan';
+
+import InfoHee from '../SiblingFade/Info/heeyeon';
+import PromiseHee from '../SiblingFade/Promise/heeyeon';
+import NewsHee from '../SiblingFade/News/heeyeon';
+
+import InfoYoung from '../SiblingFade/Info/youngsil';
+import PromiseYoung from '../SiblingFade/Promise/youngsil';
+import NewsYoung from '../SiblingFade/News/youngsil';
+
+import InfoSeung from '../SiblingFade/Info/seungju';
+import PromiseSeung from '../SiblingFade/Promise/seungju';
+import NewsSeung from '../SiblingFade/News/seungju';
+
 
 export default function Navigation() {
 
@@ -43,9 +57,22 @@ export default function Navigation() {
                     <Route path="/AboutUs" element={<AboutUs />} />
                     <Route path="/Gyeonggi" element={<Gyeonggi />} />
                     <Route path="/MockElectionComponent" element={<MockElectionComponent />} />
-                    <Route path="/Info" component={Info} />
-                    <Route path="/Promise" component={Promise} />
-                    <Route path="/News" component={News} />
+                    
+                    <Route path="/InfoSu" component={InfoSu} />
+                    <Route path="/PromiseSu" component={PromiseSu} />
+                    <Route path="/NewsSu" component={NewsSu} />
+
+                    <Route path="/InfoHee" component={InfoHee} />
+                    <Route path="/PromiseHee" component={PromiseHee} />
+                    <Route path="/NewsHee" component={NewsHee} />
+
+                    <Route path="/InfoYoung" component={InfoYoung} />
+                    <Route path="/PromiseYoung" component={PromiseYoung} />
+                    <Route path="/NewsYoung" component={NewsYoung} />
+
+                    <Route path="/InfoSeung" component={InfoSeung} />
+                    <Route path="/PromiseSeung" component={PromiseSeung} />
+                    <Route path="/NewsSeung" component={NewsSeung} />
                 </Routes>
             </BrowserRouter>
         </div>

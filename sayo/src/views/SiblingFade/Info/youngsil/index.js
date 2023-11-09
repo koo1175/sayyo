@@ -1,11 +1,10 @@
 import React from "react";
-import WorldPlaces from "../WorldPlaces";
 
-export default function Promise() {
+export default function InfoYoung() {
 
     return (
         <div style={{marginTop:'20px'}}>
-            <WorldPlaces/>
+            영실님의 정보
         </div>
         );
 }
