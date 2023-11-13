@@ -1,11 +1,14 @@
 package com.pj.sayyo.controller.member;
 
 
+import com.pj.sayyo.domain.LoginRequest;
 import com.pj.sayyo.model.member.dto.MemberDto;
 import com.pj.sayyo.service.member.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +17,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/member")
+@RequiredArgsConstructor
 public class MemberController {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -53,19 +57,27 @@ public class MemberController {
         return "로그인 성공 ( by kakao )";
     }
 
-    @PostMapping("/login")
-    @ResponseBody
-    private boolean login(@RequestBody MemberDto memberDto){
-        MemberDto m = memberService.login(memberDto);
-        if(m == null){
-            // 받아온 id와 pw에 해당하는 유저가 없을때
-            System.out.println("로그인 실패");
-            return false;
-        }
-        System.out.println(m.toString());
-        System.out.println("로그인 성공");
+//    @PostMapping("/login")
+//    @ResponseBody
+//    private boolean login(@RequestBody MemberDto memberDto){
+//
+//
+//        MemberDto m = memberService.login(memberDto);
+//        if(m == null){
+//            // 받아온 id와 pw에 해당하는 유저가 없을때
+//            System.out.println("로그인 실패");
+//            return false;
+//        }
+//        System.out.println(m.toString());
+//        System.out.println("로그인 성공");
+//
+//        return true;
+//    }
 
-        return true;
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequest dto) {
+        return ResponseEntity.ok().body(memberService.login(dto.getUserName(), ""));
     }
 
     @GetMapping("/findAll")

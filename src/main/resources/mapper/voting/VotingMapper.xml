@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pj.sayyo.model.voting.mapper.VotingMapper">
+
+    <insert id="regist" parameterType="VotingDto">
+        INSERT INTO VOTING(TITLE, NUM, AFFIL, NAME, SCORE)
+        VALUES (#{title}, #{num},
+                #{affil}, #{name}, #{score})
+    </insert>
+
+    <delete id="delete" parameterType="VotingDto">
+        DELETE FROM VOTING
+        WHERE NUM = #{num} AND TITLE = #{title}
+    </delete>
+
+    <select id="findAll" resultType="VotingDto">
+        SELECT * FROM VOTING
+    </select>
+
+    <update id="voteScore" parameterType="VotingDto">
+        UPDATE VOTING
+        SET SCORE = SCORE + 1
+        WHERE TITLE = #{title} AND NUM = #{num}
+    </update>
+
+    <insert id="voted" parameterType="VotedDto">
+        INSERT INTO VOTED(TITLE, MEMBER_ID, NUM)
+        VALUES (#{title,jdbcType=VARCHAR}, #{memberId,jdbcType=VARCHAR}, #{num})
+    </insert>
+
+
+    <select id="findVoted" resultType="int" parameterType="VotedDto">
+        SELECT COUNT(*) FROM VOTED
+        WHERE TITLE = #{title} AND MEMBER_ID = #{memberId}
+    </select>
+
+</mapper>

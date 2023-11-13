@@ -8,6 +8,8 @@ public interface MemberService {
     int regist(MemberDto memberDto);
     int kakao(MemberDto memberDto);
     MemberDto login(MemberDto memberDto);
+    String login(String userName, String pw);
+
     List<MemberDto> findAll();
     int modify(MemberDto memberDto);
     int report(MemberDto memberDto);
