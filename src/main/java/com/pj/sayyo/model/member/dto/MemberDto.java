@@ -1,6 +1,5 @@
 package com.pj.sayyo.model.member.dto;
 
-import jdk.jshell.Snippet;
 import lombok.Builder;
 
 @Builder
