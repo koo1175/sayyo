@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import SiblingFade from "../SiblingFade";
 import PopUpMok from "../PopUpMok";
+import ResultOfMok from "../ResultOfMok";
 
 export default function MockElectionComponent({ onClose }) {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [selectedButton, setSelectedButton] = useState(null);
+  const [isResultPopupOpen, setResultPopupOpen] = useState(false);
 
   const openPopup = () => {
     setPopupOpen(true);
@@ -12,6 +14,15 @@ export default function MockElectionComponent({ onClose }) {
 
   const closePopup = () => {
     setPopupOpen(false);
+  };
+
+  const openResultPopup = () => {
+    setPopupOpen(false);
+    setResultPopupOpen(true);
+  };
+
+  const closeResultPopup = () => {
+    setResultPopupOpen(false);
   };
 
   const handleButtonClick = (buttonId) => {
@@ -67,9 +78,9 @@ export default function MockElectionComponent({ onClose }) {
             </button>
           </div>
           <div>
-            <button style={{ position: 'absolute', top: "69%", left: "66%", transform: "translate(-50%, 50%)", backgroundColor: "#F6E486", cursor: 'pointer' }} onClick={closePopup}>
-              <img alt="vote" src="/img/vote.png" height="48px" />
-            </button>
+          <button style={{ position: 'absolute', top: "69%", left: "66%", transform: "translate(-50%, 50%)", backgroundColor: "#F6E486", cursor: 'pointer' }} onClick={openResultPopup}>
+        <img alt="vote" src="/img/vote.png" height="48px" />
+      </button>
           </div>
 
           {renderButtons()}
@@ -97,6 +108,9 @@ export default function MockElectionComponent({ onClose }) {
           />
         </button>
         <PopUpMok isOpen={isPopupOpen} onClose={closePopup} content={popupContent} />
+      </div>
+      <div>
+        <ResultOfMok isOpen={isResultPopupOpen} onClose={closeResultPopup} style={{ position: 'absolute', top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: 3 }} />
       </div>
 
       <SiblingFade />

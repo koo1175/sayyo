@@ -1,5 +1,8 @@
 import * as React from 'react';
 import {BrowserRouter, Link, Route, Routes} from 'react-router-dom';
+
+import AuthForm from "../AuthForm";
+
 import Main from "../Main";
 import OrganizationChart from "../OrganizationChart";
 import Board from "../Board";
@@ -25,6 +28,7 @@ import PromiseSeung from '../SiblingFade/Promise/seungju';
 import NewsSeung from '../SiblingFade/News/seungju';
 
 
+
 export default function Navigation() {
 
     return (
@@ -32,7 +36,7 @@ export default function Navigation() {
             <BrowserRouter>
                 <div>
                     <div style={{display:'flex', justifyContent: 'flex-start', marginLeft: '50px', marginTop: '10px', marginBottom: '10px'}}>
-                    <Link to="/">
+                    <Link to="/Main">
                         <img
                             alt="sayoLogo"
                             src="/img/sayoLogo.png"
@@ -50,7 +54,10 @@ export default function Navigation() {
                     </div>
                 </div>
                 <Routes>
-                    <Route path="/" element={<Main />} />
+
+                    <Route path="/" element={<AuthForm/>} />
+
+                    <Route path="/Main" element={<Main />} />
                     <Route path="/OrganizationChart" element={<OrganizationChart />} />
                     <Route path="/Board" element={<Board />} />
                     <Route path="/Community" element={<Community />} />
@@ -73,6 +80,7 @@ export default function Navigation() {
                     <Route path="/InfoSeung" component={InfoSeung} />
                     <Route path="/PromiseSeung" component={PromiseSeung} />
                     <Route path="/NewsSeung" component={NewsSeung} />
+
                 </Routes>
             </BrowserRouter>
         </div>

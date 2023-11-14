@@ -9,7 +9,7 @@ export default function Main() {
         <div style={{ marginTop:'20px' }}>
             <PopUPModal/>
         </div>
-        <Map/>
+             <Map/>
         </div>
         );
 }

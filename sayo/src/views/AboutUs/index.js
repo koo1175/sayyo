@@ -3,14 +3,9 @@ import React from "react";
 export default function AboutUs() {
 
     return (
-        <div style={{width: '100%',
-            height: '100%',
-            backgroundColor:'yellow',
-            backgroundSize: 'cover',
-            color: 'black',
-            fontSize: '70px',
-            marginTop:'20px'}}>
-            AboutUsPage
+        <div >
+            <img src="/img/aboutUs1.png" alt="aboutUs1" width="80%" style={{marginTop: "20px",marginLeft:"-55px"}}/>
+            <img src="/img/aboutUs2.png" alt="aboutUs2" width="80%" style={{marginBottom:"100px"}}/>
         </div>
         );
 }
