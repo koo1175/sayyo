@@ -7,6 +7,7 @@ import Community from "../Community";
 import AboutUs from "../AboutUs";
 import Gyeonggi from '../Gyeonggi';
 import MockElectionComponent from '../MockElectionComponent';
+import Politician from '../Politician';
 
 import InfoSu from '../SiblingFade/Info/suchan';
 import PromiseSu from '../SiblingFade/Promise/suchan';
@@ -57,6 +58,7 @@ export default function Navigation() {
                     <Route path="/AboutUs" element={<AboutUs />} />
                     <Route path="/Gyeonggi" element={<Gyeonggi />} />
                     <Route path="/MockElectionComponent" element={<MockElectionComponent />} />
+                    <Route path="/Politician" element={<Politician />} />
                     
                     <Route path="/InfoSu" component={InfoSu} />
                     <Route path="/PromiseSu" component={PromiseSu} />
