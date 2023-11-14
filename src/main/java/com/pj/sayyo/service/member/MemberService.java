@@ -7,7 +7,7 @@ import java.util.List;
 public interface MemberService {
     int regist(MemberDto memberDto);
     int kakao(MemberDto memberDto);
-    MemberDto login(MemberDto memberDto);
+//    MemberDto login(MemberDto memberDto);
     String login(String userName, String pw);
 
     List<MemberDto> findAll();
@@ -15,4 +15,5 @@ public interface MemberService {
     int report(MemberDto memberDto);
     int delete(MemberDto memberDto);
     MemberDto findSearch(MemberDto memberDto);
+    MemberDto findByUserId(String userId);
 }

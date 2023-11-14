@@ -63,7 +63,6 @@ public class MemberServiceImpl implements MemberService{
         return memberMapper.findSearch(memberDto);
     }
 
-
     @Override
     public MemberDto findByUserId(String userName) {
         return memberMapper.findByUserId(userName);

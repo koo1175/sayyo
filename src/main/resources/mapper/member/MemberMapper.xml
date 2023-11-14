@@ -14,7 +14,7 @@
         FROM MEMBER
     </select>
 
-    <select id="login" parameterType="MemberDto" resultType="MemberDto">
+    <select id="login" parameterType="com.pj.sayyo.model.member.dto.MemberDto" resultType="com.pj.sayyo.model.member.dto.MemberDto">
         SELECT ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM, REPORTS
         FROM MEMBER
         WHERE ID = #{id} AND PW = #{pw}
