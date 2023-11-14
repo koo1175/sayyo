@@ -60,6 +60,7 @@ public class JwtFilter  extends OncePerRequestFilter {
         //Detail로 넣어줍니다.
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         filterChain.doFilter(request, response);
+        
 
     }
 }
