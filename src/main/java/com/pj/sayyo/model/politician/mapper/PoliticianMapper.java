@@ -2,6 +2,7 @@ package com.pj.sayyo.model.politician.mapper;
 
 import com.pj.sayyo.model.politician.dto.PoliticianDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

@@ -3,30 +3,30 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pj.sayyo.model.fulfillment.mapper.FulfillmentMapper">
 
-    <insert id="regist" parameterType="FulfillmentDto">
+    <insert id="regist" parameterType="com.pj.sayyo.model.fulfillment.dto.FulfillmentDto">
         INSERT INTO FULFILLMENT(POLITICIAN_NUM, PLAN_NUM, COMPLETE_NUM, TRY_NUM, REGION_DEV)
         VALUES (#{politicianNum}, #{planNum},
                 #{completeNum}, #{tryNum}, #{regionDev})
     </insert>
 
     <select id="findAll"
-            resultType="FulfillmentDto">
+            resultType="com.pj.sayyo.model.fulfillment.dto.FulfillmentDto">
         SELECT POLITICIAN_NUM, PLAN_NUM, COMPLETE_NUM, TRY_NUM, REGION_DEV
         FROM FULFILLMENT
     </select>
 
-    <update id="modify" parameterType="FulfillmentDto">
+    <update id="modify" parameterType="com.pj.sayyo.model.fulfillment.dto.FulfillmentDto">
         UPDATE FULFILLMENT
         SET PLAN_NUM = #{planNum}, COMPLETE_NUM = #{completeNum}, TRY_NUM = ${tryNum}, REGION_DEV = #{regionDev}
         WHERE POLITICIAN_NUM = #{politicianNum}
     </update>
 
-    <delete id="delete" parameterType="FulfillmentDto">
+    <delete id="delete" parameterType="com.pj.sayyo.model.fulfillment.dto.FulfillmentDto">
         DELETE FULFILLMENT
         WHERE POLITICIAN_NUM = #{politicianNum}
     </delete>
 
-    <select id="findSearch" parameterType="FulfillmentDto" resultType="FulfillmentDto">
+    <select id="findSearch" parameterType="com.pj.sayyo.model.fulfillment.dto.FulfillmentDto" resultType="com.pj.sayyo.model.fulfillment.dto.FulfillmentDto">
         SELECT (POLITICIAN_NUM, PLAN_NUM, COMPLETE_NUM, TRY_NUM, REGION_DEV)
         FROM FULFILLMENT
         <if test='keyword != null and keyword != ""'>

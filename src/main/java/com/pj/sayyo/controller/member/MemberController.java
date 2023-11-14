@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.List;
 
@@ -93,14 +94,15 @@ public class MemberController {
 
     }
 
+    // 닉네임으로 요청
     @GetMapping("/findSearch")
     @ResponseBody
     public void selectFind(@RequestBody MemberDto memberDto) {
         HashMap<String, Object> mv = new HashMap<>();
-        List<MemberDto> member = memberService.findSearch(memberDto);
+        MemberDto member = memberService.findSearch(memberDto);
 
         mv.put("member", member);
-        System.out.println(mv);
+        System.out.println(member.toString());
     }
 
     @PostMapping("/report")

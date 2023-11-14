@@ -1,8 +1,8 @@
 package com.pj.sayyo.model.issue.mapper;
 
 import com.pj.sayyo.model.issue.dto.IssueDto;
-import com.pj.sayyo.model.politician.dto.PoliticianDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

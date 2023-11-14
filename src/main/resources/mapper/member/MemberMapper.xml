@@ -3,55 +3,53 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pj.sayyo.model.member.mapper.MemberMapper">
 
-    <insert id="regist" parameterType="MemberDto">
+    <insert id="regist" parameterType="com.pj.sayyo.model.member.dto.MemberDto">
         INSERT INTO MEMBER(ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM, REPORTS)
-        VALUES (#{id,jdbcType=VARCHAR}, #{pw,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
-                #{nickname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{registNum,jdbcType=VARCHAR}, #{reports,jdbcType=INTEGER})
+        VALUES (#{id}, #{pw}, #{name},
+                #{nickname}, #{phone}, #{address}, #{registNum}, #{reports})
     </insert>
 
-    <select id="findAll" resultType="MemberDto">
+    <select id="findAll" resultType="com.pj.sayyo.model.member.dto.MemberDto">
         SELECT ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM, REPORTS
         FROM MEMBER
     </select>
 
-    <select id="login" parameterType="MemberDto" resultType="MemberDto">
+    <select id="login" parameterType="com.pj.sayyo.model.member.dto.MemberDto" resultType="com.pj.sayyo.model.member.dto.MemberDto">
         SELECT ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM, REPORTS
         FROM MEMBER
         WHERE ID = #{id} AND PW = #{pw}
     </select>
 
-    <update id="kakao" parameterType="MemberDto">
+    <update id="kakao" parameterType="com.pj.sayyo.model.member.dto.MemberDto">
         UPDATE MEMBER
         SET NICKNAME = #{nickname}, PHONE = #{phone}, ADDRESS = #{address}, REGIST_NUM = #{registNum}
         WHERE ID = #{id}
     </update>
 
-    <update id="modify" parameterType="MemberDto">
+    <update id="modify" parameterType="com.pj.sayyo.model.member.dto.MemberDto">
         UPDATE MEMBER
         SET PW = #{pw}, ADDRESS = #{address}
         WHERE ID = #{id}
     </update>
 
-    <update id="report" parameterType="MemberDto">
+    <update id="report" parameterType="com.pj.sayyo.model.member.dto.MemberDto">
         UPDATE MEMBER
         SET REPORTS = REPORTS+1
         WHERE NICKNAME = #{nickname}
     </update>
 
-    <delete id="delete" parameterType="MemberDto">
+    <delete id="delete" parameterType="com.pj.sayyo.model.member.dto.MemberDto">
         DELETE MEMBER
         WHERE ID = #{id}
     </delete>
 
-    <select id="findSearch" parameterType="MemberDto" resultType="MemberDto">
+    <select id="findSearch" parameterType="com.pj.sayyo.model.member.dto.MemberDto" resultType="com.pj.sayyo.model.member.dto.MemberDto">
         SELECT ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM, REPORTS
         FROM MEMBER
         WHERE NICKNAME = #{nickname}
     </select>
 
-    <select id="findByUserId" parameterType="MemberDto" resultType="MemberDto">
+    <select id="findByUserId" parameterType="com.pj.sayyo.model.member.dto.MemberDto" resultType="com.pj.sayyo.model.member.dto.MemberDto">
         SELECT * FROM MEMBER WHERE ID = #{id}
-
     </select>
-
 </mapper>

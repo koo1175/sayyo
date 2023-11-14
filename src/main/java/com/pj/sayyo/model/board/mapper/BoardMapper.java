@@ -2,6 +2,7 @@ package com.pj.sayyo.model.board.mapper;
 
 import com.pj.sayyo.model.board.dto.BoardDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

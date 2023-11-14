@@ -3,31 +3,31 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pj.sayyo.model.reply.mapper.ReplyMapper">
 
-    <insert id="regist" parameterType="ReplyDto">
-        INSERT INTO REPLY(ID, POLITICIAN_NUM, NICKNAME, LIKES, DISLIKE, CONTENT, CURRENT_DATE)
+    <insert id="regist" parameterType="com.pj.sayyo.model.reply.dto.ReplyDto">
+        INSERT INTO REPLY(ID, POLITICIAN_NUM, NICKNAME, LIKES, DISLIKE, CONTENT, NOW_DATE)
         VALUES (reply_id_seq.nextval, #{politicianNum},
                 #{nickname}, #{likes}, #{dislike}, #{content}, #{currentDate})
     </insert>
 
     <select id="findAll"
-            resultType="ReplyDto">
-        SELECT ID, POLITICIAN_NUM, NICKNAME, LIKES, DISLIKE, CONTENT, CURRENT_DATE
+            resultType="com.pj.sayyo.model.reply.dto.ReplyDto">
+        SELECT ID, POLITICIAN_NUM, NICKNAME, LIKES, DISLIKE, CONTENT, NOW_DATE
         FROM REPLY
     </select>
 
-    <update id="modify" parameterType="ReplyDto">
+    <update id="modify" parameterType="com.pj.sayyo.model.reply.dto.ReplyDto">
         UPDATE REPLY
         SET CONTENT = #{content}
         WHERE ID = #{id}
     </update>
 
-    <delete id="delete" parameterType="ReplyDto">
+    <delete id="delete" parameterType="com.pj.sayyo.model.reply.dto.ReplyDto">
         DELETE REPLY
         WHERE ID = #{id}
     </delete>
 
-    <select id="findSearch" parameterType="ReplyDto" resultType="ReplyDto">
-        SELECT (ID, POLITICIAN_NUM, NICKNAME, LIKES, DISLIKE, CONTENT, CURRENT_DATE)
+    <select id="findSearch" parameterType="com.pj.sayyo.model.reply.dto.ReplyDto" resultType="com.pj.sayyo.model.reply.dto.ReplyDto">
+        SELECT (ID, POLITICIAN_NUM, NICKNAME, LIKES, DISLIKE, CONTENT, NOW_DATE)
         FROM REPLY
         WHERE POLITICIAN_NUM = #{politicianNum}
     </select>

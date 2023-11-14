@@ -46,14 +46,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public List<MemberDto> findSearch(MemberDto memberDto) {
+    public MemberDto findSearch(MemberDto memberDto) {
         return memberMapper.findSearch(memberDto);
     }
-
-
-    @Override
-    public MemberDto findByUserId(String userId) {
-        return memberMapper.findByUserId(userId);
-    }
-
 }

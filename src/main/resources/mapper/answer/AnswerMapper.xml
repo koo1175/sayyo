@@ -2,38 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pj.sayyo.model.answer.mapper.AnswerMapper">
-
     <!--                      Answer                       -->
-
-    <insert id="regist" parameterType="AnswerDto">
+    <insert id="regist" parameterType="com.pj.sayyo.model.answer.dto.AnswerDto">
         INSERT INTO ANSWER(ID, CONTENT, ISVALID)
         VALUES (#{id}, #{content},  #{isValid})
     </insert>
 
     <select id="findAll"
-            resultType="AnswerDto">
-        SELECT (ID, CONTENT, ISVALID)
-        FROM
-            ANSWER
+            resultType="com.pj.sayyo.model.answer.dto.AnswerDto">
+        SELECT ID, CONTENT, ISVALID
+        FROM ANSWER
     </select>
 
-    <update id="modify" parameterType="AnswerDto">
+    <update id="modify" parameterType="com.pj.sayyo.model.answer.dto.AnswerDto">
         UPDATE ANSWER
         SET CONTENT = #{content}, ISVALID = #{isValid}
         WHERE ID = #{id}
     </update>
 
-    <delete id="delete" parameterType="AnswerDto">
-        DELETE ANSWER
+    <delete id="delete" parameterType="com.pj.sayyo.model.answer.dto.AnswerDto">
+        DELETE FROM ANSWER
         WHERE ID = #{id}
     </delete>
 
-    <select id="findSearch" parameterType="AnswerDto" resultType="AnswerDto">
-        SELECT (ID, CONTENT, ISVALID)
+    <select id="findSearch" parameterType="com.pj.sayyo.model.answer.dto.AnswerDto" resultType="com.pj.sayyo.model.answer.dto.AnswerDto">
+        SELECT ID, CONTENT, ISVALID
         FROM ANSWER
-        <if test='keyword != null and keyword != ""'>
-            WHERE ${searchCode} = #{keyword}
-        </if>
+        WHERE ID = #{id}
     </select>
-
 </mapper>

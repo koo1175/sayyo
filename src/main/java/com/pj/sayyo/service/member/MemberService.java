@@ -12,7 +12,5 @@ public interface MemberService {
     int modify(MemberDto memberDto);
     int report(MemberDto memberDto);
     int delete(MemberDto memberDto);
-    List<MemberDto> findSearch(MemberDto memberDto);
-
-    MemberDto findByUserId(String userId);
+    MemberDto findSearch(MemberDto memberDto);
 }
