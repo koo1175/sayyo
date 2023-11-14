@@ -19,7 +19,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
-public class JwtFilter  extends OncePerRequestFilter {
+public class JwtFilter extends OncePerRequestFilter {
 
 
     private final MemberService memberService;
@@ -60,6 +60,7 @@ public class JwtFilter  extends OncePerRequestFilter {
         //Detail로 넣어줍니다.
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         filterChain.doFilter(request, response);
+
 
     }
 }

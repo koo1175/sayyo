@@ -2,8 +2,7 @@ package com.pj.sayyo.model.rLike.mapper;
 
 import com.pj.sayyo.model.rLike.dto.RLikeDto;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
+import org.springframework.stereotype.Repository;
 
 @Mapper
 public interface RLikeMapper {

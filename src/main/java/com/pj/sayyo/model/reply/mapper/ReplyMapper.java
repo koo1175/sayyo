@@ -2,6 +2,7 @@ package com.pj.sayyo.model.reply.mapper;
 
 import com.pj.sayyo.model.reply.dto.ReplyDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

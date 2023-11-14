@@ -2,6 +2,7 @@ package com.pj.sayyo.model.fulfillment.mapper;
 
 import com.pj.sayyo.model.fulfillment.dto.FulfillmentDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

@@ -27,10 +27,11 @@ public class MemberServiceImpl implements MemberService{
     public int kakao(MemberDto memberDto) {
         return memberMapper.kakao(memberDto);
     }
-    @Override
-    public MemberDto login(MemberDto memberDto) {
-        return memberMapper.login(memberDto);
-    }
+
+//    @Override
+//    public MemberDto login(MemberDto memberDto) {
+//        return memberMapper.login(memberDto);
+//    }
 
     @Override
     public String login(String userName, String pw) {
@@ -58,10 +59,9 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public List<MemberDto> findSearch(MemberDto memberDto) {
+    public MemberDto findSearch(MemberDto memberDto) {
         return memberMapper.findSearch(memberDto);
     }
-
 
     @Override
     public MemberDto findByUserId(String userName) {

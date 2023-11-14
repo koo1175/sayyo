@@ -3,30 +3,30 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pj.sayyo.model.question.mapper.QuestionMapper">
 
-    <insert id="regist" parameterType="QuestionDto">
+    <insert id="regist" parameterType="com.pj.sayyo.model.question.dto.QuestionDto">
         INSERT INTO QUESTION(ID, CONTENT)
         VALUES (#{id}, #{content})
     </insert>
 
     <select id="findAll"
-            resultType="QuestionDto">
+            resultType="com.pj.sayyo.model.question.dto.QuestionDto">
         SELECT ID, CONTENT
         FROM
             QUESTION
     </select>
 
-    <update id="modify" parameterType="QuestionDto">
+    <update id="modify" parameterType="com.pj.sayyo.model.question.dto.QuestionDto">
         UPDATE QUESTION
         SET CONTENT = ${content}
         WHERE ID = #{id}
     </update>
 
-    <delete id="delete" parameterType="QuestionDto">
+    <delete id="delete" parameterType="com.pj.sayyo.model.question.dto.QuestionDto">
         DELETE QUESTION
         WHERE ID = #{id}
     </delete>
 
-    <select id="findSearch" parameterType="QuestionDto" resultType="QuestionDto">
+    <select id="findSearch" parameterType="com.pj.sayyo.model.question.dto.QuestionDto" resultType="com.pj.sayyo.model.question.dto.QuestionDto">
         SELECT ID, NAME, KOR_SCORE, ENG_SCORE, MATH_SCORE
         FROM QUESTION
         <if test='keyword != null and keyword != ""'>

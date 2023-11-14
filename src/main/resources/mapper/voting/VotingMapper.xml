@@ -3,34 +3,34 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pj.sayyo.model.voting.mapper.VotingMapper">
 
-    <insert id="regist" parameterType="VotingDto">
+    <insert id="regist" parameterType="com.pj.sayyo.model.voting.dto.VotingDto">
         INSERT INTO VOTING(TITLE, NUM, AFFIL, NAME, SCORE)
         VALUES (#{title}, #{num},
                 #{affil}, #{name}, #{score})
     </insert>
 
-    <delete id="delete" parameterType="VotingDto">
+    <delete id="delete" parameterType="com.pj.sayyo.model.voting.dto.VotingDto">
         DELETE FROM VOTING
         WHERE NUM = #{num} AND TITLE = #{title}
     </delete>
 
-    <select id="findAll" resultType="VotingDto">
+    <select id="findAll" resultType="com.pj.sayyo.model.voting.dto.VotingDto">
         SELECT * FROM VOTING
     </select>
 
-    <update id="voteScore" parameterType="VotingDto">
+    <update id="voteScore" parameterType="com.pj.sayyo.model.voting.dto.VotingDto">
         UPDATE VOTING
         SET SCORE = SCORE + 1
         WHERE TITLE = #{title} AND NUM = #{num}
     </update>
 
-    <insert id="voted" parameterType="VotedDto">
+    <insert id="voted" parameterType="com.pj.sayyo.model.voting.dto.VotedDto">
         INSERT INTO VOTED(TITLE, MEMBER_ID, NUM)
         VALUES (#{title,jdbcType=VARCHAR}, #{memberId,jdbcType=VARCHAR}, #{num})
     </insert>
 
 
-    <select id="findVoted" resultType="int" parameterType="VotedDto">
+    <select id="findVoted" resultType="int" parameterType="com.pj.sayyo.model.voting.dto.VotedDto">
         SELECT COUNT(*) FROM VOTED
         WHERE TITLE = #{title} AND MEMBER_ID = #{memberId}
     </select>
