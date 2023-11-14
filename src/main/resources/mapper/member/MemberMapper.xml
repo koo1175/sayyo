@@ -5,8 +5,8 @@
 
     <insert id="regist" parameterType="com.pj.sayyo.model.member.dto.MemberDto">
         INSERT INTO MEMBER(ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM, REPORTS)
-        VALUES (#{id}, #{pw}, #{name},
-                #{nickname}, #{phone}, #{address}, #{registNum}, #{reports})
+        VALUES (#{id,jdbcType=VARCHAR}, #{pw,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+        #{nickname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{registNum,jdbcType=VARCHAR}, #{reports,jdbcType=INTEGER})
     </insert>
 
     <select id="findAll" resultType="com.pj.sayyo.model.member.dto.MemberDto">
@@ -14,7 +14,7 @@
         FROM MEMBER
     </select>
 
-    <select id="login" parameterType="com.pj.sayyo.model.member.dto.MemberDto" resultType="com.pj.sayyo.model.member.dto.MemberDto">
+    <select id="login" parameterType="MemberDto" resultType="MemberDto">
         SELECT ID, PW, NAME, NICKNAME, PHONE, ADDRESS, REGIST_NUM, REPORTS
         FROM MEMBER
         WHERE ID = #{id} AND PW = #{pw}
