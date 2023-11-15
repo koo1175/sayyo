@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
 import { useSpring, animated } from 'react-spring';
+import { useNavigate } from 'react-router-dom';
+
+
 
 // New component for registration form
 function LoginForm() {
+
+  const navigate = useNavigate();
+
+  const gotoMain = () => {
+    navigate('/Main');
+    window.location.reload();
+  };
+
   return (
     <div style={{ marginTop: 200, marginLeft: 350, textAlign: 'center' }}>
       {/* Add your registration form elements here */}
@@ -14,7 +25,7 @@ function LoginForm() {
         <input type="password" placeholder='Password' />
         <br /><br />
         {/* Example submit button */}
-        <button type="submit" style={{ backgroundColor: '#909090', color: "#fff", borderRadius: 5 }}>Sign in</button>
+        <button type="submit" onClick={gotoMain} style={{ backgroundColor: '#909090', color: "#fff", borderRadius: 5 }}>Sign in</button>
         <br />
         <button style={{ fontSize: '0.5em' }}>Forget password?</button>
       </form>
@@ -70,15 +81,15 @@ export default function AuthForm() {
           position: 'realtive',
           width: 708,
           height: 500,
-          margin: '300px 0 0 170px', // Adjust position to center inside the gray square
+          margin: '350px 0 0 0px', // Adjust position to center inside the gray square
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.4)',
           borderRadius: 30,
         }}
       >
         <div style={{ position: 'absolute', top: '30%', left: '45%', transform: 'translate(-50%, -50%)', fontSize: '1em' }}>
-        {/* Render registration form if isLogin is false */}
-        {isLogin && <LoginForm />}
-        {!isLogin && <RegisterForm />}
+          {/* Render registration form if isLogin is false */}
+          {isLogin && <LoginForm />}
+          {!isLogin && <RegisterForm />}
         </div>
 
         {/* Gray animated square */}
