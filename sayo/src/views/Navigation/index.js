@@ -30,6 +30,18 @@ import NewsSeung from '../SiblingFade/News/seungju';
 
 
 export default function Navigation() {
+    const isAuth = window.location.pathname === '/';
+  
+    // If it's the home page, return null to render nothing
+    if (isAuth) {
+        return (
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<AuthForm />} />
+            </Routes>
+          </BrowserRouter>
+        );
+      }
 
     return (
         <div>
@@ -53,9 +65,7 @@ export default function Navigation() {
                     <Link to="/AboutUs" style={{textDecoration: 'none',  margin: '0px 150px 0px 0px',color: '#444444', fontWeight:'bolder'}}>AboutUs</Link>
                     </div>
                 </div>
-                <Routes>
-
-                    <Route path="/" element={<AuthForm/>} />
+                <Routes>                    
 
                     <Route path="/Main" element={<Main />} />
                     <Route path="/OrganizationChart" element={<OrganizationChart />} />
