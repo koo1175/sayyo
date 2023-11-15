@@ -11,6 +11,7 @@ function LoginForm() {
 
   const gotoMain = () => {
     navigate('/Main');
+
     window.location.reload();
   };
 
@@ -25,9 +26,9 @@ function LoginForm() {
         <input type="password" placeholder='Password' />
         <br /><br />
         {/* Example submit button */}
-        <button type="submit" onClick={gotoMain} style={{ backgroundColor: '#909090', color: "#fff", borderRadius: 5 }}>Sign in</button>
+        <button type="submit" onClick={gotoMain} style={{ backgroundColor: '#909090', color: "#fff", borderRadius: 5, cursor: 'pointer' }}>Sign in</button>
         <br />
-        <button style={{ fontSize: '0.5em' }}>Forget password?</button>
+        <button style={{ fontSize: '0.5em', cursor: 'pointer' }}>Forget password?</button>
       </form>
     </div>
   );
@@ -49,7 +50,7 @@ function RegisterForm() {
         <input type="text" placeholder='Confirm Password' />
         <br />
         {/* Example submit button */}
-        <button type="submit" style={{ backgroundColor: '#909090', color: "#fff", borderRadius: 5 }}>Sign up</button>
+        <button type="submit" style={{ backgroundColor: '#909090', color: "#fff", borderRadius: 5, cursor: 'pointer' }}>Sign up</button>
 
       </form>
     </div>
@@ -74,7 +75,8 @@ export default function AuthForm() {
   };
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div style={{ position: 'relative' }}> 
+
       {/* White form in front of the gray square */}
       <animated.div
         style={{
@@ -102,6 +104,7 @@ export default function AuthForm() {
             borderRadius: 30,
             marginTop: -110,
             marginLeft: -170,
+            cursor: 'pointer',
             ...springProps,
           }}
         >
@@ -131,7 +134,7 @@ export default function AuthForm() {
       </animated.div>
 
       {/* Toggle between login and sign-up buttons */}
-      <button onClick={handleClick} style={{ marginTop: 10, marginLeft: 470 }}>
+      <button onClick={handleClick} style={{ marginTop: 10, marginLeft: 470 ,cursor: 'pointer'}}>
         {isLogin ? '회원가입 하러가기' : '로그인 하러가기'}
       </button>
     </div>
