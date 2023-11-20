@@ -58,11 +58,12 @@ public class IssueController {
 
     @GetMapping("/findSearch")
     @ResponseBody
-    public void selectFind(@RequestBody IssueDto issueDto) {
+    public HashMap<String, Object> selectFind(@RequestBody IssueDto issueDto) {
         HashMap<String, Object> mv = new HashMap<>();
         List<IssueDto> list = issueService.findSearch(issueDto);
 
         mv.put("list", list);
+        return mv;
     }
 
 }

@@ -1,26 +1,17 @@
 package com.pj.sayyo.model.issue.dto;
 
 public class IssueDto {
-    private int id;
-    private String region;
+    private String search;
     private String title;
     private String url;
     private int reports;
 
-    public int getId() {
-        return id;
+    public String getSearch() {
+        return search;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getRegion() {
-        return region;
-    }
-
-    public void setRegion(String region) {
-        this.region = region;
+    public void setSearch(String search) {
+        this.search = search;
     }
 
     public String getTitle() {
