@@ -27,6 +27,8 @@ import InfoSeung from '../SiblingFade/Info/seungju';
 import PromiseSeung from '../SiblingFade/Promise/seungju';
 import NewsSeung from '../SiblingFade/News/seungju';
 
+import BoardAdd from '../Board/board/BoardAdd';
+
 
 
 export default function Navigation() {
@@ -90,6 +92,8 @@ export default function Navigation() {
                     <Route path="/InfoSeung" component={InfoSeung} />
                     <Route path="/PromiseSeung" component={PromiseSeung} />
                     <Route path="/NewsSeung" component={NewsSeung} />
+
+                    <Route path='/BoardAdd' element={<BoardAdd />} />
 
                 </Routes>
             </BrowserRouter>
