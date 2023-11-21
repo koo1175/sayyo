@@ -1,3 +1,5 @@
+//프로그래스바 퍼센트 나타내는 부분
+
 import React from "react";
 import Modal from 'react-modal';
 import AnimatedProgressBar from "../AnimatedProgressBar";
@@ -48,10 +50,10 @@ export default function ResultOfMok({ isOpen, onClose }) {
 
         {/* Progress bars drawn on top of the image */}
         <div style={progressBarStyle} >
-          <AnimatedProgressBar color="red" progress={45} />
-          <AnimatedProgressBar color="yellow" progress={80} />          
-          <AnimatedProgressBar color="purple" progress={90} />
-          <AnimatedProgressBar color="orange" progress={70} />
+          <AnimatedProgressBar color="red" progress={10} />
+          <AnimatedProgressBar color="yellow" progress={10} />          
+          <AnimatedProgressBar color="purple" progress={10} />
+          <AnimatedProgressBar color="orange" progress={10} />
         </div>
       </div>
     </Modal>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
 
+
 export default function AnimatedProgressBar({ color, progress }){
   const [barWidth, setBarWidth] = useState(0);
 
