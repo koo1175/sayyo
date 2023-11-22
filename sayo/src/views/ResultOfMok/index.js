@@ -51,7 +51,7 @@ export default function ResultOfMok({ isOpen, onClose }) {
         {/* Progress bars drawn on top of the image */}
         <div style={progressBarStyle} >
           <AnimatedProgressBar color="red" progress={10} />
-          <AnimatedProgressBar color="yellow" progress={10} />          
+          <AnimatedProgressBar color="yellow" progress={50.4} />          
           <AnimatedProgressBar color="purple" progress={10} />
           <AnimatedProgressBar color="orange" progress={10} />
         </div>

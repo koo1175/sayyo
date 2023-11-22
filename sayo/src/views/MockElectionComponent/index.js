@@ -10,23 +10,23 @@ export default function MockElectionComponent() {
   const [isResultPopupOpen, setResultPopupOpen] = useState(false);
 
   const openPopup = () => {
-    const memberId = "zxc"; // TODO: 실제 사용자 아이디로 변경
+    const memberId = "asd"; // TODO: 실제 사용자 아이디로 변경
     const votedDto = {
       title: "제 02대 몰입형 선거 모의투표", // TODO: 투표 항목 제목으로 변경
       memberId: memberId,
     };
-  
+
     const config = {
       headers: {
         'Content-Type': 'application/json',
       },
     };
-  
+
     // 서버에 투표 여부 전송
     axios.post("https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/voting/findVoted", votedDto, config)
       .then(response => {
         const serverCount = response.data;
-  
+
         // 이미 투표한 경우
         if (serverCount > 0) {
           console.log("공정한 평가를 위해 재투표는 불가합니다");
@@ -40,7 +40,7 @@ export default function MockElectionComponent() {
         console.error("에러:", error);
       });
   };
-  
+
 
   const closePopup = () => {
     setPopupOpen(false);
@@ -51,32 +51,66 @@ export default function MockElectionComponent() {
   const openResultPopup = () => {
     setPopupOpen(false);
 
-  
-      const votingData = {
-          title: '제 02대 몰입형 선거 모의투표', 
-          memberId: 'zxc',
-          num: selectedButton
-      };
-      console.log('대한민국만세');
-      axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/voting/voted', votingData)
-          .then(response => {
-              if (response.data === 1) {
-                  alert('투표가 성공적으로 완료되었습니다.');
-              } else {
-                  alert('투표에 실패하였습니다. 다시 시도해주세요.');
-              }
-              
-          })
-          .catch(error => {
-              console.error('투표 중 에러가 발생했습니다', error);
-          });
-  
+
+    const votingData = {
+      title: '제 02대 몰입형 선거 모의투표',
+      memberId: 'asd',
+      num: selectedButton
+    };
+    axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/voting/voted', votingData)
+      .then(response => {
+        if (response.data === 1) {
+          alert('투표가 성공적으로 완료되었습니다.');
+          updatePercentage(votingData.title);
+        } else {
+          alert('투표에 실패하였습니다. 다시 시도해주세요.');
+        }
+
+      })
+      .catch(error => {
+        console.error('투표 중 에러가 발생했습니다', error);
+      });
+
 
 
     // 결과 팝업 열기
     setResultPopupOpen(true);
   };
 
+  const updatePercentage = (title) => {
+    const updatePercentageData = {
+      title
+    };
+    console.log('updatePercentageData 의 title 값', updatePercentageData.title);
+    axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/voting/candidates', updatePercentageData)
+      .then(response => {
+        if (response.status === 200) {
+          console.log('퍼센트 업데이트 성공!');
+          fetchCandidates();
+        } else {
+          console.log('퍼센트 업데이트 실패!');
+        }
+      })
+      .catch(error => {
+        console.error('퍼센트 업데이트 에러!', error);
+      });
+  }
+
+  const fetchCandidates = () => {
+    axios.get('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/voting/findAll')
+      .then(response => {
+        const candidates = response.data.list;
+        let [candidate1Percentage, candidate2Percentage, candidate3Percentage, candidate4Percentage] = candidates.map(candidate => candidate.percentage);
+        console.log('후보1의 득표율:', candidate1Percentage);
+        console.log('후보2의 득표율:', candidate2Percentage);
+        console.log('후보3의 득표율:', candidate3Percentage);
+        console.log('후보4의 득표율:', candidate4Percentage);
+
+      })
+      .catch(error => {
+        console.error('후보 목록을 가져오는데 실패했습니다', error);
+      });
+  }
   const closeResultPopup = () => {
     setResultPopupOpen(false);
   };
@@ -105,7 +139,7 @@ export default function MockElectionComponent() {
     }
     setSelectedButton(buttonId === selectedButton ? null : buttonId);
   };
-  
+
   const renderButtons = () => {
     const buttons = [
       { id: 1, top: "12%" },

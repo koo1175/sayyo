@@ -89,7 +89,7 @@ export default function PopUPModal() {
 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-                    <label>
+                    <label style={{fontSize:'15px'}}>
                         <input
                             type="checkbox"
                             checked={doNotShowAgain}
