@@ -32,7 +32,7 @@ public class PoliticianController {
         return mv;
     }
 
-    @GetMapping("/findAll")
+    @PostMapping("/findAll")
     @ResponseBody
     private HashMap<String, Object> findAll(){
         HashMap<String, Object> mv = new HashMap<>();
@@ -62,7 +62,6 @@ public class PoliticianController {
     public void likes(@RequestBody PoliticianDto politicianDto) {
         int resultCnt3 = politicianService.likes(politicianDto);
         System.out.println("좋아요 완료 여부 : " + resultCnt3);
-
     }
 
     @PostMapping("/dislike")
@@ -73,7 +72,7 @@ public class PoliticianController {
 
     }
     
-    @GetMapping("/findSearch")
+    @PostMapping("/findSearch")
     @ResponseBody
     public void selectFind(@RequestBody PoliticianDto politicianDto) {
         HashMap<String, Object> mv = new HashMap<>();

@@ -29,9 +29,12 @@
     <select id="findSearch" parameterType="com.pj.sayyo.model.fulfillment.dto.FulfillmentDto" resultType="com.pj.sayyo.model.fulfillment.dto.FulfillmentDto">
         SELECT (POLITICIAN_NUM, PLAN_NUM, COMPLETE_NUM, TRY_NUM, REGION_DEV)
         FROM FULFILLMENT
-        <if test='keyword != null and keyword != ""'>
-            WHERE ${searchCode} = #{keyword}
-        </if>
+        WHERE POLITICIAN_NUM = #{politicianNum}
     </select>
 
+    <select id="returnF" parameterType="com.pj.sayyo.model.fulfillment.dto.FulfillmentDto" resultType="java.math.BigDecimal">
+        SELECT ((COMPLETE_NUM + TRY_NUM/10)/PLAN_NUM + REGION_DEV/100)
+        FROM FULFILLMENT
+        WHERE POLITICIAN_NUM = #{politicianNum}
+    </select>
 </mapper>

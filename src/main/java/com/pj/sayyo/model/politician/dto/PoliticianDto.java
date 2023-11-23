@@ -5,6 +5,8 @@ import java.util.Date;
 public class PoliticianDto {
     // 고유 ID
     private int id;
+    // 지역 이름
+    private String region;
     // 이름
     private String name;
     // 좋아요 수

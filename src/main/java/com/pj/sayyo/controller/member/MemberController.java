@@ -60,7 +60,7 @@ public class MemberController {
 
 //    @PostMapping("/login")
 //    @ResponseBody
-//    private boolean login(@RequestBody MemberDto memberDto){
+//    private MemberDto login(@RequestBody MemberDto memberDto){
 //
 //
 //        MemberDto m = memberService.login(memberDto);
@@ -72,7 +72,7 @@ public class MemberController {
 //        System.out.println(m.toString());
 //        System.out.println("로그인 성공");
 //
-//        return true;
+//        return m;
 //    }
 
 
