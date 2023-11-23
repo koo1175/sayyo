@@ -1,0 +1,51 @@
+path:hover {
+    fill: #bada55;
+    stroke: red;
+    stroke-width: 1.5px;
+    transform: translateZ(30px) rotateX(10deg);
+}
+path{
+    transition: transform 0.5s ease-in-out;
+    fill: #fff;
+    stroke: #000;
+    stroke-width: 0.5px;
+}
+svg{
+    height:900px;
+    width:1000px;
+}
+
+.image-container img {
+    width: 275px;
+    height: 250px;
+    /* max-width: 100%;
+    max-height: 100%; */  
+    object-fit: cover;
+    margin-top: 20px; 
+    margin-left: 45px;
+}
+
+.center .slick-current .image-container img {
+    width: 450px;
+    height: 300px;
+    z-index: 2;
+    margin-top: 0; /* 가운데 이미지에는 공간을 추가하지 않습니다. */
+    margin-left: -45px; /* 가운데 이미지의 왼쪽 여백을 조정합니다. */
+    margin-right: 0px; /* 가운데 이미지의 오른쪽 여백을 조정합니다. */
+}
+.image-description {
+    display: none; /* 기본적으로 모든 설명을 숨깁니다. */
+
+}
+
+.center .slick-current .image-description {
+    display: block; /* 가운데 이미지의 설명만 표시합니다. */
+    font-size: 20px;
+    color: #333;
+    text-align: center;
+    margin-left: 0px;
+    width: 100%; /* 너비를 설정하면 텍스트가 해당 너비를 초과할 때 ...으로 표시됩니다. */
+
+}
+
+

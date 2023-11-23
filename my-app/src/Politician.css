@@ -1,0 +1,121 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-top: 500px;
+  }
+.myButton {
+    background-color: white; /* White */
+    border: none;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px; /* Rounded corners */
+  }
+  
+  .myButton:hover {
+    background-color: #ddd; /* Add a hover effect */
+  }
+  
+  .selected {
+    color: red; /* Red text for selected button */
+  }
+  .myButton2 {
+    background-color: white; /* White */
+    border: none;
+    color: #9F9F9F;
+    font-weight: bold; /* Make the text bold */
+    font-family: Arial, sans-serif; /* Change the font */
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 30px;
+    cursor: pointer;
+    border-radius: 12px; /* Rounded corners */
+  }
+  .detailButton {
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 30px;
+    cursor: pointer;
+    border-radius: 12px; /* Rounded corners */
+    background: linear-gradient(to right, #FF4848,#E548FF, #476FFF); /* Gradient background */
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3); /* Shadow */
+  }
+  .background-image {
+    width: 1400px;
+    height: 450px; 
+    position: absolute;
+    top: 150px;
+    left: 300px;
+  }
+  .overlay-text {
+    position: absolute;
+    top: 200px;
+    left: 400px;
+    color: white; 
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 40px; 
+  }
+  .overlay-text2 {
+    position: absolute;
+    top: 200px;
+    left: 900px;
+    color: black; 
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px; /* 모서리를 둥글게 */
+    padding: 10px; /* 텍스트와 배경 사이에 패딩 추가 */  
+    border: 1px solid black; /* 모서리에 검은색 선 추가 */
+
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 20px; 
+  }
+  .small-text {
+    font-size: 12px; /* 글씨 크기 설정 */
+  }
+
+  .button {
+    width: 100px;
+    height: 50px;
+    display: flex; /* inline-block 대신 flex를 사용 */
+    justify-content: center; /* 가로 방향 중앙 정렬 */
+    align-items: center; /* 세로 방향 중앙 정렬 */
+    padding: 10px 30px;
+    color: white;
+    background-color: #007BFF;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    user-select: none;
+    margin-top: 50px;
+  }
+  
+  .button:hover {
+    background-color: #0056b3;
+  }
+  
+  textarea {
+    width: 300px;  /* 원하는 너비로 설정 */
+    height: 150px; /* 원하는 높이로 설정 */
+    resize: none;  /* 사용자가 textarea의 크기를 변경하는 것을 막습니다 */
+    font-size: 24px;
+    margin-left: 150px;
+  }
+  form {
+    display: flex; /* form 요소를 flex container로 만듭니다. */
+    justify-content: space-between; /* textarea와 버튼 사이에 가능한 많은 공간을 두도록 합니다. */
+  }

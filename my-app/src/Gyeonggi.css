@@ -1,0 +1,192 @@
+.OUTLINE {
+    stroke-linejoin:round;
+    stroke: #ffffff;
+    stroke-width: 2;
+}
+#CD41111 {
+    fill: #f1c40f;
+    /* 수원시 장안구 */
+}
+#CD41113 {
+    fill: #f1c40f;
+    /* 수원시 권선구 */
+}
+#CD41115 {
+    fill: #f1c40f;
+    /* 수원시 팔달구 */
+}
+#CD41117 {
+    fill: #f1c40f;
+    /* 수원시 영통구 */
+}
+#CD41131 {
+    fill: #e67e22;
+    /* 성남시 수정구 */
+}
+#CD41133 {
+    fill: #e67e22;
+    /* 성남시 중원구 */
+}
+#CD41135 {
+    fill: #e67e22;
+    /* 성남시 분당구 */
+}
+#CD41150 {
+    fill: #3498db;
+    /* 의정부시 */
+}
+#CD41171 {
+    fill: #2980b9;
+    /* 안양시 만안구 */
+}
+#CD41173 {
+    fill: #2980b9;
+    /* 안양시 동안구 */
+}
+#CD41190 {
+    fill: #c0392b;
+    /* 부천시 */
+}
+#CD41210 {
+    fill: #9b59b6;
+    /* 광명시 */
+}
+#CD41220 {
+    fill: #8e44ad;
+    /* 평택시 */
+}
+#CD41250 {
+    fill: #34495e;
+    /* 동두천시 */
+}
+#CD41271 {
+    fill: #2c3e50;
+    /* 안산시 단원구 */
+}
+#CD41273 {
+    fill: #2c3e50;
+    /* 안산시 상록구 */
+}
+#CD41281 {
+    fill: #f1c40f;
+    /* 고양시 덕양구 */
+}
+#CD41285 {
+    fill: #f1c40f;
+    /* 고양시 일산동구 */
+}
+#CD41287 {
+    fill: #f1c40f;
+    /* 고양시 일산서구 */
+}
+#CD41290 {
+    fill: #2ecc71;
+    /* 과천시 */
+}
+#CD41310 {
+    fill: #e67e22;
+    /* 구리시 */
+}
+#CD41360 {
+    fill: #27ae60;
+    /* 남양주시 */
+}
+#CD41370 {
+    fill: #d35400;
+    /* 오산시 */
+}
+#CD41390 {
+    fill: #3498db;
+    /* 시흥시 */
+}
+#CD41410 {
+    fill: #e74c3c;
+    /* 안산시 상록구 */
+}
+#CD41430 {
+    fill: #16a085;
+    /* 의왕시 */
+}
+#CD41450 {
+    fill: #c0392b;
+    /* 하남시 */
+}
+#CD41461 {
+    fill: #9b59b6;
+    /* 용인시 처인구 */
+}
+#CD41463 {
+    fill: #9b59b6;
+    /* 용인시 기흥구 */
+}
+#CD41465 {
+    fill: #9b59b6;
+    /* 용인시 수지구 */
+}
+#CD41480 {
+    fill: #2c3e50;
+    /* 파주시 */
+}
+#CD41500 {
+    fill: #1abc9c;
+    /* 이천시 */
+}
+#CD41550 {
+    fill: #f1c40f;
+    /* 안성시 */
+}
+#CD41570 {
+    fill: #16a085;
+    /* 김포시 */
+}
+#CD41590 {
+    fill: #f39c12;
+    /* 화성시 */
+}
+#CD41610 {
+    fill: #2ecc71;
+    /* 광주시 */
+}
+#CD41630 {
+    fill: #e67e22;
+    /* 양주시 */
+}
+#CD41650 {
+    fill: #27ae60;
+    /* 포천시 */
+}
+#CD41670 {
+    fill: #d35400;
+    /* 여주시 */
+}
+#CD41800 {
+    fill: #eaeaea;
+    /* 연천군 */
+}
+#CD41820 {
+    fill: #eaeaea;
+    /* 가평군 */
+}
+#CD41830 {
+    fill: #eaeaea;
+    /* 양평군 */
+}
+.LINE {
+    stroke-linejoin:round;
+    stroke: #ffffff;
+    stroke-width: 1;
+    fill: none;
+}
+.POINT {
+    stroke: #ffffff;
+    stroke-width: 1;
+    fill: #ffffff;
+}
+.TEXT {
+    fill: #ffffff;
+    font-size: 13px;
+    text-anchor: middle;
+    alignment-baseline: middle;
+    pointer-events: none;
+
+}
