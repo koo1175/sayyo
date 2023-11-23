@@ -15,18 +15,19 @@ const settings = {
     autoplay: true, // 자동 캐러셀
     autoplaySpeed: 2000, // 자동 캐러셀 속도
     arrows: true,
+
 };
-const Gyeonggi = () => {
+export default function Gyeonggi ({ slidesMayor = [], slidesNews = [], slidesAccidents = [] }) {
     const navigate = useNavigate();
 
     const handleClick = (path, text) => {
         navigate(path, { state: { text } });
     }
+
     return (
         <div style={{ marginTop: '0px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '20px' }}>
-            <div style={{ position: 'absolute' ,marginTop: '-1000px', height: '550px', width: '100vw', background: 'url(/img/배경.png)' }}>
-            </div>
-            <svg style={{ position: 'relative', marginLeft: '0px' }} viewBox='0 0 730 780' xmlns="http://www.w3.org/2000/svg">
+            <div style={{ position: 'absolute', marginTop: '150px', marginLeft: '1100px', height: '2250px', width: '2000px', background: 'url(/img/배경.png) no-repeat' }}></div>
+            <svg style={{ position: 'relative', marginLeft: '0px' }} viewBox="0 0 800 850" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <filter id="dropshadow">
                         <feGaussianBlur in="SourceAlpha" stdDeviation="7" />
@@ -164,33 +165,29 @@ const Gyeonggi = () => {
                     <text id="LCD41800" class="TEXT" x="340" y="171">연천군</text>
                     <text id="LCD41820" class="TEXT" x="503" y="305">가평군</text>
                     <text id="LCD41830" class="TEXT" x="553" y="450">양평군</text>
-                </g>
-            </svg>
+                </g></svg>
             <div style={{ marginLeft: '40px', width: '1000px' }} >
                 <h2 style={{ textAlign: 'center' }}>시장행보</h2>
                 <Slider
                     {...settings}>
-                    <div>
-                        {/* target="_blank" 는 새 탭에서 열리는 기능 */}
+                    {/* <div>
                         <a href="https://www.naver.com" target="_blank" rel="noreferrer">
                             <img src="/img/야경.png" alt="야경" style={{ width: '320px', height: '200px' }} />
                         </a>
                     </div>
                     <div>
                         <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/배경.png" alt="배경" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/성남시장.png" alt="성남시장" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
                             <img src="/img/의정부시장.png" alt="의정부시장" style={{ width: '320px', height: '200px' }} />
                         </a>
-                    </div>
+                    </div> */}
+                    {slidesMayor.map((slide, index) => (
+                        <div key={index}>
+                            <a href={slide.link} target="_blank" rel="noreferrer">
+                                <img src={slide.image} alt={slide.title} style={{ width: '320px', height: '200px' }} />
+                                <p>{slide.title}</p>
+                            </a>
+                        </div>
+                    ))}
                 </Slider>
             </div>
 
@@ -198,60 +195,38 @@ const Gyeonggi = () => {
                 <h2 style={{ textAlign: 'center' }}>지역소식</h2>
                 <Slider
                     {...settings}>
-                    <div>
-                        {/* target="_blank" 는 새 탭에서 열리는 기능 */}
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/야경.png" alt="야경" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/배경.png" alt="배경" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/성남시장.png" alt="성남시장" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/의정부시장.png" alt="의정부시장" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
+                    {slidesNews.map((slide, index) => (
+                        <div key={index}>
+                            <a href={slide.link} target="_blank" rel="noreferrer">
+                                <img src={slide.image} alt={slide.title} style={{ width: '320px', height: '200px' }}/>
+                                <p>{slide.title}</p>
+                            </a>
+                        </div>
+                    ))}
                 </Slider>
             </div>
 
-            <div style={{ marginLeft: '40px',marginBottom: '150px' , width: '1000px' }} >
+            <div style={{ marginLeft: '40px', width: '1000px' }} >
                 <h2 style={{ textAlign: 'center' }}>사건사고</h2>
                 <Slider
                     {...settings}>
-                    <div>
-                        {/* target="_blank" 는 새 탭에서 열리는 기능 */}
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/야경.png" alt="야경" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/배경.png" alt="배경" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/성남시장.png" alt="성남시장" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/의정부시장.png" alt="의정부시장" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
+                    {slidesAccidents.map((slide, index) => (
+                        <div key={index}>
+                            <a href={slide.link} target="_blank" rel="noreferrer">
+                                <img src={slide.image} alt={slide.title} style={{ width: '320px', height: '200px' }}/>
+                                <p>{slide.title}</p>
+                            </a>
+                        </div>
+                    ))}
                 </Slider>
             </div>
-        </div >
+
+            <div style={{ marginTop: '100px', textAlign: 'center', color: 'gray' }}>
+                <p>충남 천안시</p>
+                <p>Copyright ⓒ 2023 Dike Engineering & Construction Corporation, All rights Reserved</p>
+                <p>Dike 정책 | 개인정보처리 방침 | 고객센터</p>
+            </div>
+        </div>
 
     )
 }
-
-export default Gyeonggi;
