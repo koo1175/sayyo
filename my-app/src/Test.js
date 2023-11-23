@@ -1,28 +1,44 @@
-import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import "./Map.css";
-import Slider from 'react-slick';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const MapComponent = ({ results = [] }) => {
+const Test = () => {
+  const [result, setResult] = useState([]);
+  const location = useLocation();
+  const text = location.state?.text || '성남';
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    const getData = () => {
+      const memberDto = {
+        region: text,
+      };
+  
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+  
+      axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/politician/findSearch', memberDto, config)
+        .then(response => {
+          console.log('Test.js 성공!!! -> ', response.data);
+          setResult(response.data);
+          navigate('/Politician', { state: { data: response.data, text }, replace: true });
+        })
+        .catch(error => {
+          console.error('에러:', error);
+        });
+    };
+
+    getData();
+  }, [text, navigate]);
+
   return (
-    <div style={{ marginLeft: '600px', marginTop: '100px' }}>
-      <div style={{ width: '1100px', height: '500px', marginLeft: '-200px', marginTop: '-200px' }} >
-        <h1 style={{ marginLeft: '430px' }}>이 시각 주요뉴스</h1>
-        <Slider {...settings}>
-          {results.map((result, index) => (
-            <div className="image-container" key={index}>
-              <a href={result.link} target="_blank" rel="noreferrer">
-                <img src={result.image} alt={`image${index + 1}`} />
-                <p className="image-description">{result.title}</p>
-              </a>
-            </div>
-          ))}
-        </Slider>
-      </div>
+    <div>
+        {/* 바로 Politician.js 로 넘어가야함. 로딩화면 만들면 됨 ㅇㅇ*/}
     </div>
-  )
-}
+  );
+};
 
-export default MapComponent;
+export default Test;

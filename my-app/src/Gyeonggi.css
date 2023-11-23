@@ -187,4 +187,6 @@
     font-size: 13px;
     text-anchor: middle;
     alignment-baseline: middle;
+    pointer-events: none;
+
 }
