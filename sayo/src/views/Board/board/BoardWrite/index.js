@@ -1,51 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import './style.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function BoardWrite() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [file, setFile] = useState(null);
-    const [latestNum, setLatestNum] = useState(0);
 
-    useEffect(() => {
-        // 최신 글의 num을 조회
-        axios.get('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/memBoard/findAll')
-            .then(response => {
-                setLatestNum(response.data || 0); // 최신 글이 없으면 기본값 0으로 설정
-            })
-            .catch(error => {
-                console.error("최신 글 조회 실패:", error);
-            });
-    }, []);
+    const navigate = useNavigate();
+    const gotoListPage = () => {
+        navigate('/BoardList');
+    };
 
     const Register = () => {
-        const nowDate = new Date();
-        const formattedDate = `${nowDate.getFullYear()}-${nowDate.getMonth() + 1}-${nowDate.getDate()} ${nowDate.getHours()}:${nowDate.getMinutes()}:${nowDate.getSeconds()}`;
 
-        const formData = new FormData();
-        formData.append("title", title);
-        formData.append("content", content);
-        formData.append("file", file);
-        formData.append("now_date", formattedDate);
-        formData.append("Member_ID", "zxc");
-        formData.append("category", "공지");
-        formData.append("num", latestNum + 1); // 최신 글의 num에 1을 더해 사용
+        const memberDto = {
+            memberId:"zxc",
+            title:title,
+            content:content,
+            category:"공지"
+        };
+      
 
         const config = {
             headers: {
-                'Content-Type': 'multipart/form-data',
+                'Content-Type': 'application/json',
             },
         };
 
         // 이미지 업로드 및 게시글 등록
-        axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/memBoard/regist', formData, config)
+        axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/memBoard/regist', memberDto, config)
             .then(response => {
                 console.log("글 등록 성공:", response.data);
+                gotoListPage();
                 // TODO: 등록 성공 시 어떤 처리를 할지 추가
             })
             .catch(error => {
                 console.error("글 등록 실패:", error);
+                console.error("mem",memberDto);
+                alert("글 등록에 실패했습니다. 다시 시도해 주세요.");
                 // TODO: 등록 실패 시 어떤 처리를 할지 추가
             });
     };
@@ -57,14 +50,16 @@ export default function BoardWrite() {
     };
 
     const handleContentChange = (e) => {
-        if (e.target.value.length <= 400) {
-            setContent(e.target.value);
+        const value = e.target.value;
+        const replacedValue = value.replace(/\n/g, '<br>');
+    
+        if (replacedValue.length <= 400) {
+            setContent(replacedValue);
         }
     };
+    
 
-    const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
-    };
+   
 
     return (
         <div style={{ marginLeft: '150px', marginTop: '100px', textAlign: 'left' }}>
@@ -85,8 +80,6 @@ export default function BoardWrite() {
             <label style={{ display: 'block', margin: 20 }}>내용<span style={{ color: 'red' }}> *</span></label>
             <textarea value={content} onChange={handleContentChange} style={{ marginLeft: 10, width: '780px', height: '330px', fontSize: 20 }} />
             <div style={{ marginLeft: '720px', fontSize: 20 }}>({content.length}/400)</div>
-            <label style={{ display: 'block', margin: 20 }}>파일</label>
-            <input type="file" onChange={handleFileChange} style={{ marginLeft: 20 }} />
             <div style={{ display: 'flex', justifyContent: 'space-between', width: '200px', margin: '20px' }}>
                 <button style={{ backgroundColor: '#7FBDF6', color: 'white', fontWeight: 'bold', borderRadius: '5px', padding: '10px 20px' }}>취소</button>
                 <button onClick={Register} style={{ backgroundColor: '#7FBDF6', color: 'white', fontWeight: 'bold', borderRadius: '5px', padding: '10px 20px' }}>작성</button>

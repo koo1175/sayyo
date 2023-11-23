@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './style.css';
+import formatDate from '../../../formatDate';
 
 export default function BoardList() {
     const navigate = useNavigate();
@@ -14,29 +15,31 @@ export default function BoardList() {
 
     useEffect(() => {
         // 서버에서 게시글 목록을 가져오는 함수
-        const fetchBoardList = async () => {
-          try {
-            const response = await axios.get('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/memBoard/findAll'); // API 주소를 실제 서버 주소로 변경
-            setBoardList(response.data.list);
-          } catch (error) {
-            console.error('게시글 목록을 불러오는 중 오류 발생:', error);
-          }
-        };
+        const fetchBoardList = () => {
+            axios.get('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/memBoard/findAll')
+              .then(response => {
+                console.log(response.data); // 확인용
+          
+                // list 키의 값을 사용
+                setBoardList(response.data.list);
+              })
+              .catch(error => {
+                console.error('게시글 목록을 불러오는 중 오류 발생:', error);
+              });
+          };
     
         fetchBoardList();
       }, []); // 컴포넌트가 마운트될 때만 실행
     
-
-
 
     return (
         <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
             <div>
                 <div>
 
-                    <section class="notice">
-                        <div class="page-title">
-                            <div class="container">
+                    <section className="notice">
+                        <div className="page-title">
+                            <div className="container">
                                 <h3>공지사항</h3>
                             </div>
                         </div>
@@ -62,15 +65,15 @@ export default function BoardList() {
                         </form>
 
                         <div id="board-list">
-                            <div class="container">
-                                <table class="board-table">
+                            <div className="container">
+                                <table className="board-table">
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="th-num">번호</th>
-                                            <th scope="col" class="th-classfication">분류</th>
-                                            <th scope="col" class="th-title">제목</th>
-                                            <th scope="col" class="th-views">조회수</th>
-                                            <th scope="col" class="th-date">작성일자</th>
+                                            <th scope="col" className="th-num">번호</th>
+                                            <th scope="col" className="th-classfication">분류</th>
+                                            <th scope="col" className="th-title">제목</th>
+                                            <th scope="col" className="th-views">조회수</th>
+                                            <th scope="col" className="th-date">작성일자</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -82,7 +85,7 @@ export default function BoardList() {
                                                     <a href={`/BoardDetail/${board.num}`}>{board.title}</a>
                                                 </th>
                                                 <td>{board.views}</td>
-                                                <td>{board.now_date}</td>
+                                                <td>{formatDate(board.nowDate)}</td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -102,18 +105,19 @@ export default function BoardList() {
                 </div>
 
                 {/* 페이징 */}
-                <div class="page_wrap">
-                    <div class="page_nation">
-                        <a class="arrow pprev" href="#!"><span class="sr-only">Previous Previous</span></a>
-                        <a class="arrow prev" href="#!"><span class="sr-only">Previous</span></a>
-                        <a href="#!" class="active">1</a>
+                <div className="page_wrap">
+                    <div className="page_nation">
+                        <a className="arrow pprev" href="#!"><span className="sr-only">Previous Previous</span></a>
+                        <a className="arrow prev" href="#!"><span className="sr-only">Previous</span></a>
+                        <a href="#!" className="active">1</a>
                         <a href="#!">2</a>
                         <a href="#!">3</a>
                         <a href="#!">4</a>
                         <a href="#!">5</a>
-                        <a class="arrow next" href="#!"><span class="sr-only">next</span></a>
-                        <a class="arrow nnext" href="#!"><span class="sr-only">next next</span></a>
+                        <a className="arrow next" href="#!"><span className="sr-only">next</span></a>
+                        <a className="arrow nnext" href="#!"><span className="sr-only">next next</span></a>
                     </div>
+                    <div style={{marginBottom:'10%'}}/>
                 </div>
             </div>
         </div>

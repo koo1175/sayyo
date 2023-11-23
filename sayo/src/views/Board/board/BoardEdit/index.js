@@ -1,25 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 import './style.css';
 
-export default function BoardEdit () {
+export default function BoardEdit() {
+    const { num } = useParams(); // useParams로 URL 파라미터 추출
+
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [file, setFile] = useState(null);
+
+    const navigate = useNavigate();
+
+    const gotoListPage = () => {
+        navigate('/BoardList');
+    };
+
+    useEffect(() => {
+        const fetchBoardDetail = () => {
+            axios.get(`https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/memBoard/findAll`)
+                .then(response => {
+                    const board = response.data.list.find(item => item.num === Number(num));
+
+                    console.log(board); // 콘솔에 데이터 출력
+
+                    if (board) {
+                        setTitle(board.title);
+                        setContent(board.content);
+                    } else {
+                        console.error(`Board with num ${num} not found.`);
+                    }
+                })
+                .catch(error => {
+                    console.error('게시글을 가져오는 중 오류 발생: ', error);
+                });
+        };
+
+        fetchBoardDetail();
+    }, [num]);
 
     const handleTitleChange = (e) => {
-        if(e.target.value.length <= 100) {
+        if (e.target.value.length <= 100) {
             setTitle(e.target.value);
         }
     }
 
     const handleContentChange = (e) => {
-        if(e.target.value.length <= 400) {
+        if (e.target.value.length <= 400) {
             setContent(e.target.value);
         }
     }
 
-    const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
+    const handleModify = () => {
+        // 수정된 내용을 서버로 전송
+        axios.post("https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/memBoard/modify", {
+            num: Number(num),
+            title,
+            content,
+        })
+        .then(response => {
+            console.log("수정 완료 여부: ", response.data);
+        })
+        .catch(error => {
+            console.error("수정 중 오류 발생: ", error);
+        });
     }
 
     return (
@@ -40,11 +83,9 @@ export default function BoardEdit () {
             <label style={{display:'block',margin:20}}>내용<span style={{color: 'red'}}> *</span></label>
             <textarea value={content} onChange={handleContentChange} style={{marginLeft:10,width: '780px', height: '330px',fontSize:20}}/>
             <div style={{marginLeft:'720px',fontSize:20}}>({content.length}/400)</div>
-            <label style={{display:'block',margin:20}}>파일</label>
-            <input type="file" onChange={handleFileChange} style={{marginLeft:20}} />
             <div style={{display: 'flex', justifyContent: 'space-between', width: '200px', margin: '20px'}}>
                 <button style={{backgroundColor: '#7FBDF6', color: 'white', fontWeight: 'bold', borderRadius: '5px', padding: '10px 20px'}}>취소</button>
-                <button style={{backgroundColor: '#7FBDF6', color: 'white', fontWeight: 'bold', borderRadius: '5px', padding: '10px 20px'}}>작성</button>
+                <button onClick={() => { handleModify(); gotoListPage(); }} style={{backgroundColor: '#7FBDF6', color: 'white', fontWeight: 'bold', borderRadius: '5px', padding: '10px 20px'}}>게시글 수정</button>
             </div>
             <div style={{height:'150px'}}/>
             {/* <div style={{ marginTop: '100px', color: 'gray' }}>

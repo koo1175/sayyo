@@ -30,6 +30,7 @@ import NewsSeung from '../SiblingFade/News/seungju';
 import BoardWrite from '../Board/board/BoardWrite';
 import BoardDetail from '../Board/board/BoardDetail';
 import BoardEdit from '../Board/board/BoardEdit';
+import BoardList from '../Board/board/BoardList';
 
 
 
@@ -95,9 +96,10 @@ export default function Navigation() {
                     <Route path="/PromiseSeung" component={PromiseSeung} />
                     <Route path="/NewsSeung" component={NewsSeung} />
 
-                    <Route path='/BoardDetail' element={<BoardDetail />} />
+                    <Route path='/BoardList' element={<BoardList />} />
+                    <Route path='/BoardDetail/:num' element={<BoardDetail />} />
                     <Route path='/BoardWrite' element={<BoardWrite />} />
-                    <Route path='/BoardEdit' element={<BoardEdit/>} />
+                    <Route path='/BoardEdit/:num' element={<BoardEdit/>} />
 
                 </Routes>
             </BrowserRouter>
