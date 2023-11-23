@@ -21,7 +21,7 @@ function Navigation() {
                     />
                 </Link>
             </div>
-            <div style={{ margin: '-57px 0px 0px 0px', fontSize: '20px', marginLeft: '400px' }}>
+            <div style={{ margin: '-57px 0px 0px 0px', fontSize: '20px', marginLeft: '500px' }}>
                 <Link to="/OrganizationChart" style={{ textDecoration: 'none', margin: '0px 250px 0px 0px', color: '#444444', fontWeight: 'bolder' }} onClick={() => handleClick('/OrganizationChart')}>조직도</Link>
                 <Link to="/Board" style={{ textDecoration: 'none', margin: '0px 250px 0px 0px', color: '#444444', fontWeight: 'bolder' }} onClick={() => handleClick('/Board')}>게시판</Link>
                 <Link to="/Community" style={{ textDecoration: 'none', margin: '0px 250px 0px 0px', color: '#444444', fontWeight: 'bolder' }} onClick={() => handleClick('/Community')}>커뮤니티</Link>

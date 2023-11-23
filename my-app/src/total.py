@@ -36,12 +36,10 @@ def get_data_of_naver():
 
         try:
             # 웹 페이지의 모든 img 태그가 로드될 때까지 최대 10초간 대기
-            WebDriverWait(driver, 5).until(EC.presence_of_all_elements_located((By.TAG_NAME, 'img')))
+            WebDriverWait(driver, 3).until(EC.presence_of_all_elements_located((By.TAG_NAME, 'img')))
         except Exception as e:
             print(f"Error waiting for page load: {e}")
 
-        # 추가적으로 JavaScript가 이미지를 로드할 시간을 주기 위해 5초간 대기
-        time.sleep(5)
         
         # 현재 열려 있는 창 확인
         if driver.window_handles:
@@ -159,7 +157,7 @@ def get_data_of_google():
         # 결과를 콘솔에 출력
         print(f"Title: {title}")
         print(f"Content: {content}")
-        print(f"Image: {image}")
+
         print(f"Link: {link}")
         print(f"Press Info: {pressInfo}")
         print(f"Time: {time_info_text}")

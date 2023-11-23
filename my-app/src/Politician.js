@@ -1,10 +1,12 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation,useNavigate } from 'react-router-dom';
 import './Politician.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Search2 from './Search2';
+
 const settings = {
   dots: true,
   infinite: true,
@@ -39,7 +41,22 @@ function SamplePrevArrow(props) {
 const Politician = () => {
 
   const location = useLocation();
-  const text = location?.state?.text || '기본값';
+  const text = location?.state?.text || '기본값'; //Gyeonggi.js에서 받아온 데이터. 시 이름이 들어가 있음
+  const navigate = useNavigate();
+  const data = location?.state?.data || '기봉이'; //Test.js에서 받아온 데이터. DB에서 받아온 데이터
+
+  useEffect(() => {
+    console.log('Politican.js text값 -> ', text);
+    if (data==='기봉이') {
+      navigate('/Test', { state: { text }, replace: true }); //데이터가 없으면 Test.js로 이동
+    }
+  }, [data]);
+
+  if(data) {
+    console.log('Politican.js data값 -> ',data);
+    console.log('-> -> ',data.education);
+  }
+  let formattedBirth = data.birth ? data.birth.substring(0, 10) : '';
 
   const [selectedButton, setSelectedButton] = useState(null); //클릭된 버튼 빨간색으로 표시
 
@@ -82,6 +99,7 @@ const Politician = () => {
     //   console.error(error);
     // }
   };
+
   // useEffect(() => {
   //   const fetchComments = async () => {
   //     try {
@@ -95,16 +113,23 @@ const Politician = () => {
   //   };
   //   fetchComments();
   // }, []);
- 
 
+  const [articles, setArticles] = useState([]); //실시간기사 데이터
 
-  const [articles, setArticles] = useState([
-    { title: '기사1 제목zzzzzzzzzzzzzzzzzzzzzzzzzzzz', content: '기사1 내용', image: '/img/야경.png', link: 'https://naver.com' },
-    { title: '기사2 제목zzzzzzzzzzzzzzz', content: '기사2 내용', image: '/img/야경.png', link: 'https://google.com' },
-    { title: '기사3 제목', content: '기사3 내용zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz', image: '/img/야경.png', link: 'https://youtube.com' },
-    // 테스트용 기사 데이터
-  ]);
+  const handleData = (data) => {
+    const filteredData = data.map(item => ({
+      title: item.title,
+      content: item.content,
+      image: item.image,
+      link: item.link,
+      pressInfo: item.pressInfo,
+      time: item.time,
+    }));
 
+    //console.log('test', filteredData);
+    
+    setArticles(filteredData);
+  }
   const [mainArticles, setmainArticles] = useState([
     { title: '메인기사 제목', content: '메인기사1 내용', image: '/img/배경.png', link: 'https://naver.com' },
   ]);
@@ -156,6 +181,7 @@ const Politician = () => {
     else if (button === '실시간기사') {
       setShowRealTimeArticles(true);
       setShowMajorArticles(false);
+      
     }
     else if (button === '주요기사') {
       setShowRealTimeArticles(false);
@@ -179,26 +205,27 @@ const Politician = () => {
   const naver = () => {
     alert('네이버');
   }
+
+
+
+
   return (
 
     <div className="container">
+      <Search2 keyword={text} handleData={handleData} />
+
       <img src="/img/야경.png" alt="설명" className="background-image" />
       <img src={`/img/${text}시장.png`} alt="설명" style={{ position: 'absolute', top: '200px', left: '450px', width: '400px', height: '400px' }} />
       <div className="overlay-text">{text}</div>
       <div className="overlay-text2">
         테스트테스트테스트 <br /><br />
         <div className="small-text">
-          출생 : 1999.08.11 <br />
-          소속 : 성남 시장<br />
-          학력 : 서울대학교 대학원 법학과<br />
-          경력 : 2022.03 제 20대 대통령선거 당선<br />
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2019.07 ~ 2021.03 대검찰청 검찰총장<br /><br /><br />
-
-          수상내역<br />
-          무슨상<br />
-          무슨상<br />
-          무슨상<br />
-
+          이름 : {data.name} <br />
+          출생 : {formattedBirth} <br />
+          소속 : {text} 시장<br />
+          학력 : {data.education}<br />
+          경력 : {data.career}<br />
+   
         </div>
       </div>
 
@@ -231,27 +258,32 @@ const Politician = () => {
         {showImage3 && <img src={`/img/${text}3.png`} alt="설명" style={{ position: 'absolute', top: '900px', left: '400px', width: '1200px' }} />}
 
         {showRealTimeArticles &&
-          <div style={{ marginLeft: '0px', marginTop: '600px' }}>
+          <div style={{ position: 'absolute',right:'450px',Top: '2400px' }}>
             {articles.map((article, index) => (
-              <a href={article.link} key={index} style={{ textDecoration: 'none', color: 'inherit' }}>
-                <div key={index} style={{ display: 'flex', marginBottom: '50px', paddingBottom: '20px', borderBottom: '2px solid #000' }}>
-                  {/* display: 'flex' -> 가로로배치  */}
-                  <div style={{ width: '70%', wordWrap: 'break-word' }}>
-                    {/* 텍스트가 일정길이 넘어가면 자동으로 줄바꿈 */}
+              <a href={article.link} target="_blank" rel="noopener noreferrer"  key={index} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <div key={index} style={{ display: 'flex', width: '850px', borderBottom: '2px solid #000' }}>
+                  <div style={{ marginLeft:'30px', wordWrap: 'break-word' }}>
+                    <div style={{ display: 'flex' }}>  
+                      <h4 style={{ marginRight: '20px' }}>{article.pressInfo}</h4> 
+                      <h4 style={{color: '#A6A6A6'}}>ㆍ{article.time}</h4>  
+                    </div>
                     <h2>{article.title}</h2>
                     <p>{article.content}</p>
-                  </div>
-                  <img src={article.image} alt="설명" style={{ marginLeft: '20px', borderRadius: '10%', width: '200px', height: '200px' }} />
+                  </div>  
+                  <img src={article.image} alt="이미지" style={{ margin: '20px', borderRadius: '10%', width: '200px', height: '200px' }} />
                 </div>
               </a>
             ))}
+            <div style={{ marginTop: '100px', textAlign: 'center', color: 'gray' }}>
+              <p>충남 천안시</p>
+              <p>Copyright ⓒ 2023 Dike Engineering & Construction Corporation, All rights Reserved</p>
+              <p>Dike 정책 | 개인정보처리 방침 | 고객센터</p>
+            </div>
           </div>
         }
-
-
-
+        
         {showMajorArticles &&
-          <div style={{ marginLeft: '0px', marginTop: '900px' }}>
+          <div style={{ marginLeft: '100px', marginTop: '1300px' }}>
             {mainArticles.map((article, index) => (
               <a href={article.link} key={index} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div key={index} style={{ display: 'flex', flexDirection: 'column', marginBottom: '50px', paddingBottom: '20px', borderBottom: '2px solid #000', backgroundColor: '#354B63' }}>

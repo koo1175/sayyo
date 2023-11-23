@@ -9,6 +9,10 @@ import React from 'react';
 import Board from './Board';
 import Navigation from './Navigation';
 import Search from './Search';
+import Test from './Test';
+import Test2 from './Test2';
+import BoardList from './Test5';
+import Chat from './Chat';
 import { BrowserRouter as Router, Route,Routes} from 'react-router-dom';
 
 
@@ -16,8 +20,11 @@ function App() {
   return (
     <Router>
       <Navigation />
+      {/* <Chat /> */}
       <Routes>
-      <Route path="/" element={<MapComponent/>} />
+      <Route path="/" element={<BoardList/>} />
+      <Route path="/Test" element={<Test />} />
+      <Route path="/Search" element={<Search />} />
       <Route path="/Gyeonggi" element={<Gyeonggi />} />
       <Route path="/Map" element={<MapComponent />} />
       <Route path="/Board" element={<Board />} />

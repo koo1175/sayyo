@@ -17,15 +17,16 @@ const settings = {
     arrows: true,
 
 };
-const Gyeonggi = ({ results }) => {
+const Gyeonggi = ({ slidesMayor = [], slidesNews = [], slidesAccidents = [] }) => {
     const navigate = useNavigate();
 
     const handleClick = (path, text) => {
         navigate(path, { state: { text } });
     }
+
     return (
         <div style={{ marginTop: '0px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '20px' }}>
-            <div style={{ position: 'absolute', marginTop: '150px',marginLeft:'1100px', height: '2000px', width: '2000px', background: 'url(/img/배경.png) no-repeat' }}></div>
+            <div style={{ position: 'absolute', marginTop: '150px', marginLeft: '1100px', height: '2250px', width: '2000px', background: 'url(/img/배경.png) no-repeat' }}></div>
             <svg style={{ position: 'relative', marginLeft: '0px' }} viewBox="0 0 800 850" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <filter id="dropshadow">
@@ -176,24 +177,14 @@ const Gyeonggi = ({ results }) => {
                     </div>
                     <div>
                         <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/배경.png" alt="배경" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/성남시장.png" alt="성남시장" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
                             <img src="/img/의정부시장.png" alt="의정부시장" style={{ width: '320px', height: '200px' }} />
                         </a>
                     </div> */}
-                     {results.map((result, index) => (
+                    {slidesMayor.map((slide, index) => (
                         <div key={index}>
-                            <a href={result.link} target="_blank" rel="noreferrer">
-                                <img src={result.image} alt={`image${index}`} style={{ width: '320px', height: '200px' }} />
-                                <p>{result.title}</p>
+                            <a href={slide.link} target="_blank" rel="noreferrer">
+                                <img src={slide.image} alt={slide.title} style={{ width: '320px', height: '200px' }} />
+                                <p>{slide.title}</p>
                             </a>
                         </div>
                     ))}
@@ -204,27 +195,14 @@ const Gyeonggi = ({ results }) => {
                 <h2 style={{ textAlign: 'center' }}>지역소식</h2>
                 <Slider
                     {...settings}>
-                    <div>
-                        {/* target="_blank" 는 새 탭에서 열리는 기능 */}
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/야경.png" alt="야경" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/배경.png" alt="배경" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/성남시장.png" alt="성남시장" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/의정부시장.png" alt="의정부시장" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
+                    {slidesNews.map((slide, index) => (
+                        <div key={index}>
+                            <a href={slide.link} target="_blank" rel="noreferrer">
+                                <img src={slide.image} alt={slide.title} style={{ width: '320px', height: '200px' }}/>
+                                <p>{slide.title}</p>
+                            </a>
+                        </div>
+                    ))}
                 </Slider>
             </div>
 
@@ -232,27 +210,14 @@ const Gyeonggi = ({ results }) => {
                 <h2 style={{ textAlign: 'center' }}>사건사고</h2>
                 <Slider
                     {...settings}>
-                    <div>
-                        {/* target="_blank" 는 새 탭에서 열리는 기능 */}
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/야경.png" alt="야경" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/배경.png" alt="배경" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/성남시장.png" alt="성남시장" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/의정부시장.png" alt="의정부시장" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
+                    {slidesAccidents.map((slide, index) => (
+                        <div key={index}>
+                            <a href={slide.link} target="_blank" rel="noreferrer">
+                                <img src={slide.image} alt={slide.title} style={{ width: '320px', height: '200px' }}/>
+                                <p>{slide.title}</p>
+                            </a>
+                        </div>
+                    ))}
                 </Slider>
             </div>
 

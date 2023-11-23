@@ -8,125 +8,53 @@ class Search extends Component {
     super();
     this.state = {
       search: '',
-      id: '',
-      pw : '',
-      resultsGoogle: [],
-      resultsNaver: [],
-      resultsLike: [],
-      resultsDislike: [],
+      slides: [],
+      slidesMayor: [],
+      slidesNews: [],
+      slidesAccidents: [],
     };
   }
 
   componentDidMount() {
-    this.handleSubmit();
+    this.handleSubmit('경기도 시장', 'slidesMayor');
+    this.handleSubmit('지역소식', 'slidesNews');
+    this.handleSubmit('사건사고', 'slidesAccidents');
   }
 
   handleSearchChange = (event) => {
     this.setState({ search: event.target.value });
   }
-  handleSubmit = () => {
-    const { search } = this.state;
-    // Google의 결과를 가져옴
+
+  handleSubmit = (search, stateKey) => {
     axios.get(`http://127.0.0.1:5000/scrape/google?search=${search}`)
       .then((response) => {
-        console.log('Google 성공:', response);
-        this.setState({ resultsGoogle: response.data });
-        this.props.onResults(response.data);//추가
+        this.setState({
+          [stateKey]: response.data.map(result => ({
+            title: result.title,
+            link: result.link,
+            image: result.image
+          }))
+        });
       })
       .catch((error) => {
         console.error('Google Error:', error);
       });
-    
-    // Naver의 결과를 가져옴
-    axios.get(`http://127.0.0.1:5000/scrape/naver?search=${search}`)
-      .then((response) => {
-        console.log('Naver 성공:', response);
-        this.setState({ resultsNaver: response.data });
-       // this.props.onResults(response.data); //추가
-      })
-      .catch((error) => {
-        console.error('Naver Error:', error);
-      });
-  }
 
-  handleLike = () => {
-  const pLikeDto = {
-    memberId : "koo", // 실제 member id 값을 사용해야 합니다.
-    politicianNum: "1", // 실제 politician num 값을 사용해야 합니다.
-    likeState: '1',
-  };
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-  console.log(JSON.stringify(pLikeDto));
-    axios.post(`http://localhost:8035/plike/like`, JSON.stringify(pLikeDto), config)
-      .then((response) => {
-        console.log('좋아요 성공:', response);
-        this.setState({ resultLike: response.data });
-      })
-      .catch((error) => {
-        console.error('좋아요 Error:', error);
-      });
-  }
-
-  handleDislike = () => {
-    const pLikeDto = {
-      memberId: "koo", // 실제 member id 값을 사용해야 합니다.
-      politicianNum: "1", // 실제 politician num 값을 사용해야 합니다.
-      likeState: '2',
-    };
-  
-    axios.post(`http://localhost:8035/plike/dislike`, pLikeDto)
-      .then((response) => {
-        console.log('싫어요 성공:', response);
-        this.setState({ resultDislike: response.data });
-      })
-      .catch((error) => {
-        console.error('싫어요 Error:', error);
-      });
   }
 
   render() {
-    const { search, resultsGoogle, resultsNaver } = this.state;
-  return (
-    <>
+    const { slidesMayor, slidesNews, slidesAccidents } = this.state;
+    return (
+      <>
         <div>
-          <input
-            type="text"
-            placeholder="검색어를 입력하세요"
-            value={search}
-            onChange={this.handleSearchChange}
+          <Gyeonggi
+            slidesMayor={slidesMayor}
+            slidesNews={slidesNews}
+            slidesAccidents={slidesAccidents}
           />
-          <button onClick={this.handleSubmit}>검색</button>
-          {/* <h2>Google 결과:</h2>
-          {resultsGoogle.map((result, index) => (
-            <div key={index}>
-              <h2>Title: {result.title}</h2>
-              <p>Content: {result.content}</p>
-              <p>Link: {result.link}</p>
-              <p>Image: {result.image}</p>
-              <hr />
-            </div>
-          ))}
-          <hr />
-          <h2 style={{"color":"green"}}>Naver 결과:</h2>
-          {resultsNaver.map((result, index) => (
-            <div key={index}>
-              <h2>Title: {result.title}</h2>
-              <p>Content: {result.content}</p>
-              <p>Link: {result.link}</p>
-              <p>Image: {result.image}</p>
-              <hr />
-            </div>
-          ))} */}
         </div>
-        <MapComponent results={resultsGoogle.concat(resultsNaver)} />
-
-           
       </>
-  );
+    );
   }
 }
 
