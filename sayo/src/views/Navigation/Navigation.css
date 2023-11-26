@@ -1,0 +1,21 @@
+/* CSS 파일 */
+.link {
+    text-decoration: none;
+    color: #444444;
+    font-weight: bolder;
+    margin: 0px 50px;
+}
+
+/* 화면 크기가 800px 이상일 때 */
+@media (min-width: 800px) {
+    .link {
+        margin: 0px 5%;
+    }
+}
+
+/* 화면 크기가 1200px 이상일 때 */
+@media (min-width: 1200px) {
+    .link {
+        margin: 0px 5%;
+    }
+}

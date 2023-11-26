@@ -1,4 +1,5 @@
 import * as React from 'react';
+import './Navigation.css';
 import {BrowserRouter, Link, Route, Routes} from 'react-router-dom';
 import Main from "../Main";
 import OrganizationChart from "../OrganizationChart";
@@ -8,6 +9,8 @@ import AboutUs from "../AboutUs";
 import Gyeonggi from '../Gyeonggi';
 import MockElectionComponent from '../MockElectionComponent';
 import Politician from '../Politician';
+import AuthForm from "../AuthForm";
+import Test from '../Test';
 
 import InfoSu from '../SiblingFade/Info/suchan';
 import PromiseSu from '../SiblingFade/Promise/suchan';
@@ -27,13 +30,24 @@ import NewsSeung from '../SiblingFade/News/seungju';
 
 
 export default function Navigation() {
-
+    const isAuth = window.location.pathname === '/';
+  
+    // If it's the home page, return null to render nothing
+    if (isAuth) {
+        return (
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<AuthForm />} />
+            </Routes>
+          </BrowserRouter>
+        );
+      }
     return (
         <div>
             <BrowserRouter>
                 <div>
-                    <div style={{display:'flex', justifyContent: 'flex-start', marginLeft: '50px', marginTop: '10px', marginBottom: '10px'}}>
-                    <Link to="/">
+                    <div style={{display:'flex', justifyContent: 'flex-start', marginRight: '5%', marginTop: '10px', marginBottom: '10px'}}>
+                    <Link to="/Main">
                         <img
                             alt="sayoLogo"
                             src="/img/sayoLogo.png"
@@ -41,17 +55,16 @@ export default function Navigation() {
                         />
                     </Link>
                     </div>
-                    <div style={{margin: '-65px 0px 0px 0px', fontSize: '20px', marginLeft: '230px'}}>
-                    <Link to="/OrganizationChart" style={{textDecoration: 'none',  margin: '0px 200px 0px 0px',color: '#444444', fontWeight:'bolder'}}>
-                        조직도
-                    </Link>
-                    <Link to="/Board"style={{textDecoration: 'none',  margin: '0px 150px 0px 0px',color: '#444444', fontWeight:'bolder'}}>게시판</Link>
-                    <Link to="/Community"style={{textDecoration: 'none',  margin: '0px 150px 0px 0px',color: '#444444', fontWeight:'bolder'}}>커뮤니티</Link>
-                    <Link to="/AboutUs" style={{textDecoration: 'none',  margin: '0px 150px 0px 0px',color: '#444444', fontWeight:'bolder'}}>AboutUs</Link>
+                    <div style={{margin: '-65px 0px 0px 0px', fontSize: '20px', marginRight: '20%'}}>
+                        <Link to="/OrganizationChart" className="link">조직도</Link>
+                        <Link to="/Board" className="link">게시판</Link>
+                        <Link to="/Community" className="link">커뮤니티</Link>
+                        <Link to="/AboutUs" className="link">AboutUs</Link>
                     </div>
                 </div>
                 <Routes>
-                    <Route path="/" element={<Main />} />
+                    <Route path="/Test" element={<Test />} />
+                    <Route path="/Main" element={<Main />} />
                     <Route path="/OrganizationChart" element={<OrganizationChart />} />
                     <Route path="/Board" element={<Board />} />
                     <Route path="/Community" element={<Community />} />

@@ -23,8 +23,8 @@ const Board = () => {
     }
 
     return (
-        <div style={{marginLeft:'600px',marginTop:'100px'}}> 
-            <div style={{backgroundColor:"#ECECEC",width:'800px',height:'100px',borderTop:'3px solid gray'}}>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'left'}}> 
+            <div style={{backgroundColor:"#ECECEC",width:'800px',height:'100px',borderTop:'3px solid gray', marginTop:'100px'}}>
                 <h2 style={{marginLeft:'30px',marginTop:'35px',color:'#6A6A6A'}}>게시글 작성</h2>
                 <h5 style={{marginLeft:'600px',marginTop:'-45px',color:'#6A6A6A'}}>
                 <span style={{color: 'red'}}>*</span> 표는 필수입력사항 입니다</h5>
@@ -40,8 +40,8 @@ const Board = () => {
             <label style={{display:'block',margin:20}}>내용<span style={{color: 'red'}}> *</span></label>
             <textarea value={content} onChange={handleContentChange} style={{marginLeft:10,width: '780px', height: '330px',fontSize:20}}/>
             <div style={{marginLeft:'720px',fontSize:20}}>({content.length}/400)</div>
-            <label style={{display:'block',margin:20}}>파일</label>
-            <input type="file" onChange={handleFileChange} style={{marginLeft:20}} />
+            {/* <label style={{display:'block',margin:20}}>파일</label>
+            <input type="file" onChange={handleFileChange} style={{marginLeft:20}} /> */}
             <div style={{display: 'flex', justifyContent: 'space-between', width: '200px', margin: '20px'}}>
                 <button style={{backgroundColor: '#7FBDF6', color: 'white', fontWeight: 'bold', borderRadius: '5px', padding: '10px 20px'}}>취소</button>
                 <button style={{backgroundColor: '#7FBDF6', color: 'white', fontWeight: 'bold', borderRadius: '5px', padding: '10px 20px'}}>작성</button>
