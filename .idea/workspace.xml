@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c10420d3-bc43-4e61-b0fe-ca0daca11009" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Interface" />
+        <option value="spring-beans.schema" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="youngsil" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2XkdIh66xwm76xszro8t3YRZkci" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "false",
+    "WebServerToolWindowFactoryState": "false",
+    "android.gradle.sync.needed": "true",
+    "git-widget-placeholder": "seungju",
+    "last_opened_file_path": "C:/Users/hy/Desktop/SayYo/sayyo-back",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mariadb"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.pj.sayyo.domain" />
+      <recent name="com.pj.sayyo.controller.kakao" />
+      <recent name="com.pj.sayyo.controller.member" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\hy\Desktop\SayYo\sayyo\src\main\resources\views" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\hy\Desktop\SayYo\sayyo\src\main\webapp\WEB-INF\views" />
+      <recent name="C:\Users\hy\Desktop\SayYo\sayyo\src\main\webapp\WEB-INF\views\image" />
+      <recent name="C:\Users\hy\Desktop\SayYo\sayyo\src\main\webapp\WEB-INF\views\kakao" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.pj.sayyo.model.voting.mapper" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.SayyoApplication">
+    <configuration name="Tests in 'sayyo'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/sayyo/src/main/webapp/WEB-INF/views/index.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="SayyoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="sayyo.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.pj.sayyo.SayyoApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.pj.sayyo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Gradle.Tests in 'sayyo'" />
+      <item itemvalue="JavaScript Debug.index.html" />
+      <item itemvalue="Spring Boot.SayyoApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.index.html" />
+        <item itemvalue="Gradle.Tests in 'sayyo'" />
+        <item itemvalue="JavaScript Debug.index.html" />
+        <item itemvalue="Gradle.Tests in 'sayyo'" />
+        <item itemvalue="JavaScript Debug.index.html" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c10420d3-bc43-4e61-b0fe-ca0daca11009" name="Changes" comment="" />
+      <created>1699176934286</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1699176934286</updated>
+      <workItem from="1699176936354" duration="1480000" />
+      <workItem from="1699178791174" duration="4071000" />
+      <workItem from="1699231798031" duration="5424000" />
+      <workItem from="1699239233025" duration="15170000" />
+      <workItem from="1699317158002" duration="19119000" />
+      <workItem from="1699404772349" duration="1012000" />
+      <workItem from="1699405812012" duration="17115000" />
+      <workItem from="1699491118550" duration="14511000" />
+      <workItem from="1699576837800" duration="7418000" />
+      <workItem from="1699795072993" duration="596000" />
+      <workItem from="1699886336584" duration="360000" />
+      <workItem from="1699927336122" duration="5172000" />
+      <workItem from="1700404259593" duration="351000" />
+      <workItem from="1700441020657" duration="615000" />
+    </task>
+    <task id="LOCAL-00001" summary="kakao">
+      <option name="closed" value="true" />
+      <created>1699405264649</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1699405264649</updated>
+    </task>
+    <task id="LOCAL-00002" summary="2023.11.13">
+      <option name="closed" value="true" />
+      <created>1699886428069</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1699886428069</updated>
+    </task>
+    <task id="LOCAL-00003" summary="2023.11.14">
+      <option name="closed" value="true" />
+      <created>1699940281108</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1699940281108</updated>
+    </task>
+    <task id="LOCAL-00004" summary="2023.11.14">
+      <option name="closed" value="true" />
+      <created>1699942564062</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1699942564062</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="kakao" />
+    <MESSAGE value="2023.11.13" />
+    <MESSAGE value="2023.11.14" />
+    <option name="LAST_COMMIT_MESSAGE" value="2023.11.14" />
+  </component>
+</project>

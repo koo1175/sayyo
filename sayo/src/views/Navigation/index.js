@@ -1,5 +1,10 @@
 import * as React from 'react';
 import {BrowserRouter, Link, Route, Routes} from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import moment from 'moment';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 import AuthForm from "../AuthForm";
 
@@ -27,11 +32,71 @@ import InfoSeung from '../SiblingFade/Info/seungju';
 import PromiseSeung from '../SiblingFade/Promise/seungju';
 import NewsSeung from '../SiblingFade/News/seungju';
 
-
+const localizer = momentLocalizer(moment);
 
 export default function Navigation() {
     const isAuth = window.location.pathname === '/';
+    const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
+    const [searches, setSearches] = useState({});
+    const [searchText, setSearchText] = useState('');
+    const [popularKeywords, setPopularKeywords] = useState([]);
+    const [events, setEvents] = useState([]);
+
+    useEffect(() => {
+      // Replace the URL with your actual API URL
+      axios.get('http://localhost:8083/api/events')
+        .then((response) => {
+          const events = response.data.map((e) => ({
+            ...e,
+            start: new Date(e.start),
+            end: new Date(e.end),
+          }));
   
+          setEvents(events);
+        });
+    }, []);
+
+    useEffect(() => {
+        axios.get('http://localhost:8083/search/popular') // 실시간 인기 검색어를 가져오는 API endpoint
+            .then(response => {
+                setPopularKeywords(response.data.list.map(item => item.keyword)); // 객체 내부의 keyword를 사용
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }, []);
+    
+    
+    
+
+    const handleSearch = (event) => {
+        event.preventDefault();
+    
+        axios.post('http://localhost:8083/search/regist', {
+            keyword: searchText
+        })
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    
+        setSearches({
+            ...searches,
+            [searchText]: (searches[searchText] || 0) + 1
+        });
+        setSearchText('');
+    };
+
+    const getPopularSearches = () => {
+        return Object.entries(searches)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 5)
+            .map(([keyword]) => keyword);
+    };
+
     // If it's the home page, return null to render nothing
     if (isAuth) {
         return (
@@ -63,9 +128,32 @@ export default function Navigation() {
                     <Link to="/Board"style={{textDecoration: 'none',  margin: '0px 150px 0px 0px',color: '#444444', fontWeight:'bolder'}}>게시판</Link>
                     <Link to="/Community"style={{textDecoration: 'none',  margin: '0px 150px 0px 0px',color: '#444444', fontWeight:'bolder'}}>커뮤니티</Link>
                     <Link to="/AboutUs" style={{textDecoration: 'none',  margin: '0px 150px 0px 0px',color: '#444444', fontWeight:'bolder'}}>AboutUs</Link>
+                    <span onClick={() => setIsSearchBarVisible(!isSearchBarVisible)}>🔍</span>
+                    {isSearchBarVisible && (
+                        <form onSubmit={handleSearch}>
+                        <input type="text" value={searchText} onChange={e => setSearchText(e.target.value)} />
+                        <button type="submit">검색</button>
+                        </form>
+                    )}
+                        <div>
+                            인기 검색어:
+                            <ul>
+                                {popularKeywords.map((keyword, index) => (
+                                    <li key={index}>{keyword}</li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <Routes>                    
+                <div style={{ height: 500, marginTop: 20 }}>
+                <Calendar
+                    localizer={localizer}
+                    events={events}
+                    startAccessor="start"
+            endAccessor="end"
+          />
+        </div>
+        <Routes>                    
 
                     <Route path="/Main" element={<Main />} />
                     <Route path="/OrganizationChart" element={<OrganizationChart />} />
