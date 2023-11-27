@@ -50,7 +50,7 @@ table th {
 
 .rounded-table {
     border: 2px solid white;
-    border-radius: 10px; /* 테이블 모서리를 둥글게 만듭니다. */
+    border-radius: 30px; /* 테이블 모서리를 둥글게 만듭니다. */
     overflow: hidden; /* 둥근 테이블을 위해 필요한 속성입니다. */
 }
 
@@ -69,4 +69,126 @@ table th {
     margin-left: -350px;
     margin-right: -350px;
 
+}
+
+.refresh-chart {
+    
+    
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    border: 1px solid #fff;
+    text-align: left;
+    vertical-align: top;
+    padding: calc(.375rem - 3px) 60px calc(.375rem - 3px) 12px;
+    background-color: #00000000;
+    font-size: 14px;
+    letter-spacing: 0.16px;
+    min-height: 32px;
+    line-height: 1.29;
+    color: #fff;
+    font-weight: 400;
+  }
+  
+  .submit-deny {
+
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    padding: 2px 16px;
+    height: 32px;
+    min-width: 60px;
+    min-height: 32px;
+    border: none;
+    color: #fff;
+    background-color: #4f545c;
+    transition: background-color .17s ease,color .17s ease;
+
+  }
+
+  .submit-deny2 {
+
+    display: inline-block;
+    outline: 0;
+    border: none;
+    cursor: pointer;
+    height: 32px;
+    padding: 0px 13px;
+    border-radius: 50px;
+    background-color: #2b00ff0d;
+    color: #222;
+    font-size: 12px;
+    font-weight: bold;
+    :hover {
+        background-color: #2222221a;
+    }
+    
+  }  
+
+  .submit-deny3 {
+
+    display: inline-block;
+    outline: 0;
+    border: none;
+    cursor: pointer;
+    height: 32px;
+    padding: 0px 10px;
+    margin: 5px auto;
+    border-radius: 50px;
+    background-color: #ffffff6c;
+    color: #000000;
+    font-size: 12px;
+    font-weight: bold;
+    :hover {
+        background-color: #2222221a;
+    }
+    
+  }  
+
+  /* QuizForm.css (또는 기존의 style.css에 추가) */
+
+.quiz-form {
+  background: #7f7f7fe9; /* Dark background color */
+  padding: 20px;
+  border-radius: 100px;
+  max-width: 1000px;
+  width: 100%;
+  text-align: center;
+  color: white; /* Text color */
+}
+
+.quiz-form h4 {
+  margin-bottom: 20px;
+}
+
+.quiz-form label {
+  font-size: 15px;
+  margin-right: 10px;
+}
+
+.quiz-form input {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #555; /* Border color */
+  border-radius: 5px;
+  background: #333; /* Input background color */
+  color: white; /* Input text color */
+}
+
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999; /* Ensure the popup appears above other content */
 }

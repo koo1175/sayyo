@@ -1,14 +1,16 @@
 import * as React from 'react';
-import {BrowserRouter, Link, Route, Routes} from 'react-router-dom';
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-
+import Member from '../AdminPage/Member'
 import AdminPage from '../AdminPage';
 
+import './Search.css';
 import AuthForm from "../AuthForm";
 
 import Main from "../Main";
@@ -48,27 +50,48 @@ import Search from '../Search';
 const localizer = momentLocalizer(moment);
 
 export default function Navigation() {
-    const isAuth = window.location.pathname === '/';
+
     const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
     const [searches, setSearches] = useState({});
     const [searchText, setSearchText] = useState('');
     const [popularKeywords, setPopularKeywords] = useState([]);
+    // 캘린더
     const [events, setEvents] = useState([]);
+    // 인기 검색어 하나씩
+    const [currentKeywordIndex, setCurrentKeywordIndex] = useState(0);
+    // 인기 검색어 전체
+    const [isHovered, setIsHovered] = useState(false);
 
     useEffect(() => {
         // Replace the URL with your actual API URL
         axios.get('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/api/events')
             .then((response) => {
-                const events = response.data.map((e) => ({
-                    ...e,
-                    start: new Date(e.start),
-                    end: new Date(e.end),
-                }));
+                if (Array.isArray(response.data)) {
+                    const events = response.data
+                        .filter(e => e != null)
+                        .map((e) => ({
+                            ...e,
+                            start: new Date(e.start),
+                            end: new Date(e.end),
+                            allDay: true, // 'allDay' 속성을 추가하세요.
+                        }));
 
-                setEvents(events);
+                    setEvents(events);
+                }
             });
     }, []);
 
+    function CustomToolbar({ label, onNavigate }) {
+        return (
+            <div>
+                <button onClick={() => onNavigate('PREV')}>◀</button>
+                <span>{label}</span>
+                <button onClick={() => onNavigate('NEXT')}>▶</button>
+            </div>
+        );
+    }
+
+    //인기검색어 get
     useEffect(() => {
         axios.get('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/search/popular') // 실시간 인기 검색어를 가져오는 API endpoint
             .then(response => {
@@ -80,7 +103,25 @@ export default function Navigation() {
             });
     }, []);
 
+    //인기검색어 애니메이션
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentKeywordIndex((currentKeywordIndex + 1) % 5);
+        }, 4000);
+        return () => clearInterval(interval);
+    }, [currentKeywordIndex]);
 
+
+    const [currentDateTime, setCurrentDateTime] = useState(new Date());
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setCurrentDateTime(new Date());
+        }, 1000); // Update every 1000 milliseconds (1 second)
+
+        // Clear the interval when the component is unmounted
+        return () => clearInterval(intervalId);
+    }, []); // Empty dependency array means this effect runs once when the component mounts
 
 
     const handleSearch = (event) => {
@@ -110,6 +151,7 @@ export default function Navigation() {
             .map(([keyword]) => keyword);
     };
 
+    const isAuth = window.location.pathname === '/';
     // If it's the home page, return null to render nothing
     if (isAuth) {
         return (
@@ -121,12 +163,14 @@ export default function Navigation() {
         );
     }
 
+    const isAdminPage = window.location.pathname === '/AdminPage';
 
-    return (
-        <div>
+    // If it's the home page, return null to render nothing
+    if (isAdminPage) {
+        return (
             <BrowserRouter>
-                <div>
-                    <div style={{ display: 'flex', justifyContent: 'flex-start', marginLeft: '50px', marginTop: '10px', marginBottom: '10px' }}>
+                <div style={{ marginTop: '-30px', marginBottom: '-30px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '55px', marginBottom: '10px' }}>
                         <Link to="/Main">
                             <img
                                 alt="sayoLogo"
@@ -135,13 +179,92 @@ export default function Navigation() {
                             />
                         </Link>
                     </div>
-                    <div style={{ margin: '-65px 0px 0px 0px', fontSize: '20px', marginLeft: '230px' }}>
-                        <Link to="/OrganizationChart" style={{ textDecoration: 'none', margin: '0px 200px 0px 0px', color: '#444444', fontWeight: 'bolder' }}>
+                    <div style={{ marginTop: '-75px', marginRight: '-200px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'flex-start', fontSize: '20px' }}>
+                            <Link to="/AdminPage" style={{ textDecoration: 'none', marginTop: '-25px', marginLeft: '-200px', padding: '35px', color: '#444444', fontWeight: 'bolder' }}>
+                                관리자 모드
+                            </Link>
+                        </div>
+                        <div style={{ marginTop: '-65px', fontSize: '20px', marginLeft: '380px' }}>
+                            <Link to="/OrganizationChart" style={{ textDecoration: 'none', marginRight: '150px', marginLeft: '-200px', color: '#444444', fontWeight: 'bolder' }}>
+                                조직도
+                            </Link>
+                            <Link to="/Board" style={{ textDecoration: 'none', color: '#444444', fontWeight: 'bolder' }}>게시판</Link>
+                            <Link to="/Community" style={{ textDecoration: 'none', marginLeft: '250px', marginRight: '-150px', color: '#444444', fontWeight: 'bolder' }}>커뮤니티</Link>
+                            <Link to="/AboutUs" style={{ textDecoration: 'none', marginLeft: '250px', color: '#444444', fontWeight: 'bolder' }}>AboutUs</Link>
+                            <span className='admin-clock' style={{ marginLeft: '100px' }}>{currentDateTime.toLocaleDateString()} {currentDateTime.toLocaleTimeString()}</span>
+                        </div>
+                    </div>
+                </div>
+                <Routes>
+                    <Route path="/AdminPage" element={<AdminPage />} />
+                </Routes>
+            </BrowserRouter>
+        );
+    }
+
+    const isMember = window.location.pathname === '/Member';
+
+    // If it's the home page, return null to render nothing
+    if (isMember) {
+        return (
+            <BrowserRouter>
+                <div style={{ marginTop: '-30px', marginBottom: '-30px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '55px', marginBottom: '10px' }}>
+                        <Link to="/Main">
+                            <img
+                                alt="sayoLogo"
+                                src="/img/sayoLogo.png"
+                                height={80}
+                            />
+                        </Link>
+                    </div>
+                    <div style={{ marginTop: '-75px', marginRight: '-200px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'flex-start', fontSize: '20px' }}>
+                            <Link to="/AdminPage" style={{ textDecoration: 'none', marginTop: '-25px', marginLeft: '-200px', padding: '35px', color: '#444444', fontWeight: 'bolder' }}>
+                                관리자 모드
+                            </Link>
+                        </div>
+                        <div style={{ marginTop: '-65px', fontSize: '20px', marginLeft: '380px' }}>
+                            <Link to="/OrganizationChart" style={{ textDecoration: 'none', marginRight: '150px', marginLeft: '-200px', color: '#444444', fontWeight: 'bolder' }}>
+                                조직도
+                            </Link>
+                            <Link to="/Board" style={{ textDecoration: 'none', color: '#444444', fontWeight: 'bolder' }}>게시판</Link>
+                            <Link to="/Community" style={{ textDecoration: 'none', marginLeft: '250px', marginRight: '-150px', color: '#444444', fontWeight: 'bolder' }}>커뮤니티</Link>
+                            <Link to="/AboutUs" style={{ textDecoration: 'none', marginLeft: '250px', color: '#444444', fontWeight: 'bolder' }}>AboutUs</Link>
+                            <span className='admin-clock' style={{ marginLeft: '100px' }}>{currentDateTime.toLocaleDateString()} {currentDateTime.toLocaleTimeString()}</span>
+                        </div>
+                    </div>
+                </div>
+                <Routes>
+                    <Route path="/Member" element={<Member />} />
+                </Routes>
+            </BrowserRouter>
+        );
+    }
+
+    return (
+        <div>
+            <BrowserRouter>
+                <div>
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', marginBottom: '10px' }}>
+                        <Link to="/Main">
+                            <img
+                                alt="sayoLogo"
+                                src="/img/sayoLogo.png"
+                                height={80}
+                            />
+                        </Link>
+                    </div>
+                    <div style={{ marginTop: '-65px', fontSize: '20px', marginLeft: '230px' }}>
+                        <Link to="/OrganizationChart" style={{ textDecoration: 'none', marginRight: '150px', marginLeft: '-200px', color: '#444444', fontWeight: 'bolder' }}>
                             조직도
                         </Link>
-                        <Link to="/Board" style={{ textDecoration: 'none', margin: '0px 150px 0px 0px', color: '#444444', fontWeight: 'bolder' }}>게시판</Link>
-                        <Link to="/Community" style={{ textDecoration: 'none', margin: '0px 150px 0px 0px', color: '#444444', fontWeight: 'bolder' }}>커뮤니티</Link>
-                        <Link to="/AboutUs" style={{ textDecoration: 'none', margin: '0px 150px 0px 0px', color: '#444444', fontWeight: 'bolder' }}>AboutUs</Link>
+                        <Link to="/Board" style={{ textDecoration: 'none', margin: '0px 100px 0px 0px', color: '#444444', fontWeight: 'bolder' }}>게시판</Link>
+                        <Link to="/Community" style={{ textDecoration: 'none', marginLeft: '150px', color: '#444444', fontWeight: 'bolder' }}>커뮤니티</Link>
+                        <Link to="/AboutUs" style={{ textDecoration: 'none', marginLeft: '150px', color: '#444444', fontWeight: 'bolder' }}>AboutUs</Link>
+                    </div>
+                    <div style={{ position: 'absolute', right: 0 }}>
                         <span onClick={() => setIsSearchBarVisible(!isSearchBarVisible)}>🔍</span>
                         {isSearchBarVisible && (
                             <form onSubmit={handleSearch}>
@@ -149,27 +272,51 @@ export default function Navigation() {
                                 <button type="submit">검색</button>
                             </form>
                         )}
-                        <div>
+                        <div
+                            onMouseOver={() => setIsHovered(true)}
+                            onMouseOut={() => setIsHovered(false)}
+                        >
                             인기 검색어:
-                            <ul>
-                                {popularKeywords.map((keyword, index) => (
-                                    <li key={index}>{keyword}</li>
+                            <div style={{ height: '25px', overflow: 'hidden' }}>
+                                <TransitionGroup>
+                                    {!isHovered &&
+                                        <CSSTransition
+                                            key={currentKeywordIndex}
+                                            timeout={1000}
+                                            classNames="fade"
+                                            unmountOnExit
+                                        >
+                                            <div>{currentKeywordIndex + 1}. {popularKeywords[currentKeywordIndex]}</div>
+                                        </CSSTransition>
+                                    }
+                                </TransitionGroup>
+                            </div>
+                            {isHovered && <ul style={{ listStyleType: 'none' }}>
+                                {popularKeywords.slice(0, 5).map((keyword, index) => (
+                                    <li key={index}>{index + 1}. {keyword}</li>
                                 ))}
-                            </ul>
+                            </ul>}
                         </div>
                     </div>
                 </div>
-                <div style={{ height: 500, marginTop: 20 }}>
+                <div>
                     <Calendar
+                        style={{ height: 100, width: 350 }}
                         localizer={localizer}
                         events={events}
                         startAccessor="start"
                         endAccessor="end"
+                        defaultView='day'
+                        timeslots={1}
+                        min={new Date(2023, 10, 10, 0, 0)} // 0시
+                        max={new Date(2023, 10, 10, 0, 1)} // 0시 1분
+                        date={new Date()}
+                        components={{
+                            toolbar: () => null, // 툴바를 비활성화 합니다.
+                        }}
                     />
                 </div>
                 <Routes>
-
-                    <Route path='/AdminPage' element={<AdminPage/>}/>
 
                     <Route path='/MyPage' element={<MyPage />} />
 
@@ -204,6 +351,7 @@ export default function Navigation() {
 
                     <Route path="/Test" element={<Test />} />
                     <Route path="/Search" element={<Search />} />
+
                 </Routes>
             </BrowserRouter>
         </div>
