@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../Board/Board.css';
 
 const Test = (props) => {
-    const [search, setSearch] = useState('오세훈 시장');
+    const [search, setSearch] = useState("오세훈 시장");
     const [newsData, setNewsData] = useState([]);
     
     const config = {
@@ -12,17 +12,15 @@ const Test = (props) => {
         },
     };
 
+    console.log(search);
     useEffect(() => {
-        axios.get(`https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/issue/findSearch`, {
-            params: {
-                search:search
-            },
+        axios.post(`https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/issue/findSearch`, {
+            search:search,
         }, config)
             .then((response) => {
                 console.log("요청 [", response.status,"]")
                 console.log(response.data.list);
-                console.log(response.data[0].image);
-                setNewsData(response.data);
+                setNewsData(response.data.list)
             })
             .catch((error) => {
                 console.error('Google Error:', error);

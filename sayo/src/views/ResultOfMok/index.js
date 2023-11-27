@@ -1,8 +1,16 @@
+//프로그래스바 퍼센트 나타내는 부분
+
 import React from "react";
 import Modal from 'react-modal';
 import AnimatedProgressBar from "../AnimatedProgressBar";
 
-export default function ResultOfMok({ isOpen, onClose }) {
+export default function ResultOfMok({ isOpen, onClose,percentages }) {
+  console.log('ResultOfMock 페이지 -> 1번후보 득표율 : ', percentages[0])
+  console.log('ResultOfMock 페이지 -> 2번후보 득표율 : ', percentages[1])
+  console.log('ResultOfMock 페이지 -> 3번후보 득표율 : ', percentages[2])
+  console.log('ResultOfMock 페이지 -> 4번후보 득표율 : ', percentages[3])
+
+
   const popupStyle = {
     overlay: {
       position: 'fixed',
@@ -47,10 +55,10 @@ export default function ResultOfMok({ isOpen, onClose }) {
 
         {/* Progress bars drawn on top of the image */}
         <div style={progressBarStyle} >
-          <AnimatedProgressBar color="red" progress={45} />
-          <AnimatedProgressBar color="yellow" progress={80} />          
-          <AnimatedProgressBar color="purple" progress={90} />
-          <AnimatedProgressBar color="orange" progress={70} />
+          <AnimatedProgressBar color="red" progress={percentages[0]} />
+          <AnimatedProgressBar color="yellow" progress={percentages[1]} />          
+          <AnimatedProgressBar color="purple" progress={percentages[2]} />
+          <AnimatedProgressBar color="orange" progress={percentages[3]} />
         </div>
       </div>
     </Modal>

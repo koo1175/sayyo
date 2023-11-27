@@ -16,18 +16,14 @@ function LoginForm() {
   };
 
   return (
-    <div style={{ marginTop: 200, marginLeft: 355, textAlign: 'center' }}>
-      {/* Add your registration form elements here */}
-      <form style={{display: 'inline'}}>
-        {/* Example input field */}
+    <div style={{ marginTop: 200, marginLeft: 350, textAlign: 'center' }}>
+      <form>
         <input type="text" placeholder='Username' />
-        {/* Add more input fields as needed */}
         <br/>
         <input type="password" placeholder='Password' />
-        <br /><br />
-        {/* Example submit button */}
+        <br/><br/>
         <button type="submit" onClick={gotoMain} style={{ backgroundColor: '#909090', color: "#fff", borderRadius: 5, cursor: 'pointer' }}>Sign in</button>
-        <br />
+        <br/>
         <button style={{ fontSize: '0.5em', cursor: 'pointer' }}>Forget password?</button>
       </form>
     </div>
@@ -37,19 +33,15 @@ function LoginForm() {
 function RegisterForm() {
   return (
     <div style={{ marginTop: 200, marginLeft: -300, textAlign: 'center' }}>
-      {/* Add your registration form elements here */}
-      <form style={{display: 'inline'}}>
-        {/* Example input field */}
+      <form>
         <input type="text" placeholder='Username' />
-        {/* Add more input fields as needed */}
-        <br />
+        <br/>
         <input type="text" placeholder='Email' />
-        <br />
+        <br/>
         <input type="password" placeholder='Password' />
-        <br />
+        <br/>
         <input type="text" placeholder='Confirm Password' />
-        <br />
-        {/* Example submit button */}
+        <br/>
         <button type="submit" style={{ backgroundColor: '#909090', color: "#fff", borderRadius: 5, cursor: 'pointer' }}>Sign up</button>
 
       </form>

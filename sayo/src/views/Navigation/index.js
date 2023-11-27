@@ -11,6 +11,7 @@ import MockElectionComponent from '../MockElectionComponent';
 import Politician from '../Politician';
 import AuthForm from "../AuthForm";
 import Test from '../Test';
+import Chat from '../Chat';
 
 import InfoSu from '../SiblingFade/Info/suchan';
 import PromiseSu from '../SiblingFade/Promise/suchan';
@@ -58,12 +59,13 @@ export default function Navigation() {
                     <div style={{margin: '-65px 0px 0px 0px', fontSize: '20px', marginRight: '20%'}}>
                         <Link to="/OrganizationChart" className="link">조직도</Link>
                         <Link to="/Board" className="link">게시판</Link>
-                        <Link to="/Community" className="link">커뮤니티</Link>
+                        <Link to="/Chat" className="link">커뮤니티</Link>
                         <Link to="/AboutUs" className="link">AboutUs</Link>
                     </div>
                 </div>
                 <Routes>
                     <Route path="/Test" element={<Test />} />
+                    <Route path="/Chat" element={<Chat />} />
                     <Route path="/Main" element={<Main />} />
                     <Route path="/OrganizationChart" element={<OrganizationChart />} />
                     <Route path="/Board" element={<Board />} />

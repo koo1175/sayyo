@@ -1,0 +1,60 @@
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #ccc; /* 표 전체 선 추가 */
+  }
+  
+  section.notice {
+    padding: 80px 0;
+  }
+  
+  
+  .detial-board-table {
+    font-size: 13px;
+    width: 100%;
+    border-top: 3px solid #999; /* 맨 위 선 굵게 설정 */
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .detial-board-table a {
+    color: #333;
+    display: inline-block;
+    line-height: 1.4;
+    word-break: break-all;
+    vertical-align: middle;
+  }
+  
+  .detial-board-table a:hover {
+    text-decoration: underline;
+  }
+  
+  .detial-board-table .td-title {
+    width: 100px;
+    text-align: left;
+    padding: 5px;
+    background-color: #ddd; /* .td-title 배경 색상 추가 */
+    margin: 5px;
+    padding: 13px;
+  }
+  
+  .detial-board-table .td-blank {
+    width: 100px;
+    text-align: left;
+    margin: 5px;
+    padding: 10px;
+  }
+  
+  
+  .detial-board-table td {
+    padding: 14px 0;
+    border: 1px solid #ccc; /* 각 셀에 선 추가 */
+  }
+  
+  /* .board-detail-buttons{
+    display: flex;
+      justify-content: flex-end;
+  } */
+  
+  button{
+    cursor: pointer;
+  }
