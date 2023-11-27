@@ -9,8 +9,15 @@ export default function MockElectionComponent() {
   const [selectedButton, setSelectedButton] = useState(null);
   const [isResultPopupOpen, setResultPopupOpen] = useState(false);
 
+  const [candidate1Percentage, setCandidate1Percentage] = useState(0);
+  const [candidate2Percentage, setCandidate2Percentage] = useState(0);
+  const [candidate3Percentage, setCandidate3Percentage] = useState(0);
+  const [candidate4Percentage, setCandidate4Percentage] = useState(0);
+
+
+  // 투표 팝업 열기
   const openPopup = () => {
-    const memberId = "asd"; // TODO: 실제 사용자 아이디로 변경
+    const memberId = "koo"; // TODO: 실제 사용자 아이디로 변경
     const votedDto = {
       title: "제 02대 몰입형 선거 모의투표", // TODO: 투표 항목 제목으로 변경
       memberId: memberId,
@@ -29,8 +36,8 @@ export default function MockElectionComponent() {
 
         // 이미 투표한 경우
         if (serverCount > 0) {
-          console.log("공정한 평가를 위해 재투표는 불가합니다");
-          alert('공정한 평가를 위해 재투표는 불가합니다');
+          // 이미 투표한 경우에는 알림창을 띄우지 않음
+          openResultPopup();
         } else {
           // 투표하지 않은 경우에만 팝업을 엽니다.
           setPopupOpen(true);
@@ -41,42 +48,44 @@ export default function MockElectionComponent() {
       });
   };
 
-
+  // 투표 팝업 닫기
   const closePopup = () => {
     setPopupOpen(false);
   };
 
-
-
+  // 결과 팝업 열기 및 투표 처리
   const openResultPopup = () => {
     setPopupOpen(false);
-
-
+  
     const votingData = {
       title: '제 02대 몰입형 선거 모의투표',
-      memberId: 'asd',
+      memberId: 'koo',
       num: selectedButton
     };
+  
     axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/voting/voted', votingData)
       .then(response => {
         if (response.data === 1) {
-          alert('투표가 성공적으로 완료되었습니다.');
+          // 투표가 성공적으로 완료되었을 때 알림
+          // alert('투표가 성공적으로 완료되었습니다.'); 일단 보류
           updatePercentage(votingData.title);
-        } else {
-          alert('투표에 실패하였습니다. 다시 시도해주세요.');
-        }
-
+        } 
       })
       .catch(error => {
         console.error('투표 중 에러가 발생했습니다', error);
       });
-
-
-
-    // 결과 팝업 열기
+  
+    // 중복 투표여도 결과 팝업 열기
     setResultPopupOpen(true);
   };
+  
 
+  // 투표 결과 팝업 닫기
+  const closeResultPopup = () => {
+    setResultPopupOpen(false);
+  };
+
+  // 후보 득표율 업데이트
   const updatePercentage = (title) => {
     const updatePercentageData = {
       title
@@ -96,6 +105,7 @@ export default function MockElectionComponent() {
       });
   }
 
+  // 후보 목록 가져오기
   const fetchCandidates = () => {
     axios.get('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/voting/findAll')
       .then(response => {
@@ -106,15 +116,17 @@ export default function MockElectionComponent() {
         console.log('후보3의 득표율:', candidate3Percentage);
         console.log('후보4의 득표율:', candidate4Percentage);
 
+        setCandidate1Percentage(candidates[0].percentage);
+        setCandidate2Percentage(candidates[1].percentage);
+        setCandidate3Percentage(candidates[2].percentage);
+        setCandidate4Percentage(candidates[3].percentage)
       })
       .catch(error => {
         console.error('후보 목록을 가져오는데 실패했습니다', error);
       });
   }
-  const closeResultPopup = () => {
-    setResultPopupOpen(false);
-  };
 
+  // 후보 선택 버튼 핸들링
   const handleButtonClick = (buttonId) => {
     let color;
     switch (buttonId) {
@@ -140,6 +152,7 @@ export default function MockElectionComponent() {
     setSelectedButton(buttonId === selectedButton ? null : buttonId);
   };
 
+  // 후보 선택 버튼 렌더링
   const renderButtons = () => {
     const buttons = [
       { id: 1, top: "12%" },
@@ -171,6 +184,7 @@ export default function MockElectionComponent() {
     ));
   };
 
+  // 팝업 컨텐츠
   const popupContent = (
     <div>
       <container
@@ -223,10 +237,15 @@ export default function MockElectionComponent() {
         <PopUpMok isOpen={isPopupOpen} onClose={closePopup} content={popupContent} />
       </div>
       <div>
-
         <ResultOfMok
           isOpen={isResultPopupOpen}
           onClose={closeResultPopup}
+          percentages={{
+            candidate1: candidate1Percentage,
+            candidate2: candidate2Percentage,
+            candidate3: candidate3Percentage,
+            candidate4: candidate4Percentage,
+          }}
           style={{
             position: "absolute",
             top: "50%",

@@ -98,7 +98,7 @@ export default function MapComponent ({ slides }) {
     };
 
     return (
-        <div style={{ marginLeft: '600px', marginTop: '100px' }}>
+        <div style={{ marginLeft: '300px', marginTop: '100px' }}>
             {/*  style={{background: 'url(/img/배경.png) no-repeat',backgroundPosition: '-50% 0%', }} */}
             <div style={{ background: 'url(/img/배경.png) no-repeat', height: '900px', width: '1200px', marginLeft: '-100px' }} />
             <div style={{ position: 'absolute', top: '180px' }}>
@@ -266,9 +266,7 @@ export default function MapComponent ({ slides }) {
                 )}
             </div>
             <div style={{ marginTop: '100px', textAlign: 'center', color: 'gray', marginLeft: '-700px' }}>
-                <p>충남 천안시</p>
-                <p>Copyright ⓒ 2023 Dike Engineering & Construction Corporation, All rights Reserved</p>
-                <p>Dike 정책 | 개인정보처리 방침 | 고객센터</p>
+                
             </div>
         </div>
     )

@@ -11,26 +11,47 @@ export default function BoardList() {
         navigate('/BoardWrite');
     };
 
-    const [boardList, setBoardList] = useState([]);
+   const [boardList, setBoardList] = useState([]);
 
+    
     useEffect(() => {
         // 서버에서 게시글 목록을 가져오는 함수
         const fetchBoardList = () => {
             axios.get('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/memBoard/findAll')
-              .then(response => {
-                console.log(response.data); // 확인용
-          
-                // list 키의 값을 사용
-                setBoardList(response.data.list);
-              })
-              .catch(error => {
-                console.error('게시글 목록을 불러오는 중 오류 발생:', error);
-              });
-          };
-    
+                .then(response => {
+                    console.log(response.data); // 확인용
+
+                    // list 키의 값을 사용
+                    setBoardList(response.data.list);
+                })
+                .catch(error => {
+                    console.error('게시글 목록을 불러오는 중 오류 발생:', error);
+                });
+        };
+
         fetchBoardList();
-      }, []); // 컴포넌트가 마운트될 때만 실행
-    
+    }, []); // 컴포넌트가 마운트될 때만 실행
+
+    const handleTitleClick = (board) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        axios.post(
+            'https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/memBoard/updateViews',
+            { num: board.num }, // 수정: 서버로 보낼 데이터를 객체로 감싸서 전달
+            config
+        )
+            .then(response => {
+                console.log('조회수 카운팅 완료 여부:', response.data);
+                navigate(`/BoardDetail/${board.num}`);
+            })
+            .catch(error => {
+                console.error('Error incrementing view count:', error);
+            });
+    };
 
     return (
         <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
@@ -81,9 +102,9 @@ export default function BoardList() {
                                             <tr key={board.num}>
                                                 <td>{board.num}</td>
                                                 <td>{board.category}</td>
-                                                <th>
-                                                    <a href={`/BoardDetail/${board.num}`}>{board.title}</a>
-                                                </th>
+                                                <td><a href={`/BoardDetail/${board.num}`} onClick={() => handleTitleClick(board)}>
+                                                    {board.title}
+                                                </a></td>
                                                 <td>{board.views}</td>
                                                 <td>{formatDate(board.nowDate)}</td>
                                             </tr>
@@ -117,7 +138,7 @@ export default function BoardList() {
                         <a className="arrow next" href="#!"><span className="sr-only">next</span></a>
                         <a className="arrow nnext" href="#!"><span className="sr-only">next next</span></a>
                     </div>
-                    <div style={{marginBottom:'10%'}}/>
+                    <div style={{ marginBottom: '10%' }} />
                 </div>
             </div>
         </div>

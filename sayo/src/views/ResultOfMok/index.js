@@ -4,7 +4,7 @@ import React from "react";
 import Modal from 'react-modal';
 import AnimatedProgressBar from "../AnimatedProgressBar";
 
-export default function ResultOfMok({ isOpen, onClose }) {
+export default function ResultOfMok({ isOpen, onClose, percentages }) {
 
   const popupStyle = {
     overlay: {
@@ -50,10 +50,10 @@ export default function ResultOfMok({ isOpen, onClose }) {
 
         {/* Progress bars drawn on top of the image */}
         <div style={progressBarStyle} >
-          <AnimatedProgressBar color="red" progress={10} />
-          <AnimatedProgressBar color="yellow" progress={50.4} />          
-          <AnimatedProgressBar color="purple" progress={10} />
-          <AnimatedProgressBar color="orange" progress={10} />
+          <AnimatedProgressBar color="red" progress={percentages.candidate1} />
+          <AnimatedProgressBar color="yellow" progress={percentages.candidate2} />          
+          <AnimatedProgressBar color="purple" progress={percentages.candidate3} />
+          <AnimatedProgressBar color="orange" progress={percentages.candidate4} />
         </div>
       </div>
     </Modal>

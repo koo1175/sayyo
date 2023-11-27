@@ -2,8 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import './Chat.css';
-import paperPlaneIcon from './img/btn_send_before.png'; // 기본 이미지 경로
-import paperPlaneHoverIcon from './img/btn_send_after.png';
+import paperPlaneIcon from '../../../src/img/btn_send_before.png'; // 기본 이미지 경로
+import paperPlaneHoverIcon from '../../../src/img/btn_send_after.png';
 export default  function Chat() {
     const [stompClient, setStompClient] = useState(null);
     const [messages, setMessages] = useState([]);
