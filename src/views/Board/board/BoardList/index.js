@@ -68,14 +68,14 @@ export default function BoardList() {
                         <form style={{ marginTop: '-40px', marginBottom: '20px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                             <select id="myDropdown1" >
                                 <option value="none">구분선택</option>
-                                <option value="option2">Option 2</option>
-                                <option value="option3">Option 3</option>
+                                <option value="option2">공지</option>
+                                <option value="option3">문의</option>
                             </select>
 
                             <select id="myDropdown2" >
                                 <option value="none">제목 + 내용</option>
-                                <option value="option2">Option 2</option>
-                                <option value="option3">Option 3</option>
+                                <option value="option2">제목</option>
+                                <option value="option3">내용</option>
                             </select>
 
                             <input type="text" placeholder='' />

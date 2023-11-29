@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import Chart from 'chart.js/auto';
 import Utils from './Utils';
 import QuizForm from './QuizForm';
-import './style.css';
+import axios from 'axios';
+import './Admin.css';
 import { useNavigate } from 'react-router-dom';
 
 export default function AdminPage() {
@@ -10,7 +11,7 @@ export default function AdminPage() {
         labels: Utils.months({ count: 7 }),
         datasets: [
             {
-                label: '방문자 현황',
+                label: '사용자 방문 현황',
                 data: [1, 30, 20, 81, 56, 55, 90],
                 fill: false,
                 borderColor: 'rgb(75, 192, 192)',
@@ -50,87 +51,59 @@ export default function AdminPage() {
         setChartKey((prevKey) => prevKey + 1);
     };
 
-    // 퀴즈 데이터
-    const [quizData, setQuizData] = useState([
-        {
-            createDate: '23-11-27 12:59',
-            quizContent: '한국 국회 의원의 임기는?',
-            option1: '4년',
-            option2: '5년',
-            option3: '6년',
-            option4: '7년',
-            correctAnswer: '4년',
-        },
-        {
-            createDate: '23-11-27 12:45',
-            quizContent: '한국 대통령의 임기는?',
-            option1: '4년',
-            option2: '5년',
-            option3: '6년',
-            option4: '7년',
-            correctAnswer: '5년',
-        },
-        {
-            createDate: '23-11-27 12:40',
-            quizContent: '한국 정부의 국가원수는?',
-            option1: '대통령',
-            option2: '국회의장',
-            option3: '총리',
-            option4: '헌법재판소장',
-            correctAnswer: '대통령',
-        },
-        {
-            createDate: '23-11-27 12:36',
-            quizContent: '한국 헌법이 제정된 연도는?',
-            option1: '1932',
-            option2: '1948',
-            option3: '1956',
-            option4: '1977',
-            correctAnswer: '1948',
-        },
-        {
-            createDate: '23-11-27 12:59',
-            quizContent: '한국 국회의 의석 수는?',
-            option1: '100',
-            option2: '200',
-            option3: '300',
-            option4: '400',
-            correctAnswer: '300',
-        },
-    ]);
+    const [quizzes, setQuizzes] = useState([]);
+    const [editIndex, setEditIndex] = useState(null);
 
-    const [editMode, setEditMode] = useState(false);
-    const [editedRow, setEditedRow] = useState({
-        createDate: '',
-        quizContent: '',
-        option1: '',
-        option2: '',
-        option3: '',
-        option4: '',
-        correctAnswer: '',
-    });
+    useEffect(() => {
+        // Fetch quiz data from the server on component mount
+        axios.get('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/question/findAll')
+            .then((response) => {
+                // Assuming the response data is an array
+                setQuizzes(response.data.list);
+            })
+            .catch((error) => {
+                console.error('Error fetching quiz data:', error);
+            });
+    }, []); // Run only on component mount
 
-    const handleEditClick = (row) => {
-        setEditedRow(row);
-        setEditMode(true);
+    const handleEdit = (index) => {
+        setEditIndex(index);
     };
-    
-    const handleSaveClick = () => {
-        // Add logic to save the edited information to quizData
-        const updatedQuizData = quizData.map((row) =>
-            row === editedRow ? { ...row, ...editedRow } : row
-        );
-    
-        // Update the quizData state with the edited information
-        setQuizData(updatedQuizData);
-    
-        // Set editMode to false
-        setEditMode(false);
-    };
-    
 
-    const handleCancelClick = () => {
-        setEditMode(false);
+    const handleSave = (index) => {
+
+        const quizDto = {
+            id: quizzes[index].id,
+            content: quizzes[index].content,
+            option1: quizzes[index].option1,
+            option2: quizzes[index].option2,
+            option3: quizzes[index].option3,
+            option4: quizzes[index].option4,
+            answer: quizzes[index].answer,
+        };
+
+        axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/question/modify', quizDto)
+            .then(response => {
+                console.log('Quiz updated:', response.data);
+                // Update the state with the modified quiz
+                setQuizzes((prevQuizzes) => {
+                    const newQuizzes = [...prevQuizzes];
+                    newQuizzes[index] = quizDto;
+                    return newQuizzes;
+                });
+                // Reset edit state after saving
+                setEditIndex(null);
+                handleCancel();
+            })
+            .catch((error) => {
+                console.error('Error updating quiz:', error);
+                console.log('id : ', quizzes[index].id);
+            });
+    };
+
+
+    const handleCancel = () => {
+        setEditIndex(null); // Reset edit state on cancel
     };
 
     useEffect(() => {
@@ -174,25 +147,118 @@ export default function AdminPage() {
                 newChartInstance.destroy();
             }
         };
+
     }, [chartKey, chartData]);
+
 
     const [isQuizFormOpen, setQuizFormOpen] = useState(false);
 
-  const handleQuizFormToggle = () => {
-    setQuizFormOpen(!isQuizFormOpen);
-  };
+    const handleQuizFormToggle = () => {
+        setQuizFormOpen(!isQuizFormOpen);
+    };
 
-  const handleQuizRegister = (newQuizzes) => {
-    // Add logic to update quizData with the new quizzes
-    const updatedQuizData = [...quizData, ...newQuizzes];
-    setQuizData(updatedQuizData);
-  };
+    const handleQuizRegister = (newQuizzes) => {
+        // Add logic to update quizData with the new quizzes
+        const updatedsetQuizzes = [...quizzes, ...newQuizzes];
+        setQuizzes(updatedsetQuizzes);
+    };
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const goMemberPage = () => {
-    navigate('/Member');
-};
+    const goMemberPage = () => {
+        navigate('/Member');
+    };
+
+    const gotoFullfillPage = () => {
+        navigate('/Fullfillment');
+    };
+
+    const handleDelete = (id) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        const idDto = {
+            id: id
+        };
+
+        axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/question/delete', idDto, config)
+            .then(response => {
+                console.log('삭제 완료 여부:', response.data);
+                // TODO: 삭제가 성공적으로 이루어졌을 때 어떤 동작을 할지 추가
+
+                // Uncomment the line below to reload the page after successful deletion
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('퀴즈 삭제 실패:', error);
+                console.log('서버에서 전송된 에러 메시지:', error.response.data);
+
+                console.log('id: ', id);
+                // TODO: 삭제 실패 시 어떤 동작을 할지 추가
+            });
+    };
+
+    const [members, setMembers] = useState([]);
+
+    useEffect(() => {
+        // Fetch member data from the server on component mount
+        axios.get('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/member/findAll')
+            .then((response) => {
+                // Assuming the response data is an array
+                setMembers(response.data.list);
+            })
+            .catch((error) => {
+                console.error('Error fetching member data:', error);
+            });
+    }, []); // Run only on component mount
+
+    const handleDeleteMember = (id) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        const idDto = {
+            id: id
+        };
+
+        axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/member/delete', idDto, config)
+            .then(response => {
+                console.log('삭제 완료 여부:', response.data);
+                // TODO: 삭제가 성공적으로 이루어졌을 때 어떤 동작을 할지 추가
+
+                // Uncomment the line below to reload the page after successful deletion
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('퀴즈 삭제 실패:', error);
+                console.log('서버에서 전송된 에러 메시지:', error.response.data);
+
+                console.log('id: ', id);
+                // TODO: 삭제 실패 시 어떤 동작을 할지 추가
+            });
+    };
+
+    /* 이행률 리스트 */
+
+    const [topFive, setTopFive] = useState([]);
+
+    useEffect(() => {
+        // Fetch top five data from the server
+        axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/fulfillment/topFive')
+            .then(response => {
+                console.log('Fulfillment data:', response.data.topFive);
+                setTopFive(response.data.topFive);
+            })
+            .catch(error => {
+                console.error('Error fetching top five data:', error);
+            });
+    }, []); // Run only on component mount
+    
 
     return (
         <div className="rounded-bg">
@@ -282,43 +348,25 @@ export default function AdminPage() {
                         <table className="rounded-table">
                             <thead>
                                 <tr>
-                                    <th className="th-no">순위</th>
-                                    <th className="th-name">이름</th>
-                                    <th className="th-region">지역</th>
-                                    <th className="th-percentage">이행률</th>
+                                    <th>순위</th>
+                                    <th>이름</th>
+                                    <th>지역</th>
+                                    <th>이행률</th>
+                                    <th>삭제</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>김관용</td>
-                                    <td>경북</td>
-                                    <td>80.5%</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>박원순</td>
-                                    <td>서울</td>
-                                    <td>80.3%</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>박준영</td>
-                                    <td>경북</td>
-                                    <td>80.0%</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>염홍철</td>
-                                    <td>대전</td>
-                                    <td>76.6%</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>강운태</td>
-                                    <td>광주</td>
-                                    <td>75.9%</td>
-                                </tr>
+                                {topFive.map((item, index) => (
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>{item.name}</td>
+                                        <td>{item.region}</td>
+                                        <td>{item.fulfillment}%</td>
+                                        <td>
+                                            <button className='submit-deny2'>X</button>
+                                        </td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>
@@ -327,17 +375,21 @@ export default function AdminPage() {
 
             {/* 차트 새로고침 버튼 */}
             <div style={{ padding: '10px', display: 'flex', justifyContent: 'center', marginTop: '140px' }}>
-                <button className='refresh-chart btn-0' onClick={goMemberPage} style={{ marginLeft: '0px' }}>회원 관리 </button>
-                <button className='refresh-chart btn-0' onClick={toggleChartData} style={{ marginLeft: '150px' }}>Refresh Chart</button>
-                <button className='refresh-chart btn-0' onClick={handleQuizFormToggle} style={{ marginLeft: '150px' }}>퀴즈 생성 </button>
+                <button className='button-85' onClick={gotoFullfillPage} style={{ marginLeft: '0px' }}>시장 관리 </button>
+
+                <button className='button-85' onClick={goMemberPage} style={{ marginLeft: '150px' }}>회원 관리 </button>
+                <button className='button-85' onClick={toggleChartData} style={{ marginLeft: '150px' }}>Refresh Chart</button>
+                <button className='button-85' onClick={handleQuizFormToggle} style={{ marginLeft: '150px' }}>퀴즈 생성 </button>
+
+                <button className='button-85' onClick={gotoFullfillPage} style={{ marginLeft: '150px' }}>이행률 관리 </button>
             </div>
 
-{/* Render QuizForm as a popup if isQuizFormOpen is true */}
-{isQuizFormOpen && (
-        <div className="popup-overlay">
-          <QuizForm onClose={handleQuizFormToggle} onRegister={handleQuizRegister} />
-        </div>
-      )}
+            {/* Render QuizForm as a popup if isQuizFormOpen is true */}
+            {isQuizFormOpen && (
+                <div className="popup-overlay">
+                    <QuizForm onClose={handleQuizFormToggle} onRegister={handleQuizRegister} />
+                </div>
+            )}
 
 
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '50px' }}>
@@ -347,87 +399,29 @@ export default function AdminPage() {
                     <table className="rounded-table" style={{ width: '850px' }}>
                         <thead>
                             <tr>
-                                <th>회원가입 신청 일자</th>
                                 <th>아이디</th>
+                                <th>이름</th>
                                 <th>닉네임</th>
                                 <th>전화번호</th>
                                 <th>주민등록번호</th>
                                 <th>주소</th>
-                                <th>승인</th>
                                 <th>삭제</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>2023-11-27 20:39:10</td>
-                                <td>1x1x17</td>
-                                <td>닉닉</td>
-                                <td>010-1111-1111</td>
-                                <td>201111-2077777</td>
-                                <td>경북</td>
-                                <td>
-                                    <button className='submit-deny'>승인</button>
-                                </td>
-                                <td>
-                                    <button className='submit-deny'>거절</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2023-11-27 20:39:00</td>
-                                <td>2x2x27</td>
-                                <td>믹믹</td>
-                                <td>010-1111-2222</td>
-                                <td>202222-2077777</td>
-                                <td>광주</td>
-                                <td>
-                                    <button className='submit-deny'>승인</button>
-                                </td>
-                                <td>
-                                    <button className='submit-deny'>거절</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2023-11-27 20:20:50</td>
-                                <td>3x3x37</td>
-                                <td>긱긱</td>
-                                <td>010-1111-3333</td>
-                                <td>2033333-2077777</td>
-                                <td>경북</td>
-                                <td>
-                                    <button className='submit-deny'>승인</button>
-                                </td>
-                                <td>
-                                    <button className='submit-deny'>거절</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2023-11-27 20:10:24</td>
-                                <td>4x4x47</td>
-                                <td>틱틱</td>
-                                <td>010-1111-4444</td>
-                                <td>204444-2077777</td>
-                                <td>수원</td>
-                                <td>
-                                    <button className='submit-deny'>승인</button>
-                                </td>
-                                <td>
-                                    <button className='submit-deny'>거절</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2023-11-27 20:00:13</td>
-                                <td>5X5X57</td>
-                                <td>픽픽</td>
-                                <td>010-1111-5555</td>
-                                <td>2055555-2077777</td>
-                                <td>서울</td>
-                                <td>
-                                    <button className='submit-deny'>승인</button>
-                                </td>
-                                <td>
-                                    <button className='submit-deny'>거절</button>
-                                </td>
-                            </tr>
+                            {members.map((member, index) => (
+                                <tr>
+                                    <td>{member.id}</td>
+                                    <td>{member.name}</td>
+                                    <td>{member.nickname}</td>
+                                    <td>{member.phone}</td>
+                                    <td>{member.registNum}</td>
+                                    <td>{member.address}</td>
+                                    <td>
+                                        <button className='submit-deny' onClick={() => handleDeleteMember(member.id)}>삭제</button>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
@@ -438,7 +432,7 @@ export default function AdminPage() {
                         <table className="rounded-table" style={{ width: '900px' }}>
                             <thead>
                                 <tr>
-                                    <th>생성 일자</th>
+                                    <th>ID</th>
                                     <th>퀴즈 내용</th>
                                     <th>보기 1</th>
                                     <th>보기 2</th>
@@ -450,27 +444,27 @@ export default function AdminPage() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {quizData.map((row, index) => (
-                                    <tr key={index}>
-                                        <td>{editMode ? <input type="text" placeholder={editedRow.createDate} style={{width:'110px'}} /> : row.createDate}</td>
-                                        <td>{editMode ? <input type="text" placeholder={editedRow.quizContent} style={{width:'150px'}} /> : row.quizContent}</td>
-                                        <td>{editMode ? <input type="text" placeholder={editedRow.option1} style={{width:'50px'}} /> : row.option1}</td>
-                                        <td>{editMode ? <input type="text" placeholder={editedRow.option2} style={{width:'50px'}} /> : row.option2}</td>
-                                        <td>{editMode ? <input type="text" placeholder={editedRow.option3} style={{width:'50px'}} /> : row.option3}</td>
-                                        <td>{editMode ? <input type="text" placeholder={editedRow.option4} style={{width:'50px'}} /> : row.option4}</td>
-                                        <td>{editMode ? <input type="text" placeholder={editedRow.correctAnswer} style={{width:'50px'}} /> : row.correctAnswer}</td>
+                                {quizzes.map((quiz, index) => (
+                                    <tr key={quiz.id}>
+                                        <td>{editIndex === index ? <input type="text" style={{ width: '10px' }} value={quiz.id} disabled /> : quiz.id}</td>
+                                        <td>{editIndex === index ? <input type="text" style={{ width: '150px' }} value={quiz.content} onChange={(e) => setQuizzes(prev => [...prev.slice(0, index), { ...prev[index], content: e.target.value }, ...prev.slice(index + 1)])} /> : quiz.content}</td>
+                                        <td>{editIndex === index ? <input type="text" style={{ width: '50px' }} value={quiz.option1} onChange={(e) => setQuizzes(prev => [...prev.slice(0, index), { ...prev[index], option1: e.target.value }, ...prev.slice(index + 1)])} /> : quiz.option1}</td>
+                                        <td>{editIndex === index ? <input type="text" style={{ width: '50px' }} value={quiz.option2} onChange={(e) => setQuizzes(prev => [...prev.slice(0, index), { ...prev[index], option2: e.target.value }, ...prev.slice(index + 1)])} /> : quiz.option2}</td>
+                                        <td>{editIndex === index ? <input type="text" style={{ width: '50px' }} value={quiz.option3} onChange={(e) => setQuizzes(prev => [...prev.slice(0, index), { ...prev[index], option3: e.target.value }, ...prev.slice(index + 1)])} /> : quiz.option3}</td>
+                                        <td>{editIndex === index ? <input type="text" style={{ width: '50px' }} value={quiz.option4} onChange={(e) => setQuizzes(prev => [...prev.slice(0, index), { ...prev[index], option4: e.target.value }, ...prev.slice(index + 1)])} /> : quiz.option4}</td>
+                                        <td>{editIndex === index ? <input type="text" style={{ width: '50px' }} value={quiz.answer} onChange={(e) => setQuizzes(prev => [...prev.slice(0, index), { ...prev[index], answer: e.target.value }, ...prev.slice(index + 1)])} /> : quiz.answer}</td>
                                         <td>
-                                            {editMode ? (
+                                            {editIndex === index ? (
                                                 <>
-                                                    <button className='submit-deny2' onClick={handleSaveClick}>저장</button>
-                                                    <button className='submit-deny2' onClick={handleCancelClick}>취소</button>
+                                                    <button className='submit-deny2' onClick={() => handleSave(index)}>저장</button>
+                                                    <button className='submit-deny2' onClick={handleCancel}>취소</button>
                                                 </>
                                             ) : (
-                                                <button className='submit-deny2' onClick={() => handleEditClick(row)}>수정</button>
+                                                <button className='submit-deny2' onClick={() => handleEdit(index)}>수정</button>
                                             )}
                                         </td>
                                         <td>
-                                            <button className='submit-deny2'>삭제</button>
+                                            <button className='submit-deny2' onClick={() => handleDelete(quiz.id)}>삭제</button>
                                         </td>
                                     </tr>
                                 ))}

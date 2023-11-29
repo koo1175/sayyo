@@ -13,6 +13,10 @@ export default function BoardWrite() {
     };
 
     const Register = () => {
+        if (title.trim() === '' || content.trim() === '') {
+            alert("제목과 내용을 모두 작성해 주세요.");
+            return; // Prevent further execution if either title or content is empty
+        }
 
         const memberDto = {
             memberId:"zxc",
@@ -81,7 +85,7 @@ export default function BoardWrite() {
             <textarea value={content} onChange={handleContentChange} style={{ marginLeft: 10, width: '780px', height: '330px', fontSize: 20 }} />
             <div style={{ marginLeft: '720px', fontSize: 20 }}>({content.length}/400)</div>
             <div style={{ display: 'flex', justifyContent: 'space-between', width: '200px', margin: '20px' }}>
-                <button style={{ backgroundColor: '#7FBDF6', color: 'white', fontWeight: 'bold', borderRadius: '5px', padding: '10px 20px' }}>취소</button>
+                <button onClick={gotoListPage} style={{ backgroundColor: '#7FBDF6', color: 'white', fontWeight: 'bold', borderRadius: '5px', padding: '10px 20px' }}>취소</button>
                 <button onClick={Register} style={{ backgroundColor: '#7FBDF6', color: 'white', fontWeight: 'bold', borderRadius: '5px', padding: '10px 20px' }}>작성</button>
             </div>
             <div style={{ height: '150px' }} />
