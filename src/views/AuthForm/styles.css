@@ -1,16 +1,16 @@
 .authButton {
-    background-color: #909090;
-    color: #fff;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    margin-left: 10px;
-  }
-  
-  .authButton:hover {
-    background-color: #4399FF;
-  }
-  
-  .authButton.authVerified {
-    background-color: #4399FF;
-  }
+  background-color: #909090;
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.authButton:hover {
+  background-color: #4399FF;
+}
+
+.authButton.authVerified {
+  background-color: #4399FF;
+}

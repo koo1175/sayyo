@@ -14,8 +14,9 @@ function boldText(text, word) {
     return text.replace(regex, `<strong>${word}</strong>`);
 }
 
-const ShowRealTimeArticles = () => {
-    const [search, setSearch] = useState("오세훈 시장");
+const ShowRealTimeArticles = ({ politicianName }) => {
+    console.log('받아온 politicianName값 : ',politicianName);
+    const [search, setSearch] = useState(`${politicianName} 시장`);
     const [newsData, setNewsData] = useState([]);
 
     const config = {
@@ -60,7 +61,7 @@ const ShowRealTimeArticles = () => {
                                 <p style={{ color: 'gray' }}>ㆍ{news.wrotetime}ㆍ네이버뉴스</p>
                             </div>
                             <div>
-                                <p style={{ textAlign: 'left', fontSize: '16px', color: '#0042ED', marginBottom: '-5px' }} dangerouslySetInnerHTML={{ __html: boldText(shortenText(news.title, 40), '오세훈 시장') }}></p>
+                                <p style={{ textAlign: 'left', fontSize: '16px', color: '#0042ED', marginBottom: '-5px' }} dangerouslySetInnerHTML={{ __html: boldText(shortenText(news.title, 40), search) }}></p>
                                 <p style={{ textAlign: 'left', fontSize: '15px' }}>{news.content}</p>
                             </div>
                         </div>

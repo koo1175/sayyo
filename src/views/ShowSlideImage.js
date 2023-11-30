@@ -4,9 +4,9 @@ import NewsSlider from './NewsSlider';
 
 
 const ShowSlideImage = () => {
-    const [search, setSearch] = useState("오세훈 시장");
-    const [search2, setSearch2] = useState("이재준 시장");
-    const [search3, setSearch3] = useState("의정부 소식");
+    const [search, setSearch] = useState("선문대학교");
+    const [search2, setSearch2] = useState("경기 사건사고");
+    const [search3, setSearch3] = useState("경기도 행사");
     const [newsData, setNewsData] = useState([]);
     const [newsData2, setNewsData2] = useState([]);
     const [newsData3, setNewsData3] = useState([]);

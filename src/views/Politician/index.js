@@ -17,7 +17,7 @@ export default function Politician() {
   const text = location?.state?.text || '기본값'; //Gyeonggi.js에서 받아온 데이터. 시 이름이 들어가 있음
   const navigate = useNavigate();
   const data = location?.state?.data || '기봉이'; //Test.js에서 받아온 데이터. DB에서 받아온 데이터
-
+  // console.log('data :',data);
   useEffect(() => {
     console.log('Politican.js text값 -> ', text);
     if (data === '기봉이') {
@@ -26,8 +26,7 @@ export default function Politician() {
   }, [data]);
 
   if (data) {
-    console.log('Politican.js data값 -> ', data);
-    console.log('-> -> ', data.education);
+    //console.log('Politican.js data값 -> ', data);
   }
   let formattedBirth = data.birth ? data.birth.substring(0, 10) : '';
 
@@ -208,15 +207,15 @@ export default function Politician() {
         {showImage3 && <img src={`/img/${text}3.png`} alt="설명" style={{ position: 'absolute', top: '900px', left: '100px', width: '1000px' }} />}
         <div style={{marginLeft:'-350px'}}>
         {showRealTimeArticles &&
-          <ShowRealTimeArticles />
+          <ShowRealTimeArticles politicianName={data.name}/>
         }
         </div>
 
-        {/* {selectedButton === '댓글' &&
-          <div >
+        {selectedButton === '댓글' &&
+          <div style={{marginLeft:'-450px'}}>
             <Reply text={text} />
           </div>
-        } */}
+        }
         <div style={{ height: '200px' }} />
       </div>
         <div>

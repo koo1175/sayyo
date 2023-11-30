@@ -59,7 +59,7 @@ function NewsSlider({ newsData, newsData2, newsData3 }) {
 
     return (
         <div style={{ width: '800px', marginLeft: '200px' }}>
-            <h2 style={{ textAlign: 'center' }}>시장행보</h2>
+            <h2 style={{ textAlign: 'center' }}>지역소식</h2>
             <Slider {...settings}>
                 {newsData.map((newsItem, index) => (
                     <div key={index} style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -70,7 +70,7 @@ function NewsSlider({ newsData, newsData2, newsData3 }) {
                     </div>
                 ))}
             </Slider>
-            <h2 style={{ textAlign: 'center' }}>지역소식</h2>
+            <h2 style={{ textAlign: 'center' }}>사건사고</h2>
             <Slider {...settings}>
                 {newsData2.map((newsItem, index) => (
                     <div key={index} style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -81,7 +81,7 @@ function NewsSlider({ newsData, newsData2, newsData3 }) {
                     </div>
                 ))}
             </Slider>
-            <h2 style={{ textAlign: 'center' }}>사건사고</h2>
+            <h2 style={{ textAlign: 'center' }}>지역행사</h2>
             <Slider {...settings}>
                 {newsData3.map((newsItem, index) => (
                     <div key={index} style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

@@ -2,6 +2,7 @@ import * as React from 'react';
 import {BrowserRouter, Link, Route, Routes} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -9,6 +10,9 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import AdminPage from '../AdminPage';
 import './Search.css';
 import AuthForm from "../AuthForm";
+import Fullfillment from '../AdminPage/Fullfillment';
+import Member from '../AdminPage/Member'
+
 
 import Main from "../Main";
 import OrganizationChart from "../OrganizationChart";
@@ -48,6 +52,42 @@ import Chat from '../Chat';
 import { ChatProvider } from '../ChatContext';
 import Politician from '../Politician';
 
+// 공통 헤더 렌더링 함수
+const renderCommonHeader = (currentDateTime) => (
+    <div>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '55px', marginBottom: '10px' }}>
+            <Link to="/Main">
+                <img alt="sayoLogo" src="/img/sayoLogo.png" height={80} />
+            </Link>
+        </div>
+        <div style={{ marginTop: '-75px', marginRight: '-200px' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-start', fontSize: '20px' }}>
+                <Link to="/AdminPage" style={{ textDecoration: 'none', marginTop: '-25px', marginLeft: '-200px', padding: '35px', color: '#444444', fontWeight: 'bolder' }}>
+                    관리자 모드
+                </Link>
+            </div>
+            <div style={{ marginTop: '-65px', fontSize: '20px', marginLeft: '380px' }}>
+                <Link to="/OrganizationChart" style={{ textDecoration: 'none', marginRight: '150px', marginLeft: '-200px', color: '#444444', fontWeight: 'bolder' }}>
+                    조직도
+                </Link>
+                <Link to="/Board" style={{ textDecoration: 'none', color: '#444444', fontWeight: 'bolder' }}>게시판</Link>
+                <Link to="/Community" style={{ textDecoration: 'none', marginLeft: '250px', marginRight: '-150px', color: '#444444', fontWeight: 'bolder' }}>커뮤니티</Link>
+                <Link to="/AboutUs" style={{ textDecoration: 'none', marginLeft: '250px', color: '#444444', fontWeight: 'bolder' }}>AboutUs</Link>
+                <span className='admin-clock' style={{ marginLeft: '100px' }}>{currentDateTime.toLocaleDateString()} {currentDateTime.toLocaleTimeString()}</span>
+            </div>
+        </div>
+    </div>
+);
+
+// 페이지 설정 객체 배열
+const pageConfigs = [
+    { path: '/AdminPage', element: <AdminPage /> },
+    { path: '/Fullfillment', element: <Fullfillment /> },
+    { path: '/Member', element: <Member /> },
+];
+
+
+const localizer = momentLocalizer(moment);
 
 export default function Navigation() {
 
@@ -159,45 +199,22 @@ export default function Navigation() {
         );
     }
 
-    const isAdminPage = window.location.pathname === '/AdminPage';
-    // If it's the home page, return null to render nothing
-    if (isAdminPage) {
+    // 현재 페이지에 대한 설정 찾기
+    const currentPageConfig = pageConfigs.find(config => window.location.pathname === config.path);
+
+    // 만약 설정이 존재한다면 해당 페이지 렌더링
+    if (currentPageConfig) {
         return (
             <BrowserRouter>
                 <div style={{ marginTop: '-30px', marginBottom: '-30px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '55px', marginBottom: '10px' }}>
-                        <Link to="/Main">
-                            <img
-                                alt="sayoLogo"
-                                src="/img/sayoLogo.png"
-                                height={80}
-                            />
-                        </Link>
-                    </div>
-                    <div style={{ marginTop: '-75px', marginRight: '-200px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'flex-start', fontSize: '20px' }}>
-                            <Link to="/AdminPage" style={{ textDecoration: 'none', marginTop: '-25px', marginLeft: '-200px', padding: '35px', color: '#444444', fontWeight: 'bolder' }}>
-                                관리자 모드
-                            </Link>
-                        </div>
-                        <div style={{ marginTop: '-65px', fontSize: '20px', marginLeft: '380px' }}>
-                            <Link to="/OrganizationChart" style={{ textDecoration: 'none', marginRight: '150px', marginLeft: '-200px', color: '#444444', fontWeight: 'bolder' }}>
-                                조직도
-                            </Link>
-                            <Link to="/Board" style={{ textDecoration: 'none', color: '#444444', fontWeight: 'bolder' }}>게시판</Link>
-                            <Link to="/Community" style={{ textDecoration: 'none', marginLeft: '250px', marginRight: '-150px', color: '#444444', fontWeight: 'bolder' }}>커뮤니티</Link>
-                            <Link to="/AboutUs" style={{ textDecoration: 'none', marginLeft: '250px', color: '#444444', fontWeight: 'bolder' }}>AboutUs</Link>
-                            <span className='admin-clock' style={{ marginLeft: '100px' }}>{currentDateTime.toLocaleDateString()} {currentDateTime.toLocaleTimeString()}</span>
-                        </div>
-                    </div>
+                    {renderCommonHeader(currentDateTime)}
+                    <Routes>
+                        <Route {...currentPageConfig} />
+                    </Routes>
                 </div>
-                <Routes>
-                    <Route path="/AdminPage" element={<AdminPage />} />
-                </Routes>
             </BrowserRouter>
         );
     }
-
     return (
         <div>
             <BrowserRouter>

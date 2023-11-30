@@ -6,9 +6,9 @@ import AnimatedProgressBar from "../AnimatedProgressBar";
 
 export default function ResultOfMok({ isOpen, onClose,percentages }) {
   console.log('ResultOfMock 페이지 -> 1번후보 득표율 : ', percentages[0])
-  console.log('ResultOfMock 페이지 -> 2번후보 득표율 : ', percentages[1])
-  console.log('ResultOfMock 페이지 -> 3번후보 득표율 : ', percentages[2])
-  console.log('ResultOfMock 페이지 -> 4번후보 득표율 : ', percentages[3])
+  // console.log('ResultOfMock 페이지 -> 2번후보 득표율 : ', percentages[1])
+  // console.log('ResultOfMock 페이지 -> 3번후보 득표율 : ', percentages[2])
+  // console.log('ResultOfMock 페이지 -> 4번후보 득표율 : ', percentages[3])
 
 
   const popupStyle = {
