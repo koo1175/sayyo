@@ -182,6 +182,9 @@ export default function Politician() {
             학력 : {data.education}<br />
             경력 : {data.career}<br />
           </div>
+          <div>
+          <img src={imageSrc} onClick={toggleLike} />
+        </div>
         </div>
 
         <img src="/img/유튜브로고.png" alt="설명" style={{ position: 'absolute', top: '500px', left: '900px', width: '40px', height: '40px' }} onClick={youtube} />
