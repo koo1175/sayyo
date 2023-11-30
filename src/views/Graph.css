@@ -1,0 +1,12 @@
+
+.chart-container {
+    flex-direction: column;
+    padding-top: 100px;
+}
+
+.chart-container2 {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 0px;
+    padding:20px;
+  }

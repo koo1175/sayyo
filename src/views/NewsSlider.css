@@ -1,0 +1,18 @@
+/* .slick-prev,
+.slick-next {
+  display: none !important;
+} */
+
+/* 커스텀 화살표 이미지 설정 */
+.slick-next:before,
+.slick-prev:before {
+  font-family: 'slick';
+  font-size: 30px;
+  line-height: 1;
+  color: white;
+  opacity: 0.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: none; /* Unicode 화살표 코드 */
+}
+
