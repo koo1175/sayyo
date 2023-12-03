@@ -1,24 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Admin.css';
+import { useNavigate } from 'react-router-dom';
+import FulfillForm from './FulfillForm';
+
+const Minus = ({ onClick }) => (
+    <input
+        type='button'
+        onClick={onClick}
+        value='-'
+        style={{ fontSize: '15px', width: '20px', padding: '1px', cursor: 'pointer', color: '#444', borderRadius: '15px' }}
+    />
+);
+
+const Plus = ({ onClick }) => (
+    <input
+        type='button'
+        onClick={onClick}
+        value='+'
+        style={{ fontSize: '15px', width: '20px', padding: '1px', cursor: 'pointer', color: '#444', borderRadius: '15px' }}
+    />
+);
+
 
 const Fullfillment = () => {
     const [topFive, setTopFive] = useState([]);
     const [editIndex, setEditIndex] = useState(null);
     const [loading, setLoading] = useState(true);
     const [showPopup, setShowPopup] = useState(false);
-    const [newItem, setNewItem] = useState({
-        region: '',
-        name: '',
-        planNum: '',
-        completeNum: '',
-        tryNum: '',
-        regionDev: '',
-        fulfillment: '',
-    });
+    
 
-    const handleEdit = (index) => {
-        setEditIndex(index);
+    const navigate = useNavigate();
+
+    const gotoBack = () => {
+        navigate('/AdminPage');
     };
 
     const handleSave = (index) => {
@@ -55,7 +70,10 @@ const Fullfillment = () => {
         axios
             .get('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/fulfillment/findAll')
             .then(response => {
-                setTopFive(response.data.list);
+                const sortedData = response.data.list.sort((a, b) => b.fulfillment - a.fulfillment);
+                setTopFive(sortedData);
+
+
                 setLoading(false);
             })
             .catch(error => {
@@ -64,56 +82,17 @@ const Fullfillment = () => {
             });
     };
 
-    const handleCancel = () => {
-        setEditIndex(null);
-    };
-
     const handlePopupOpen = () => {
         setShowPopup(true);
     };
 
-    const handlePopupClose = () => {
-        setShowPopup(false);
-    };
-
-    const handlePopupSave = () => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        };
-
-        const newItemData = {
-            name: newItem.name,
-            region: newItem.region,
-            planNum: newItem.planNum,
-            completeNum: newItem.completeNum,
-            tryNum: newItem.tryNum,
-            regionDev: newItem.regionDev,
-        };
-
-        axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/fulfillment/regist', newItemData, config)
-            .then(response => {
-                console.log('New item registered:', response.data);
-
-                // After successful registration, reload the data
-                reloadData();
-                setShowPopup(false); // Close the popup
-            })
-            .catch(error => {
-                console.error('Error registering new item:', error);
-            });
-    };
-
-    const handlePopupInputChange = (key, value) => {
-        setNewItem((prevNewItem) => ({ ...prevNewItem, [key]: value }));
-    };
 
     useEffect(() => {
         axios
             .get('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/fulfillment/findAll')
             .then((response) => {
-                setTopFive(response.data.list);
+                const sortedData = response.data.list.sort((a, b) => b.fulfillment - a.fulfillment);
+                setTopFive(sortedData);
                 setLoading(false);
             })
             .catch((error) => {
@@ -147,26 +126,30 @@ const Fullfillment = () => {
 
     };
 
-    const initialFill = {
-        name: newItem.name,
-        region: newItem.region,
-        planNum: newItem.planNum,
-        completeNum: newItem.completeNum,
-        tryNum: newItem.tryNum,
-        regionDev: newItem.regionDev,
+    const handleCount = (type, index, field) => {
+        const newTopFive = [...topFive];
+        const inputState = {
+            'plus': 1,
+            'minus': -1
+        };
+
+        if (type === 'plus' || type === 'minus') {
+            newTopFive[index][field] = (parseInt(newTopFive[index][field], 10) + inputState[type]).toString();
+        }
+
+        setTopFive(newTopFive);
     };
 
-    const [fill, setFill] = useState([initialFill]);
+    const [fulfillments, setFulfillments] = useState([]);
 
-    const handleInput = (index, event) => {
-        const { name, value } = event.target;
-        const newFill = [...fill];
-        newFill[index][name] = value;
-        setFill(newFill);
+    const handlePopupClose = () => {
+        setShowPopup(false);
     };
 
-    const handleAddFullfillSet = () => {
-        setFill((prevFill) => [...prevFill, { ...initialFill }]);
+    const handleFulfillRegister = (newFulfillments) => {
+        // Add logic to update fulfillmentData with the new fulfillments
+        const updatedFulfillments = [...fulfillments, ...newFulfillments];
+        setFulfillments(updatedFulfillments);
     };
 
 
@@ -180,39 +163,22 @@ const Fullfillment = () => {
 
             {/* Popup */}
             {showPopup && (
-                <div className="popup">
-                    <div className="popup-content">
-                        <span className="close" onClick={handlePopupClose}>
-                            &times;
-                        </span>
-                        <h3>새로운 항목 추가</h3>
-                        <div className='thisSet'>
-                        <label style={{ fontSize: '15px', marginRight: '10px' }}>이름:</label>
-                        <input type="text" style={{ width: '50px' }} value={newItem.name} onChange={(e) => handlePopupInputChange('name', e.target.value)} />
-                        <label style={{ fontSize: '15px', marginRight: '10px' }}>지역:</label>
-                        <input type="text" style={{ width: '50px' }} value={newItem.region} onChange={(e) => handlePopupInputChange('region', e.target.value)} />
-                        <label style={{ fontSize: '15px', marginRight: '10px' }}>공약 수:</label>
-                        <input type="text" style={{ width: '50px' }} value={newItem.planNum} onChange={(e) => handlePopupInputChange('planNum', e.target.value)} />
-                        <label style={{ fontSize: '15px', marginRight: '10px' }}>완료:</label>
-                        <input type="text" style={{ width: '50px' }} value={newItem.completeNum} onChange={(e) => handlePopupInputChange('completeNum', e.target.value)} />
-                        <label style={{ fontSize: '15px', marginRight: '10px' }}>시행 중:</label>
-                        <input type="text" style={{ width: '50px' }} value={newItem.tryNum} onChange={(e) => handlePopupInputChange('tryNum', e.target.value)} />
-                        <label style={{ fontSize: '15px', marginRight: '10px' }}>지역 발전도:</label>
-                        <input type="text" style={{ width: '50px' }} value={newItem.regionDev} onChange={(e) => handlePopupInputChange('regionDev', e.target.value)} />
-                        <button className="submit-deny3" onClick={handlePopupSave}>확인</button>
-                        </div>
-
-                        <button className="submit-deny3" onClick={handleAddFullfillSet} style={{ marginLeft: '15px' }}>
-                            추가
-                        </button>
-                    </div>
+                <div className="popup-overlay">
+                    <FulfillForm onClose={handlePopupClose} onRegister={handleFulfillRegister} reloadData={reloadData} />
                 </div>
             )}
 
-            <h3 className="member-heading" style={{ color: 'white' }}>
-                이행률 관리
-            </h3>
-
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <h3 className="member-heading" style={{ color: 'white', flexBasis: '40%', marginLeft: '650px' }}>
+                    이행률 관리
+                </h3>
+                {/* 뒤로가기 버튼 */}
+                <div style={{ flexBasis: '60%' }}>
+                    <button onClick={gotoBack} style={{ backgroundColor: '#555454', color: '#fff', marginLeft: '-150px', marginTop: '20px' }}>
+                        <img src='/img/뒤로가기.png' alt='뒤로가기' width='20px' />
+                    </button>
+                </div>
+            </div>
             {/* Loading state */}
             {loading && <p>Loading...</p>}
 
@@ -225,7 +191,7 @@ const Fullfillment = () => {
                         <th>공약 수</th>
                         <th>완료</th>
                         <th>시행 중</th>
-                        <th>지역 발전도</th>
+                        <th>발전도</th>
                         <th>이행률</th>
                         <th>수정</th>
                         <th>삭제</th>
@@ -237,26 +203,53 @@ const Fullfillment = () => {
                             <td>{index + 1}</td>
                             <td>{data.name}</td>
                             <td>{data.region}</td>
-                            <td>{editIndex === index ? <input type="text" style={{ width: '25px' }} value={data.planNum} onChange={(e) => handleInputChange(index, 'planNum', e.target.value)} /> : data.planNum}</td>
-                            <td>{editIndex === index ? <input type="text" style={{ width: '25px' }} value={data.completeNum} onChange={(e) => handleInputChange(index, 'completeNum', e.target.value)} /> : data.completeNum}</td>
-                            <td>{editIndex === index ? <input type="text" style={{ width: '25px' }} value={data.tryNum} onChange={(e) => handleInputChange(index, 'tryNum', e.target.value)} /> : data.tryNum}</td>
-                            <td>{editIndex === index ? <input type="text" style={{ width: '25px' }} value={data.regionDev} onChange={(e) => handleInputChange(index, 'regionDev', e.target.value)} /> : data.regionDev}</td>
+                            <td>
+                                <Minus onClick={() => handleCount('minus', index, 'planNum')} />
+                                <input
+                                    type="text"
+                                    style={{ width: '25px' }}
+                                    value={data.planNum}
+                                    onChange={(e) => handleInputChange(index, 'planNum', e.target.value)}
+                                />
+                                <Plus onClick={() => handleCount('plus', index, 'planNum')} />
+                            </td>
+                            <td>
+                                <Minus onClick={() => handleCount('minus', index, 'completeNum')} />
+                                <input
+                                    type="text"
+                                    style={{ width: '25px' }}
+                                    value={data.completeNum}
+                                    onChange={(e) => handleInputChange(index, 'completeNum', e.target.value)}
+                                />
+                                <Plus onClick={() => handleCount('plus', index, 'completeNum')} />
+                            </td>
+                            <td>
+                                <Minus onClick={() => handleCount('minus', index, 'tryNum')} />
+                                <input
+                                    type="text"
+                                    style={{ width: '25px' }}
+                                    value={data.tryNum}
+                                    onChange={(e) => handleInputChange(index, 'tryNum', e.target.value)}
+                                />
+                                <Plus onClick={() => handleCount('plus', index, 'tryNum')} />
+                            </td>
+                            <td>
+                                <Minus onClick={() => handleCount('minus', index, 'regionDev')} />
+                                <input
+                                    type="text"
+                                    style={{ width: '25px' }}
+                                    value={data.regionDev}
+                                    onChange={(e) => handleInputChange(index, 'regionDev', e.target.value)}
+                                />
+                                <Plus onClick={() => handleCount('plus', index, 'regionDev')} />
+                            </td>
+
                             <td>{data.fulfillment}%</td>
-                            <td style={{ width: '120px' }}>
-                                {editIndex === index ? (
-                                    <>
-                                        <button className="submit-deny2" onClick={() => handleSave(index)}>
-                                            저장
-                                        </button>
-                                        <button className="submit-deny2" onClick={handleCancel}>
-                                            취소
-                                        </button>
-                                    </>
-                                ) : (
-                                    <button className="submit-deny2" onClick={() => handleEdit(index)}>
-                                        수정
-                                    </button>
-                                )}
+                            <td>
+                                <button className="submit-deny2" onClick={() => handleSave(index)}>
+                                    수정
+                                </button>
+
                             </td>
                             <td>
                                 <button className="submit-deny" onClick={() => handleDelete(data.region)}>
@@ -267,7 +260,7 @@ const Fullfillment = () => {
                     ))}
                 </tbody>
             </table>
-        </div>
+        </div >
     );
 
     function handleInputChange(index, key, value) {
@@ -277,6 +270,8 @@ const Fullfillment = () => {
             return newTopFive;
         });
     }
+
+
 };
 
 export default Fullfillment;

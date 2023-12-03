@@ -1,62 +1,35 @@
-import { useLocation,useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './Politician.css';
 import { useState, useEffect } from 'react';
 import React from "react";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Search2 from './Search2';
+import ShowRealTimeArticles from '../ShowRealTimeArticles';
+import Reply from '../Reply';
+import axios from 'axios';
+import HeartImg from "../../img/heart_fill.png";
+import EmptyHeartImg from "../../img/heart_empty.png";
+import Chat from "../Chat";
 
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 3,
-  slidesToScroll: 1,
-  autoplay: true, // 자동 캐러셀
-  autoplaySpeed: 2000, // 자동 캐러셀 속도
-  arrows: true,
-};
-function SampleNextArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", background: "black" }}
-      onClick={onClick}
-    />
-  );
-}
-
-function SamplePrevArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", background: "black" }}
-      onClick={onClick}
-    />
-  );
-}
 export default function Politician() {
 
   const location = useLocation();
   const text = location?.state?.text || '기본값'; //Gyeonggi.js에서 받아온 데이터. 시 이름이 들어가 있음
   const navigate = useNavigate();
-  const data = location?.state?.data || '기봉이'; //Test.js에서 받아온 데이터. DB에서 받아온 데이터
+  const data = location?.state?.data || null; //Test.js에서 받아온 데이터. DB에서 받아온 데이터 
+  console.log('data test', data);
 
   useEffect(() => {
-    console.log('Politican.js text값 -> ', text);
-    if (data==='기봉이') {
-      navigate('/Test', { state: { text }, replace: true }); //데이터가 없으면 Test.js로 이동
+    if (!data) {
+      console.log('ㄱㅁㄸ');
+      navigate('/Test', { state: { text }, replace: true });
     }
-  }, [data]);
+  }, []);
 
-  if(data) {
-    console.log('Politican.js data값 -> ',data);
-    console.log('-> -> ',data.education);
+  let formattedBirth = '';
+  if (data) {
+    formattedBirth = data.birth ? data.birth.substring(0, 10) : '';
   }
-  let formattedBirth = data.birth ? data.birth.substring(0, 10) : '';
 
   const [selectedButton, setSelectedButton] = useState(null); //클릭된 버튼 빨간색으로 표시
 
@@ -71,84 +44,23 @@ export default function Politician() {
   const [showImage3, setShowImage3] = useState(false); //이행현황
 
   const [showRealTimeArticles, setShowRealTimeArticles] = useState(false); //실시간기사
-  const [showMajorArticles, setShowMajorArticles] = useState(false); //주요기사
 
-  const [comment, setComment] = useState('');
-  const [comments, setComments] = useState([
-    { id: 1, text: '첫 번째 댓글입니다.' },
-    { id: 2, text: '두 번째 댓글입니다.' },
-    { id: 3, text: '세 번째 댓글입니다.' },
-  ]);
-
-  const handleChange = (e) => {
-    setComment(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setComments([...comments, { id: Date.now(), text: comment }]);
-    setComment('');
-    // try {
-    //   // 백엔드 API에 댓글을 저장하는 요청을 보냅니다.
-    //   const response = await axios.post('/api/comments', { text: comment });
-    //   // DB에 저장된 댓글을 상태에 추가합니다.
-    //   setComments([...comments, response.data]);
-    //   // textarea를 비웁니다.
-    //   setComment('');
-    // } catch (error) {
-    //   console.error(error);
-    // }
-  };
-
-  // useEffect(() => {
-  //   const fetchComments = async () => {
-  //     try {
-  //       // 백엔드 API로부터 댓글을 가져오는 요청을 보냅니다.
-  //       const response = await axios.get('/api/comments');
-  //       // 가져온 댓글을 상태에 저장합니다.
-  //       setComments(response.data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   fetchComments();
-  // }, []);
-
-  const [articles, setArticles] = useState([]); //실시간기사 데이터
-
-  const handleData = (data) => {
-    const filteredData = data.map(item => ({
-      title: item.title,
-      content: item.content,
-      image: item.image,
-      link: item.link,
-      pressInfo: item.pressInfo,
-      time: item.time,
-    }));
-
-    //console.log('test', filteredData);
-    
-    setArticles(filteredData);
-  }
-  const [mainArticles, setmainArticles] = useState([
-    { title: '메인기사 제목', content: '메인기사1 내용', image: '/img/배경.png', link: 'https://naver.com' },
-  ]);
 
   const handleClick = (button) => {
+
+
     setSelectedButton(button);
     if (button === '공약') {
       setshowButton1(true); // 공약 버튼 클릭시 총괄현황, 공약가계부, 이행현황 버튼이 나오게
       setshowButton2(false); // 공약 버튼 클릭시 실시간기사, 주요기사 버튼은 안나오게
       setShowRealTimeArticles(false); // 공약 버튼 클릭시 실시간기사 안나오게
-      setShowMajorArticles(false); // 공약 버튼 클릭시 주요기사 안나오게
       handleDetailClick('총괄현황'); // 총괄현황이 기본으로 나오게
     } else if (button === '관련기사') {
       setshowButton1(false); // 관련기사 버튼 클릭시 총괄현황, 공약가계부, 이행현황 버튼은 안나오게
-      setshowButton2(true); // 관련기사 버튼 클릭시 실시간기사, 주요기사 버튼이 나오게
+      setShowRealTimeArticles(true);
       setShowImage1(false);
       setShowImage2(false);
       setShowImage3(false);
-      handleDetailClick('실시간기사'); // 실시간기사가 기본으로 나오게
     } else if (button === '댓글') {
       setshowButton1(false);
       setshowButton2(false);
@@ -156,7 +68,6 @@ export default function Politician() {
       setShowImage2(false);
       setShowImage3(false);
       setShowRealTimeArticles(false);
-      setShowMajorArticles(false);
     } else {
       setshowButton1(false);
       setshowButton2(false);
@@ -178,187 +89,139 @@ export default function Politician() {
       setShowImage2(false);
       setShowImage3(true);
     }
-    else if (button === '실시간기사') {
-      setShowRealTimeArticles(true);
-      setShowMajorArticles(false);
-      
-    }
-    else if (button === '주요기사') {
-      setShowRealTimeArticles(false);
-      setShowMajorArticles(true);
-    } else {
+    else {
       setShowImage1(false);
       setShowImage2(false);
       setShowImage3(false);
     }
   }
 
-  const youtube = () => {
-    alert('유튜브');
-  }
-  const twitter = () => {
-    alert('트위터');
-  }
-  const kakao = () => {
-    alert('카카오');
-  }
-  const naver = () => {
-    alert('네이버');
-  }
+  const [like, setLike] = useState(false);
+  const [imageSrc, setImageSrc] = useState('');
+
+  // 이미지 주소를 상태에 따라 변경하는 함수
+  const setImageBasedOnLike = () => {
+    if (like) {
+      setImageSrc(HeartImg); // 좋아요 상태일 때 이미지 주소 설정
+    } else {
+      setImageSrc(EmptyHeartImg); // 좋아요 상태가 아닐 때 이미지 주소 설정
+    }
+  };
+
+  // 좋아요 상태 변경 시 이미지 업데이트
+  useEffect(() => {
+    setImageBasedOnLike();
+  }, [like]);
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  // pLikeDto 객체를 생성
+  const pLikeDto = {
+    memberId: "koo", // 유저 아이디와
+    region: "수원"   // 지역 아이디를 넣어서 좋아요 기록이 있는지 확인
+    // 좋아요 : like, 싫어요 : dislike, 기록없음 : nothing 반환
+  };
 
 
+  useEffect(() => {
+    axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/plike/state', pLikeDto, config)
+      .then(response => {
+        console.log("좋아요 여부:", response.data);
+        if (response.data === "like") {
+          setLike(true)
+        } else {
+          setLike(false)
+        }
+      })
+      .catch(error => {
+        console.error("좋아요 상태 조회 실패:", error);
+      })
+  }, [])
+
+  // 좋아요 누를 때마다 상태 갱신
+  const toggleLike = async (e) => {
+    try {
+      const response = await axios.post(`https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/plike/like`, pLikeDto, config);
+      console.log("좋아요 요청");
+      setLike(!like);
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
+
+  const openLink = (url) => {
+    if(url) {
+      window.open(url, '_blank');
+    } else {
+      alert('링크가 없습니다.');
+    }
+  }
 
 
   return (
 
-    <div className="container">
-      <Search2 keyword={text} handleData={handleData} />
-
-      <img src="/img/야경.png" alt="설명" className="background-image" />
-      <img src={`/img/${text}시장.png`} alt="설명" style={{ position: 'absolute', top: '200px', left: '450px', width: '400px', height: '400px' }} />
-      <div className="overlay-text">{text}</div>
-      <div className="overlay-text2">
-        테스트테스트테스트 <br /><br />
-        <div className="small-text">
-          이름 : {data.name} <br />
-          출생 : {formattedBirth} <br />
-          소속 : {text} 시장<br />
-          학력 : {data.education}<br />
-          경력 : {data.career}<br />
-   
+    <div className="container"  >
+      <div style={{ width: '500px', height: '300px' }}>
+        <img src="/img/야경.png" alt="설명" className="background-image" />
+        <img src={`/img/${text}시장.png`} alt="설명" style={{ position: 'absolute', top: '200px', left: '50px', width: '400px', height: '400px' }} />
+        <div className="overlay-text">{text}</div>
+        <div className="overlay-text2">
+          테스트테스트테스트 <br /><br />
+          <div className="small-text">
+            이름 : {data ? data.name : '로딩 중...'} <br />
+            출생 : {data ? formattedBirth : '로딩 중...'} <br />
+            소속 : {text} 시장<br />
+            학력 : {data ? data.education : '로딩 중...'}<br />
+            경력 : {data ? data.career : '로딩 중...'}<br />
+          </div>
+          <div>
+            <img src={imageSrc} onClick={toggleLike} />
+          </div>
         </div>
+
+        <img src="/img/유튜브로고.png" alt="설명" style={{ position: 'absolute', top: '500px', left: '900px', width: '40px', height: '40px' }} onClick={() => openLink(data?.youtube)} />
+        <img src="/img/인스타그램로고.png" alt="설명" style={{ position: 'absolute', top: '500px', left: '970px', width: '40px', height: '40px' }} onClick={() => openLink(data?.instagram)} />
+        <img src="/img/카카오톡로고.png" alt="설명" style={{ position: 'absolute', top: '500px', left: '1040px', width: '40px', height: '40px', borderRadius: '0%' }} onClick={() => openLink(data?.kakao)} />
+        <img src="/img/네이버로고.png" alt="설명" style={{ position: 'absolute', top: '500px', left: '1110px', width: '40px', height: '40px', borderRadius: '0%' }} onClick={() => openLink(data?.blog)} />
       </div>
-
-      <img src="/img/유튜브로고.png" alt="설명" style={{ position: 'absolute', top: '500px', left: '1300px', width: '40px', height: '40px' }} onClick={youtube} />
-      <img src="/img/트위터로고.png" alt="설명" style={{ position: 'absolute', top: '500px', left: '1370px', width: '40px', height: '40px' }} onClick={twitter} />
-      <img src="/img/카카오톡로고.png" alt="설명" style={{ position: 'absolute', top: '500px', left: '1440px', width: '40px', height: '40px', borderRadius: '50%' }} onClick={kakao} />
-      <img src="/img/네이버로고.png" alt="설명" style={{ position: 'absolute', top: '500px', left: '1510px', width: '40px', height: '40px', borderRadius: '50%' }} onClick={naver} />
-
       <div>
-        <button className={`myButton ${selectedButton === '공약' ? 'selected' : ''}`} onClick={() => handleClick('공약')} style={{ position: 'absolute', top: '650px', left: '750px' }}>공약</button>
-        <button className={`myButton ${selectedButton === '관련기사' ? 'selected' : ''}`} onClick={() => handleClick('관련기사')} style={{ position: 'absolute', top: '650px', left: '950px' }}>관련기사</button>
-        <button className={`myButton ${selectedButton === '댓글' ? 'selected' : ''}`} onClick={() => handleClick('댓글')} style={{ position: 'absolute', top: '650px', left: '1150px' }}>댓글</button>
+        <button className={`myButton ${selectedButton === '공약' ? 'selected' : ''}`} onClick={() => handleClick('공약')} style={{ position: 'absolute', top: '650px', left: '350px' }}>공약</button>
+        <button className={`myButton ${selectedButton === '관련기사' ? 'selected' : ''}`} onClick={() => handleClick('관련기사')} style={{ position: 'absolute', top: '650px', left: '550px' }}>관련기사</button>
+        <button className={`myButton ${selectedButton === '댓글' ? 'selected' : ''}`} onClick={() => handleClick('댓글')} style={{ position: 'absolute', top: '650px', left: '750px' }}>댓글</button>
 
         {showButton1 &&
+          
           <div>
-            <button className={`myButton2 ${selectedDetailButton === '총괄현황' ? 'detailButton' : ''}`} onClick={() => handleDetailClick('총괄현황')} style={{ position: 'absolute', top: '750px', left: '700px' }}>총괄현황</button>
-            <button className={`myButton2 ${selectedDetailButton === '공약가계부' ? 'detailButton' : ''}`} onClick={() => handleDetailClick('공약가계부')} style={{ position: 'absolute', top: '750px', left: '910px' }}>공약가계부</button>
-            <button className={`myButton2 ${selectedDetailButton === '이행현황' ? 'detailButton' : ''}`} onClick={() => handleDetailClick('이행현황')} style={{ position: 'absolute', top: '750px', left: '1130px' }}>이행현황</button>
-          </div>
-        }
-        {showButton2 &&
-          <div>
-            <button className={`myButton2 ${selectedDetailButton === '실시간기사' ? 'detailButton' : ''}`} onClick={() => handleDetailClick('실시간기사')} style={{ position: 'absolute', top: '750px', left: '800px' }}>실시간기사</button>
-            <button className={`myButton2 ${selectedDetailButton === '주요기사' ? 'detailButton' : ''}`} onClick={() => handleDetailClick('주요기사')} style={{ position: 'absolute', top: '750px', left: '1050px' }}>주요기사</button>
+            <button className={`myButton2 ${selectedDetailButton === '총괄현황' ? 'detailButton' : ''}`} onClick={() => handleDetailClick('총괄현황')} style={{ position: 'absolute', top: '750px', left: '300px' }}>총괄현황</button>
+            <button className={`myButton2 ${selectedDetailButton === '공약가계부' ? 'detailButton' : ''}`} onClick={() => handleDetailClick('공약가계부')} style={{ position: 'absolute', top: '750px', left: '510px' }}>공약가계부</button>
+            <button className={`myButton2 ${selectedDetailButton === '이행현황' ? 'detailButton' : ''}`} onClick={() => handleDetailClick('이행현황')} style={{ position: 'absolute', top: '750px', left: '730px' }}>이행현황</button>
           </div>
         }
 
-        {showImage1 && <img src={`/img/${text}1.png`} alt="설명" style={{ position: 'absolute', top: '900px', left: '400px', width: '1200px' }} />}
-        {showImage2 && <img src={`/img/${text}2.png`} alt="설명" style={{ position: 'absolute', top: '900px', left: '400px', width: '1200px' }} />}
-        {showImage3 && <img src={`/img/${text}3.png`} alt="설명" style={{ position: 'absolute', top: '900px', left: '400px', width: '1200px' }} />}
-
-        {showRealTimeArticles &&
-          <div style={{ position: 'absolute',right:'450px',Top: '2400px' }}>
-            {articles.map((article, index) => (
-              <a href={article.link} target="_blank" rel="noopener noreferrer"  key={index} style={{ textDecoration: 'none', color: 'inherit' }}>
-                <div key={index} style={{ display: 'flex', width: '850px', borderBottom: '2px solid #000' }}>
-                  <div style={{ marginLeft:'30px', wordWrap: 'break-word' }}>
-                    <div style={{ display: 'flex' }}>  
-                      <h4 style={{ marginRight: '20px' }}>{article.pressInfo}</h4> 
-                      <h4 style={{color: '#A6A6A6'}}>ㆍ{article.time}</h4>  
-                    </div>
-                    <h2>{article.title}</h2>
-                    <p>{article.content}</p>
-                  </div>  
-                  <img src={article.image} alt="이미지" style={{ margin: '20px', borderRadius: '10%', width: '200px', height: '200px' }} />
-                </div>
-              </a>
-            ))}
-            <div style={{ marginTop: '100px', textAlign: 'center', color: 'gray' }}>
-              <p>충남 천안시</p>
-              <p>Copyright ⓒ 2023 Dike Engineering & Construction Corporation, All rights Reserved</p>
-              <p>Dike 정책 | 개인정보처리 방침 | 고객센터</p>
-            </div>
-          </div>
-        }
-        
-        {showMajorArticles &&
-          <div style={{ marginLeft: '100px', marginTop: '1300px' }}>
-            {mainArticles.map((article, index) => (
-              <a href={article.link} key={index} style={{ textDecoration: 'none', color: 'inherit' }}>
-                <div key={index} style={{ display: 'flex', flexDirection: 'column', marginBottom: '50px', paddingBottom: '20px', borderBottom: '2px solid #000', backgroundColor: '#354B63' }}>
-                  <div style={{ marginBottom: '20px', padding: '40px', backgroundColor: '#354B63' }}>
-                    <img src={article.image} alt="설명" style={{ width: '1000px', height: '600px' }} />
-                  </div>
-                  <div style={{ width: '100%', wordWrap: 'break-word', textAlign: 'center', color: 'white' }}>
-                    <h2>{article.title}</h2>
-                    <p>{article.content}</p>
-                  </div>
-                </div>
-              </a>
-            ))}
-            <div style={{ marginLeft: '40px', width: '1000px' }} > {/* 이거 안해줘서 하루종일 고생함 */}
-              <Slider
-                {...settings}
-                nextArrow={<SampleNextArrow />}
-                prevArrow={<SamplePrevArrow />}
-              >
-                <div>
-                  {/* target="_blank" 는 새 탭에서 열리는 기능 */}
-                  <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                    <img src="/img/야경.png" alt="설명" style={{ width: '320px', height: '200px' }} />
-                  </a>
-                </div>
-                <div>
-                  <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                    <img src="/img/배경.png" alt="설명" style={{ width: '320px', height: '200px' }} />
-                  </a>
-                </div>
-                <div>
-                  <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                    <img src="/img/성남시장.png" alt="설명" style={{ width: '320px', height: '200px' }} />
-                  </a>
-                </div>
-                <div>
-                  <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                    <img src="/img/의정부시장.png" alt="설명" style={{ width: '320px', height: '200px' }} />
-                  </a>
-                </div>
-              </Slider>
-            </div>
-            <div style={{ marginTop: '100px', textAlign: 'center', color: 'gray' }}>
-              <p>충남 천안시</p>
-              <p>Copyright ⓒ 2023 Dike Engineering & Construction Corporation, All rights Reserved</p>
-              <p>Dike 정책 | 개인정보처리 방침 | 고객센터</p>
-            </div>
-          </div>
-        }
+        {showImage1 && <img src={`/img/${text}1.png`} alt="설명" style={{ position: 'absolute', top: '900px', left: '100px', width: '1000px' }} />}
+        {showImage2 && <img src={`/img/${text}2.png`} alt="설명" style={{ position: 'absolute', top: '900px', left: '100px', width: '1000px' }} />}
+        {showImage3 && <img src={`/img/${text}3.png`} alt="설명" style={{ position: 'absolute', top: '900px', left: '100px', width: '1000px' }} />}
+        <div style={{ marginLeft: '-350px' }}>
+          {showRealTimeArticles &&
+            <ShowRealTimeArticles politicianName={data.name} />
+          }
+        </div>
 
         {selectedButton === '댓글' &&
-          <div style={{ marginLeft: '0px', marginTop: '400px' }}>
-            <div style={{ marginTop: '0px', border: '1px solid black', width: "1000px", height: "200px" }}>
-              <form onSubmit={handleSubmit}>
-                <textarea
-                  value={comment}
-                  onChange={handleChange}
-                  placeholder="댓글을 입력하세요..."
-                />
-                <div className="button" onClick={handleSubmit}>작성</div>
-              </form>
-            </div>
-            <div style={{ maxHeight: '500px', overflowY: 'auto' }}>
-              {/* 댓글출력부분 */}
-              {comments.map((comment) => (
-                <div style={{ border: '1px solid #ddd', borderRadius: '4px', padding: '10px', margin: '10px 0' }} key={comment.id}>
-                  {comment.text}
-                </div>
-              ))}
-            </div>
+          <div style={{ marginLeft: '-490px' }}>
+            <Reply text={text} />
           </div>
         }
-        <div style={{ height: '300px' }} />
+        <div style={{ height: '200px' }} />
       </div>
-
+      <div>
+        <Chat />
+      </div>
     </div>
   )
 }

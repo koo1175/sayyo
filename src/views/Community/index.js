@@ -1,13 +1,17 @@
 import React from "react";
-import Chat from "../Chat";
 
 export default function Community() {
 
     return (
 
-        <div style={{
+        <div style={{width: '100%',
+            height: '100%',
+            backgroundColor:'black',
+            backgroundSize: 'cover',
+            color: 'white',
+            fontSize: '70px',
             marginTop:'20px'}}>
-            <Chat/>
+            CommunityPage
         </div>
 
         );

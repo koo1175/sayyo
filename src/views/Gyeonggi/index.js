@@ -1,23 +1,10 @@
 import React from 'react';
 import './Gyeonggi.css';
 import { useNavigate } from 'react-router-dom';
-import Slider from 'react-slick';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import ShowSlideImage from '../ShowSlideImage';
+import Chat from "../Chat";
 
-
-const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplay: true, // 자동 캐러셀
-    autoplaySpeed: 2000, // 자동 캐러셀 속도
-    arrows: true,
-
-};
-export default function Gyeonggi ({ slidesMayor = [], slidesNews = [], slidesAccidents = [] }) {
+export default function Gyeonggi() {
     const navigate = useNavigate();
 
     const handleClick = (path, text) => {
@@ -25,9 +12,9 @@ export default function Gyeonggi ({ slidesMayor = [], slidesNews = [], slidesAcc
     }
 
     return (
-        <div style={{ marginTop: '0px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '20px' }}>
-            <div style={{ position: 'absolute', marginTop: '150px', marginLeft: '1100px', height: '2250px', width: '2000px', background: 'url(/img/배경.png) no-repeat' }}></div>
-            <svg style={{ position: 'relative', marginLeft: '0px' }} viewBox="0 0 800 850" xmlns="http://www.w3.org/2000/svg">
+        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '20px' }}>
+            <div style={{ position: 'absolute', marginTop: '-160px', marginLeft: '300px', height: '80%', width: '100%', background: 'url(/img/배경.png) no-repeat' }}></div>
+            <svg className="myPath2" style={{position: 'relative'}} viewBox="0 0 800 850" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <filter id="dropshadow">
                         <feGaussianBlur in="SourceAlpha" stdDeviation="7" />
@@ -47,6 +34,8 @@ export default function Gyeonggi ({ slidesMayor = [], slidesNews = [], slidesAcc
                     </filter>
                 </defs>
                 <g filter="url(#dropshadow)">
+                <path id="CD41150" class="OUTLINE" d="M 370 323 l 3 1 2 2 2 1 2 3 3 1 3 2 1 2 -1 3 -3 0 -4 2 0 4 -1 5 -1 2 -3 2 -1 3 -2 2 -3 2 -2 0 -4 2 -1 3 -4 -1 -5 3 -2 1 0 0 -2 -3 -2 -1 0 0 -2 1 -2 -2 -2 -2 -4 0 1 -2 -1 -2 -1 -4 0 -4 -2 -4 -1 -1 0 -4 1 -2 0 -1 0 0 -1 -2 0 -3 3 -2 2 -2 1 0 1 1 1 0 1 0 1 0 2 0 2 0 2 1 5 1 4 -1 2 -1 3 -2 3 -2 2 -1 z "
+                        onClick={() => handleClick('/Politician', '의정부')} />
                     <path id="CD41111" class="OUTLINE" d="M 335 531 l 3 1 3 2 0 2 0 1 0 1 2 3 1 4 -2 5 -1 4 2 5 -4 1 -2 1 -3 1 -4 0 -1 -1 -1 0 -2 0 -2 0 -1 0 0 0 0 0 0 0 -1 -1 -5 2 -1 -4 -3 -3 2 -2 1 -3 0 -4 1 -5 4 1 3 -2 3 -2 3 -1 2 -2 z "
                         onClick={() => handleClick('/Politician', '수원')} />
                     <path id="CD41113" class="OUTLINE" d="M 303 554 l 5 1 5 0 3 3 1 4 4 1 2 1 0 1 0 2 3 1 1 2 1 0 0 0 2 3 4 -1 2 1 0 0 2 0 2 2 3 2 1 3 -1 5 -2 2 -3 2 -1 3 -2 0 -1 -1 -1 0 -1 0 -2 -1 -1 1 -1 0 0 0 0 0 -2 -2 -4 -1 -5 1 -2 -3 -3 -1 -1 -4 -1 -2 -2 -2 -4 -1 -3 -4 -1 -5 1 -3 1 -2 2 -4 z "
@@ -61,8 +50,7 @@ export default function Gyeonggi ({ slidesMayor = [], slidesNews = [], slidesAcc
                         onClick={() => handleClick('/Politician', '성남')} />
                     <path id="CD41135" class="OUTLINE" d="M 358 509 l 1 0 1 -1 1 0 1 0 2 -3 2 -1 0 0 1 0 2 -1 1 1 0 0 0 0 1 0 3 -3 1 -2 3 0 3 0 2 1 3 1 5 2 2 1 2 1 -1 6 2 4 -3 2 0 0 0 0 -2 2 -1 3 -2 2 -2 2 -4 2 -2 3 0 1 1 1 1 4 -4 1 -2 1 -2 0 -2 0 -1 0 0 0 -2 -2 -2 -2 0 0 -1 0 -1 -2 -4 -2 -3 0 -2 -3 -4 -2 -3 0 -2 -3 -4 -1 -2 -1 -1 -1 1 -3 1 -3 1 -4 1 -4 3 -1 5 2 3 1 1 0 1 0 z "
                         onClick={() => handleClick('/Politician', '성남')} />
-                    <path id="CD41150" class="OUTLINE" d="M 370 323 l 3 1 2 2 2 1 2 3 3 1 3 2 1 2 -1 3 -3 0 -4 2 0 4 -1 5 -1 2 -3 2 -1 3 -2 2 -3 2 -2 0 -4 2 -1 3 -4 -1 -5 3 -2 1 0 0 -2 -3 -2 -1 0 0 -2 1 -2 -2 -2 -2 -4 0 1 -2 -1 -2 -1 -4 0 -4 -2 -4 -1 -1 0 -4 1 -2 0 -1 0 0 -1 -2 0 -3 3 -2 2 -2 1 0 1 1 1 0 1 0 1 0 2 0 2 0 2 1 5 1 4 -1 2 -1 3 -2 3 -2 2 -1 z "
-                        onClick={() => handleClick('/Politician', '의정부')} />
+                    
                     <path id="CD41171" class="OUTLINE" d="M 304 486 l 1 2 3 1 1 4 -1 4 -3 2 -2 1 -2 2 0 4 1 2 2 1 2 3 0 1 -1 3 1 1 0 0 0 1 -2 0 -5 0 -4 1 -2 4 -1 2 -3 2 -1 -1 -1 -3 -1 -4 -3 -1 -1 -4 -1 -4 0 -4 -1 -2 -1 -2 3 0 3 -1 2 -4 1 -2 1 -1 -1 -1 1 -1 1 -3 4 0 4 -2 2 -3 z "
                         onClick={() => handleClick('/Politician', '안양')} />
                     <path id="CD41173" class="OUTLINE" d="M 315 488 l 0 4 -1 2 0 2 3 3 2 1 0 2 3 4 -1 4 -2 2 -1 3 -2 4 -1 5 -2 1 -4 -2 -2 -4 -2 -3 1 -3 0 -1 -2 -3 -2 -1 -1 -2 0 -4 2 -2 2 -1 3 -2 1 -4 -1 -4 4 -1 z "
@@ -166,67 +154,14 @@ export default function Gyeonggi ({ slidesMayor = [], slidesNews = [], slidesAcc
                     <text id="LCD41820" class="TEXT" x="503" y="305">가평군</text>
                     <text id="LCD41830" class="TEXT" x="553" y="450">양평군</text>
                 </g></svg>
-            <div style={{ marginLeft: '40px', width: '1000px' }} >
-                <h2 style={{ textAlign: 'center' }}>시장행보</h2>
-                <Slider
-                    {...settings}>
-                    {/* <div>
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/야경.png" alt="야경" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.naver.com" target="_blank" rel="noreferrer">
-                            <img src="/img/의정부시장.png" alt="의정부시장" style={{ width: '320px', height: '200px' }} />
-                        </a>
-                    </div> */}
-                    {slidesMayor.map((slide, index) => (
-                        <div key={index}>
-                            <a href={slide.link} target="_blank" rel="noreferrer">
-                                <img src={slide.image} alt={slide.title} style={{ width: '320px', height: '200px' }} />
-                                <p>{slide.title}</p>
-                            </a>
-                        </div>
-                    ))}
-                </Slider>
-            </div>
 
-            <div style={{ marginLeft: '40px', width: '1000px' }} >
-                <h2 style={{ textAlign: 'center' }}>지역소식</h2>
-                <Slider
-                    {...settings}>
-                    {slidesNews.map((slide, index) => (
-                        <div key={index}>
-                            <a href={slide.link} target="_blank" rel="noreferrer">
-                                <img src={slide.image} alt={slide.title} style={{ width: '320px', height: '200px' }}/>
-                                <p>{slide.title}</p>
-                            </a>
-                        </div>
-                    ))}
-                </Slider>
+            <div style={{ marginRight: '200px'}}>
+                <ShowSlideImage />
             </div>
-
-            <div style={{ marginLeft: '40px', width: '1000px' }} >
-                <h2 style={{ textAlign: 'center' }}>사건사고</h2>
-                <Slider
-                    {...settings}>
-                    {slidesAccidents.map((slide, index) => (
-                        <div key={index}>
-                            <a href={slide.link} target="_blank" rel="noreferrer">
-                                <img src={slide.image} alt={slide.title} style={{ width: '320px', height: '200px' }}/>
-                                <p>{slide.title}</p>
-                            </a>
-                        </div>
-                    ))}
-                </Slider>
+            <div>
+                <Chat/>
             </div>
-
-            <div style={{ marginTop: '100px', textAlign: 'center', color: 'gray' }}>
-                <p>충남 천안시</p>
-                <p>Copyright ⓒ 2023 Dike Engineering & Construction Corporation, All rights Reserved</p>
-                <p>Dike 정책 | 개인정보처리 방침 | 고객센터</p>
-            </div>
+            <div style={{ height: '100px' }} />
         </div>
-
     )
 }

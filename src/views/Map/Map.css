@@ -1,15 +1,16 @@
-path:hover {
+.myPath path:hover {
     fill: #bada55;
     stroke: red;
     stroke-width: 1.5px;
     transform: translateZ(30px) rotateX(10deg);
 }
-path{
+.myPath path{
     transition: transform 0.5s ease-in-out;
     fill: #fff;
     stroke: #000;
     stroke-width: 0.5px;
 }
+
 svg{
     height:900px;
     width:1000px;

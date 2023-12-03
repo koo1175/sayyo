@@ -73,8 +73,10 @@ export default function App() {
   };
 
   return (
-    <div style={{ marginTop: '5vw' }}>
+    <div style={{width:1400}}>
+    <div style={{ marginTop: '5vw', marginLeft: '-7vw' }}>
       <Mypage {...userData} />
+    </div>
     </div>
   );
 }

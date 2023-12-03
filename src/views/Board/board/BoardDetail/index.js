@@ -72,11 +72,12 @@ export default function BoardDetail() {
   }, [num]); // num이 변경될 때마다 다시 호출
 
   return (
+    <div style={{width: 1400}}>
     <div style={{ marginTop: '150px', display: 'flex', justifyContent: 'center' }}>
       <div>
         <div>
           <div id="board-list">
-            <div className="container">
+            <div className="container2">
               <table className="detial-board-table">
                 <tbody>
                   <tr>
@@ -113,6 +114,7 @@ export default function BoardDetail() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

@@ -3,12 +3,16 @@ import axios from 'axios';
 import SiblingFade from "../SiblingFade";
 import PopUpMok from "../PopUpMok";
 import ResultOfMok from "../ResultOfMok";
+import Graph from '../Graph';
+import Chat from "../Chat";
 
 export default function MockElectionComponent() {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [selectedButton, setSelectedButton] = useState(null);
   const [isResultPopupOpen, setResultPopupOpen] = useState(false);
   const [candidatePercentages, setCandidatePercentages] = useState([0, 0, 0, 0]); //각 후보의 득표율 저장
+
+  const [isButtonClicked, setIsButtonClicked] = useState(false); //투표현황보기 상태 저장
 
   const openPopup = () => {
     const memberId = "zxc"; // TODO: 실제 사용자 아이디로 변경
@@ -220,26 +224,41 @@ export default function MockElectionComponent() {
             style={{ width: '200px', cursor: 'pointer' }}
           />
         </button>
+        <button onClick={() => setIsButtonClicked(prevState => !prevState)}>
+          <img
+            alt="btnMok"
+            src={isButtonClicked ? "/img/btn_result_after.png" : "/img/btn_result_before.png"}
+            style={{ width: '200px', cursor: 'pointer' }}
+          />
+        </button>
+
         <PopUpMok isOpen={isPopupOpen} onClose={closePopup} content={popupContent} />
       </div>
+
+      {!isButtonClicked && (
+        <div>
+          <ResultOfMok
+            isOpen={isResultPopupOpen}
+            onClose={closeResultPopup}
+            percentages={candidatePercentages}
+
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              zIndex: 3,
+            }}
+          />
+        </div>
+      )}
+
+      {isButtonClicked && <Graph />} {/* 버튼이 클릭되었을 때 Graph 컴포넌트를 렌더링합니다. */}
+
+      {!isButtonClicked && <SiblingFade />}
       <div>
-
-        <ResultOfMok
-          isOpen={isResultPopupOpen}
-          onClose={closeResultPopup}
-          percentages={candidatePercentages}
-
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            zIndex: 3,
-          }}
-        />
+        <Chat/>
       </div>
-
-      <SiblingFade />
     </div>
   );
 }

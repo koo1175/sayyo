@@ -69,7 +69,7 @@ const Member = () => {
       {loading && <p>Loading...</p>}
 
       {/* 검색 기능 */}
-      <form style={{ marginLeft: '900px', marginTop: '-40px', marginBottom: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <form style={{ marginLeft: '1100px', marginTop: '-40px', marginBottom: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <select id="myDropdown2" >
           <option value="option1">연락처</option>
           <option value="option2">이름</option>
@@ -80,7 +80,7 @@ const Member = () => {
           <img src='/img/돋보기.png' alt='돋보기' width='25px' style={{ cursor: 'pointer' }} />
         </button>
       </form>
-      <table className="rounded-table" style={{ width: '1200px', marginBottom: '100px' }}>
+      <table className="rounded-table" style={{ width: '1400px', marginBottom: '100px' }}>
         <thead>
           <tr>
             <th>ID</th>

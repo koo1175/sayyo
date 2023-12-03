@@ -8,6 +8,10 @@ import EmailCheck from '../../img/email-check.png';
 import CheckOk from '../../img/pw-check-ok.png';
 import CheckNo from '../../img/pw-check-no.png';
 import './styles.css';
+import NickNameData from '../Nickname/NicknameData.json'
+import MakeNickname from '../../img/make_nickname.png'
+
+
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -26,32 +30,38 @@ function LoginForm() {
     },
   };
 
-  const handleLogin = (e) => {
-    e.preventDefault(); // 이벤트의 기본 동작을 막음
-    axios.post(
-      'https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/member/login', loginDto, config)
-      .then(response => {
-        if (response.data) {
-          alert("로그인 성공");
-          navigate('/Main'); // 회원 정보 전달
-          window.location.reload(); //새로고침
-        } else {
-          alert("로그인 실패");
-        }
-      })
-      .catch(error => {
-        // 로그인 실패 시 에러 처리
-        console.error(error);
-        alert("에러");
-      });
+  const handleLogin = async (e) => {
+    e.preventDefault();
+  
+    if (!id || !password) {
+      alert("아이디와 비밀번호를 입력해주세요.");
+      return;
+    }
+  
+    try {
+      const response = await axios.post(
+        'https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/member/login', loginDto, config
+      )
+  
+      if (response.data) {
+        alert("로그인 성공");
+        navigate('/Main');
+        window.location.reload();
+      } else {
+        alert("로그인 실패");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("에러");
+    }
   };
 
   return (
     <div style={{ marginTop: 200, marginLeft: 395, textAlign: 'center' }}>
-      <form  style={{ display:"inline" }}>
-        <input type="text" placeholder='아이디' value={id} onChange={e => setId(e.target.value)} style={{height: '30px'}}/>
+      <form style={{ display: "inline" }}>
+        <input type="text" placeholder='아이디' value={id} onChange={e => setId(e.target.value)} style={{ height: '30px' }} />
         <br />
-        <input type="password" placeholder='비밀번호' value={password} onChange={e => setPassword(e.target.value)} style={{height: '30px'}} />
+        <input type="password" placeholder='비밀번호' value={password} onChange={e => setPassword(e.target.value)} style={{ height: '30px' }} />
         <br /><br />
         <button type="submit" onClick={handleLogin} style={{ width: 150, height: 30, backgroundColor: '#909090', color: "#fff", borderRadius: 5, cursor: 'pointer' }}>로그인</button>
         <br />
@@ -77,7 +87,7 @@ function RegisterForm() {
   const [address, setAddress] = useState('');
   const [zoneCode, setZoneCode] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
-  
+
   const [name, setName] = useState('');
   //주민등록번호
   const [registNum, setRegistNum] = useState('');
@@ -88,7 +98,9 @@ function RegisterForm() {
   const [displayCode, setDisplayCode] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   // 휴대폰 번호 유효성 상태를 저장하는 state
-  const [phoneValid, setPhoneValid] = useState(false); 
+  const [phoneValid, setPhoneValid] = useState(false);
+
+
 
   const memberDto = {
     id: email,
@@ -128,30 +140,60 @@ function RegisterForm() {
   };
 
   // 휴대폰 번호 입력 이벤트 핸들러
-const handlePhoneChange = (e) => {
-  const { value } = e.target;
-  const phoneReg = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/; // 정규 표현식
-  setPhone(value);
-  setPhoneValid(phoneReg.test(value)); // 입력된 휴대폰 번호의 유효성 검사
-};
+  const handlePhoneChange = (e) => {
+    const { value } = e.target;
+    const phoneReg = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/; // 정규 표현식
+    setPhone(value);
+    setPhoneValid(phoneReg.test(value)); // 입력된 휴대폰 번호의 유효성 검사
+  };
 
 
-const handleComplete = (data) => {
-  let fullAddress = data.address;
-  let zoneCode = data.zonecode;
+  const handleComplete = (data) => {
+    let fullAddress = data.address;
+    let zoneCode = data.zonecode;
 
-  setAddress(fullAddress);
-  setZoneCode(zoneCode);
+    setAddress(fullAddress);
+    setZoneCode(zoneCode);
 
-  setModalOpen(false); // 주소 선택 후 모달 닫기
-}
+    setModalOpen(false); // 주소 선택 후 모달 닫기
+  }
 
-const handleRegistNumChange = (e) => {
-  const { value } = e.target;
-  const registNumReg = /^\d{6}-[1234]\d{6}$/; // 주민등록번호 정규 표현식
-  setRegistNum(value);
-  setRegistNumValid(registNumReg.test(value)); // 입력된 주민등록번호의 유효성 검사
-};
+  const handleRegistNumChange = (e) => {
+    const { value } = e.target;
+    const registNumReg = /^\d{6}-[1234]\d{6}$/; // 주민등록번호 정규 표현식
+    setRegistNum(value);
+
+    if (registNumReg.test(value)) {
+      const weights = [2, 3, 4, 5, 6, 7, 0, 8, 9, 2, 3, 4, 5]; // 가중치
+      let total = 0;
+
+      for (let i = 0; i < 13; i++) { // 주민등록번호의 각 자리수와 가중치를 곱한 값을 더한다.
+        if (i === 6) continue; // 7번째 자리('-' 부분)는 계산에서 제외한다.
+        total += weights[i] * Number(value[i]);
+      }
+
+      const checkdigit = (11 - (total % 11)) % 10; // 11에서 더한 값의 11로 나눈 나머지를 뺀 후, 그 결과를 다시 10으로 나눈 나머지를 구한다.
+      setRegistNumValid(Number(value[13]) === checkdigit); // 그 나머지와 주민등록번호의 마지막 자리수(검증코드)가 일치하는지 확인한다.
+    } else {
+      setRegistNumValid(false);
+    }
+  };
+    // 닉네임을 생성하는 함수
+    const generateNickName = () => {
+      const determiner = NickNameData.determiners[
+        Math.floor(Math.random() * NickNameData.determiners.length)
+      ];
+      const noun = NickNameData.noun[
+        Math.floor(Math.random() * NickNameData.noun.length)
+      ];
+      return determiner + ' ' + noun;
+    };
+  
+    // '닉네임 생성하기' 버튼 클릭 이벤트 핸들러
+    const handleNClick = () => {
+      const newNickName = generateNickName();
+      setNickname(newNickName);
+    };
 
   const emailDto = {
     email: email
@@ -162,7 +204,7 @@ const handleRegistNumChange = (e) => {
       alert("이메일을 입력해주세요.");
       return;
     }
-  
+
     axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/mail', emailDto, config)
       .then((response) => {
         alert("인증번호 발송");
@@ -173,7 +215,7 @@ const handleRegistNumChange = (e) => {
         console.error('There was an error!', error);
       });
   };
-  
+
   const verifyCode = () => {
     axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/mail/verify', emailDto, config)
       .then((response) => {
@@ -202,62 +244,75 @@ const handleRegistNumChange = (e) => {
 
   return (
     <div style={{ marginTop: 220, marginLeft: -300, textAlign: 'center' }}>
-      <form onSubmit={handleRegister}>
+      <form onSubmit={handleRegister} style={{ display: 'inline' }}>
         {/* 이메일 인증 부분 추가 */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <input type="text" placeholder='이메일' value={email} onChange={handleEmailChange} style={{height: '30px', marginTop:'5px', marginLeft: '60px'}} />
-            <button type="button" className={`authButton ${isVerified ? 'authVerified' : ''}` } style={{marginTop:'5px'}} onClick={sendEmail}>인증</button>
+            <input type="text" placeholder='이메일' value={email} onChange={handleEmailChange} style={{ height: '30px', marginTop: '10px', marginLeft: '60px' }} />
+            <button type="button" className={`authButton ${isVerified ? 'authVerified' : ''}`} style={{ marginTop: '5px' }} onClick={sendEmail}>인증</button>
           </div>
           <br />
           {displayCode && (
             <div>
-              <input type="text" placeholder='인증번호 입력' value={verificationCode} onChange={handleVerificationCodeChange} disabled={isVerified} style={{height: '30px', marginLeft: '60px'}} />
-              {isVerified && <img src={EmailCheck} height={20} width={20}  style={{marginLeft: '10px'}}/>}
+              <input 
+                type="text" 
+                placeholder='인증번호 입력' 
+                value={verificationCode} 
+                onChange={handleVerificationCodeChange} 
+                disabled={isVerified} 
+                style={{ 
+                  height: '30px', 
+                  marginLeft: isVerified ? '30px' : '60px' // 여기를 수정했습니다. 
+                }} 
+              />
+              {isVerified && <img src={EmailCheck} height={20} width={20} style={{ marginLeft: '10px' }} />}
               {!isVerified && <button type="button" className={`authButton ${isVerified ? 'authVerified' : ''}`} onClick={verifyCode}>확인</button>}
             </div>
           )}
           <br />
-          <input type="password" placeholder='비밀번호' value={password} onChange={handlePasswordChange} style={{height: '30px'}} />
-          <div style={{fontSize: '0.8em', marginLeft:'7px'}}>
+          <input type="password" placeholder='비밀번호' value={password} onChange={handlePasswordChange} style={{ height: '30px' }} />
+          <div style={{ fontSize: '0.8em', marginLeft: '7px' }}>
             {passwordValid ? '유효한 비밀번호입니다.' : '6자리 이상, 특수문자 1개 이상을 포함해야 합니다.'}
           </div>
           <br />
           <div>
-            <input type="password" placeholder='비밀번호 확인' value={passwordConfirm} onChange={handlePasswordConfirmChange} style={{height: '30px', marginLeft: '30px'}} />
-            {passwordCheck && <img src={CheckOk} height={20} width={20}  style={{marginLeft: '10px'}}/>} {/* 비밀번호 일치 시 이미지 */}
-            {!passwordCheck && <img src={CheckNo} height={20} width={20}  style={{marginLeft: '5px'}}/>} {/* 비밀번호 불일치 시 이미지 */}
-            <div style={{fontSize: '0.8em'}}>
+            <input type="password" placeholder='비밀번호 확인' value={passwordConfirm} onChange={handlePasswordConfirmChange} style={{ height: '30px', marginLeft: '30px' }} />
+            {passwordCheck && <img src={CheckOk} height={20} width={20} style={{ marginLeft: '10px' }} />} {/* 비밀번호 일치 시 이미지 */}
+            {!passwordCheck && <img src={CheckNo} height={20} width={20} style={{ marginLeft: '5px' }} />} {/* 비밀번호 불일치 시 이미지 */}
+            <div style={{ fontSize: '0.8em' }}>
               {passwordCheck ? '비밀번호가 일치합니다.' : '비밀번호가 일치하지 않습니다.'}
             </div>
           </div>
           <br />
-          <input type="text" placeholder='이름' onChange={e => setName(e.target.value)} style={{height: '30px'}} />
-          <br />
-          <input type="text" placeholder='닉네임' value={nickname} style={{height: '30px'}} />
+          <input type="text" placeholder='이름' onChange={e => setName(e.target.value)} style={{ height: '30px' }} />
           <br />
           <div>
-            <input type="text" placeholder='전화번호' value={phone} onChange={handlePhoneChange} style={{height: '30px', marginLeft: '30px'}} />
-            {phoneValid && <img src={CheckOk} height={20} width={20}  style={{marginLeft: '10px'}}/>} {/* 전화번호 형식 일치 시 이미지 */}
-            {!phoneValid && <img src={CheckNo} height={20} width={20}  style={{marginLeft: '5px'}}/>} {/* 전화번호 형식 불일치 시 이미지 */}
-            <div style={{fontSize: '0.8em'}}>
+            <input type="text" placeholder='닉네임' value={nickname} style={{height: '30px', marginLeft: '30px'}} />
+            <img src={MakeNickname} onClick={handleNClick} height={20} width={20} style={{marginLeft: '10px'}} />
+          </div>
+          <br />
+          <div>
+            <input type="text" placeholder='전화번호' value={phone} onChange={handlePhoneChange} style={{ height: '30px', marginLeft: '30px' }} />
+            {phoneValid && <img src={CheckOk} height={20} width={20} style={{ marginLeft: '10px' }} />} {/* 전화번호 형식 일치 시 이미지 */}
+            {!phoneValid && <img src={CheckNo} height={20} width={20} style={{ marginLeft: '5px' }} />} {/* 전화번호 형식 불일치 시 이미지 */}
+            <div style={{ fontSize: '0.8em' }}>
               {phoneValid ? '유효한 전화번호입니다.' : '전화번호 형식이 잘못되었습니다. (예: 010-0000-0000)'}
             </div>
           </div>
           <br />
           <div>
-            <input type="text" placeholder='주소' value={address} readOnly style={{height: '30px', marginLeft: '60px'}} />
-            <button type="button" onClick={() => setModalOpen(true)} className={`authButton ${isVerified ? 'authVerified' : ''}` }>검색</button>
+            <input type="text" placeholder='주소' value={address} readOnly style={{ height: '30px', marginLeft: '60px' }} />
+            <button type="button" onClick={() => setModalOpen(true)} className={`authButton ${isVerified ? 'authVerified' : ''}`}>검색</button>
           </div>
           <br />
-          <Modal 
-            isOpen={modalOpen} 
+          <Modal
+            isOpen={modalOpen}
             onRequestClose={() => setModalOpen(false)}
             style={{
               overlay: {
                 backgroundColor: 'rgba(0, 0, 0, 0.75)', // 반투명한 배경
               },
-              content : {
+              content: {
                 top: '50%',
                 left: '50%',
                 right: 'auto',
@@ -272,19 +327,20 @@ const handleRegistNumChange = (e) => {
             <DaumPostcode onComplete={handleComplete} width="100%" height="100%" />
           </Modal>
           <div>
-            <input type="text" placeholder='주민등록번호' value={registNum} onChange={handleRegistNumChange} style={{height: '30px', marginLeft: '30px'}} />
-            {registNum && <img src={CheckOk} height={20} width={20}  style={{marginLeft: '10px'}}/>} {/* 전화번호 형식 일치 시 이미지 */}
-            {!registNum && <img src={CheckNo} height={20} width={20}  style={{marginLeft: '5px'}}/>} {/* 전화번호 형식 불일치 시 이미지 */}
+            <input type="text" placeholder='주민등록번호' value={registNum} onChange={handleRegistNumChange}
+              style={{ height: '30px', marginLeft: registNumValid || (registNum !== '' && !registNumValid) ? '30px' : '0px' }} />
+            {registNumValid && <img src={CheckOk} height={20} width={20} style={{ marginLeft: '10px' }} />} {/* 주민등록번호 형식 일치 시 이미지 */}
+            {!registNumValid && registNum !== '' && <img src={CheckNo} height={20} width={20} style={{ marginLeft: '5px' }} />} {/* 주민등록번호 형식 불일치 시 이미지 */}
           </div>
-          <div style={{fontSize: '0.8em', marginLeft:'17px'}}>
-              {registNumValid ? '유효한 주민등록번호입니다.' : '주민등록번호 형식이 잘못되었습니다. (예: 123456-1234567)'}
-            </div>
+          <div style={{ fontSize: '0.8em', marginLeft: '17px' }}>
+            {registNumValid ? '유효한 주민등록번호입니다.' : '주민등록번호 형식이 잘못되었습니다. (예: 123456-1234567)'}
+          </div>
         </div>
         <br />
         <button type="button" onClick={handleRegister} className={`authButton ${isVerified ? 'authVerified' : ''}`}>회원가입</button>
       </form>
     </div>
-  );  
+  );
 }
 
 
@@ -311,20 +367,21 @@ export default function AuthForm() {
     });
   };
 
+ 
   return (
-      <div style={{ position: 'relative', marginTop:'-200px' , transform: 'scale(1.1)' }}> 
+    <div style={{ position: 'relative', marginTop: '-200px', transform: 'scale(1.1)' }}>
 
-        {/* White form in front of the gray square */}
-        <animated.div
-          style={{
-            position: 'realtive',
-            width: 770,
-            height: 645,
-            margin: '350px 0 0 0px', // Adjust position to center inside the gray square
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.4)',
-            borderRadius: 30,
-          }}
-        >
+      {/* White form in front of the gray square */}
+      <animated.div
+        style={{
+          position: 'realtive',
+          width: 770,
+          height: 645,
+          margin: '350px 0 0 0px', // Adjust position to center inside the gray square
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.4)',
+          borderRadius: 30,
+        }}
+      >
         <div style={{ position: 'absolute', top: '30%', left: '45%', transform: 'translate(-50%, -50%)', fontSize: '1em' }}>
           {/* Render registration form if isLogin is false */}
           {isLogin && <LoginForm />}
@@ -332,19 +389,19 @@ export default function AuthForm() {
         </div>
 
         {/* Gray animated square */}
-          <animated.div
-            onClick={handleClick}
-            style={{
-              width: 385,
-              height: 645,
-              background: '#909090',
-              borderRadius: 30,
-              marginTop: -110,
-              marginLeft: -170,
-              cursor: 'pointer',
-              ...springProps,
-            }}
-          >
+        <animated.div
+          onClick={handleClick}
+          style={{
+            width: 385,
+            height: 645,
+            background: '#909090',
+            borderRadius: 30,
+            marginTop: -110,
+            marginLeft: -170,
+            cursor: 'pointer',
+            ...springProps,
+          }}
+        >
 
           {/* Image positioning */}
           <img
@@ -371,7 +428,7 @@ export default function AuthForm() {
       </animated.div>
 
       {/* Toggle between login and sign-up buttons */}
-      <button onClick={handleClick} style={{ marginTop: 10, marginLeft: 470 ,cursor: 'pointer'}}>
+      <button onClick={handleClick} style={{ marginTop: 10, marginLeft: 470, cursor: 'pointer' }}>
         {isLogin ? '회원가입 하러가기' : '로그인 하러가기'}
       </button>
     </div>
