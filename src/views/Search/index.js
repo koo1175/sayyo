@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+
 function shortenText(text, maxLength) {
     if (text.length > maxLength) {
         return text.slice(0, maxLength) + '...';
@@ -14,7 +15,7 @@ function boldText(text, word) {
     return text.replace(regex, `<strong>${word}</strong>`);
 }
 
-const ShowRealTimeArticles = ({ politicianName }) => {
+const Search = ({ politicianName }) => {
     const [search, setSearch] = useState(`${politicianName} 시장`);
     const [newsData, setNewsData] = useState([]);
 
@@ -25,7 +26,7 @@ const ShowRealTimeArticles = ({ politicianName }) => {
     };
 
     useEffect(() => {
-        axios.post(`https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/issue/findSearch`, {
+        axios.post(`http://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/issue/findSearch`, {
             search: search,
         }, config)
             .then((response) => {
@@ -37,6 +38,7 @@ const ShowRealTimeArticles = ({ politicianName }) => {
                 console.error('Google Error:', error);
             });
     }, [search]);
+
     function shortenText(text, maxLength) {
         if (text.length > maxLength) {
             return text.slice(0, maxLength) + '...';
@@ -49,7 +51,6 @@ const ShowRealTimeArticles = ({ politicianName }) => {
         <div style={{ width: '670px', border: '1px solid lightgray', borderRadius: '20px',marginRight:'0px',padding:'20px',marginTop:'-100px'}}>
             {newsData.map((news, index) => (
                 <a href={news.link} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>
-
                     <div key={index} style={{ margin: '10px', padding: '3px', borderBottom: '1px solid lightgray', display: 'flex' }}>
                         <div style={{ flex: 1 }}>
                             <div style={{ display: 'flex', marginBottom: '-15px' }}>
@@ -74,4 +75,4 @@ const ShowRealTimeArticles = ({ politicianName }) => {
         </div>
     );
 }
-export default ShowRealTimeArticles;
+export default Search;

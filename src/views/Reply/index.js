@@ -85,18 +85,18 @@ export default function Reply({ text }) {
     return (
       <>
         <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
-            <div style={{ position: 'sticky', marginTop: '10px', padding: '10px', border: '1px solid #ccc', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)', borderRadius: '5px', width: "60rem", height: "50%" }}>
-              <form onSubmit={handleSubmit}>
-                <textarea
-                  style={{ flexGrow: 1, width: '100%', height: '100px', padding: '10px', borderRadius: '5px', border: '1px solid #ccc', outline: 'none', resize: 'none' }}
-                  value={comment}
-                  onChange={handleChange}
-                  placeholder="댓글을 입력하세요..."
-                />
-                <div className="button" onClick={registReply} style={{ marginTop: '10px', marginLeft: '10px', padding: '10px', backgroundColor: '#007BFF', color: '#fff', borderRadius: '5px', textAlign: 'center', cursor: 'pointer' }}>
-                  작성
-                </div>
-              </form>
+          <div style={{ position: 'sticky', marginTop: '10px', padding: '10px', border: '1px solid #ccc', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)', borderRadius: '5px', width: "60rem", height: "50%" }}>
+            <form onSubmit={handleSubmit}>
+              <textarea
+                style={{ flexGrow: 1, width: '100%', height: '100px', padding: '10px', borderRadius: '5px', border: '1px solid #ccc', outline: 'none', resize: 'none' }}
+                value={comment}
+                onChange={handleChange}
+                placeholder="댓글을 입력하세요..."
+              />
+              <div className="button" onClick={registReply} style={{ marginTop: '10px', marginLeft: '10px', padding: '10px', backgroundColor: '#007BFF', color: '#fff', borderRadius: '5px', textAlign: 'center', cursor: 'pointer' }}>
+                작성
+              </div>
+            </form>
             <div style={{ overflow: 'auto', maxHeight: '500px' }}>
             {comments.slice().reverse().map((comment, index) => (
                 <div style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px', borderRadius: '5px' }} key={index}>
@@ -106,9 +106,7 @@ export default function Reply({ text }) {
                 </div>
             ))}
             </div>
-            </div>
-            {/* <ReplyList text={text} /> */}
-            
+          </div>
         </div>
         </>
         );

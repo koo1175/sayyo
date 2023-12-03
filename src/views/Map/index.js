@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate,Link } from 'react-router-dom';
 import "./Map.css";
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Chat from "../Chat";
+import axios from 'axios';
+
 export default function MapComponent ({ slides }) {
     const navigate = useNavigate();
 
@@ -17,7 +19,12 @@ export default function MapComponent ({ slides }) {
     const [quizOptions, setQuizOptions] = useState([]); // 퀴즈 선택지 상태 추가
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(null); // 추가
     const [quizTitle, setQuizTitle] = useState("");
+    const [laws, setLaws] = useState([]);
+    const [sessionId, setSessionId] = useState("");
 
+    let sessionStorage = window.sessionStorage;
+    setSessionId(sessionStorage.getItem("loginId"));
+    console.log("id를 가져와보자"+sessionStorage.getItem("loginId"));
 
     // 각 퀴즈의 정답과 선택지를 정의
     const quizMeta = [
@@ -50,6 +57,25 @@ export default function MapComponent ({ slides }) {
         }
     };
 
+
+    useEffect(() => {
+        axios.get(`http://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/laws/findAll`)
+            .then((response) => {
+                console.log("요청 [", response.status, "]")
+                console.log(response.data.laws);
+                setLaws(response.data.laws)
+            })
+            .catch((error) => {
+                console.error('There was an error!', error);
+            });
+    }, []);
+    
+   
+
+    function boldText(text, word) {
+        const regex = new RegExp(word, 'g');
+        return text.replace(regex, `<strong>${word}</strong>`);
+    }
 
     function SampleNextArrow(props) {
         const { className, style, onClick } = props;
@@ -264,6 +290,28 @@ export default function MapComponent ({ slides }) {
                         </div>
                     </div>
                 )}
+            </div>
+            {/* 개정 법안 불러오는 곳 */}
+            <div>
+                {laws.slice(0, 5).map((law, index) => (
+                    <a href={law.link} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>
+
+                        <div key={index} style={{ margin: '10px', padding: '3px', borderBottom: '1px solid lightgray', display: 'flex' }}>
+                            <div style={{ flex: 1 }}>
+                                <div style={{ display: 'flex', marginBottom: '-15px' }}>
+                                    <p style={{ color: 'gray' }}>공포일 : {law.promulgation}</p>
+                                    <p style={{ color: 'gray' }}>시행일 : {law.tryDate}</p>
+                                    <p style={{ color: 'gray' }}>소관 부처 : {law.changes}</p>
+                                </div>
+                                <div>
+                                    <p style={{ fontWeight: 'bold', marginLeft: '3px' }}>법령명</p>
+                                    <p style={{ textAlign: 'left', fontSize: '16px', color: '#0042ED', marginBottom: '-5px' }} dangerouslySetInnerHTML={{ __html: boldText(law.name, 40) }}></p>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                ))}
             </div>
             <div>
                 <Chat/>

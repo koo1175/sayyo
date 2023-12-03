@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import formatDate from '../../../formatDate';
+import Chat from "../../../Chat";
 
 export default function BoardList() {
     const navigate = useNavigate();
@@ -31,6 +32,26 @@ export default function BoardList() {
         fetchBoardList();
     }, []); // 컴포넌트가 마운트될 때만 실행
 
+    const handleTitleClick = (board) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        axios.post(
+            'https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/memBoard/updateViews',
+            { num: board.num }, // 수정: 서버로 보낼 데이터를 객체로 감싸서 전달
+            config
+        )
+            .then(response => {
+                console.log('조회수 카운팅 완료 여부:', response.data);
+                navigate(`/BoardDetail/${board.num}`);
+            })
+            .catch(error => {
+                console.error('Error incrementing view count:', error);
+            });
+    };
 
     return (
         <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
@@ -64,8 +85,8 @@ export default function BoardList() {
                     </form>
 
                     <div id="board-list" >
-                        <div className="container" style={{height:'0px'}}>
-                            <table className="board-table" style={{marginTop:'-250px'}}>
+                        <div className="container2" style={{height:'0px'}}>
+                            <table className="board-table" style={{marginTop:'20px',marginLeft:'0px'}}>
                                 <thead>
                                     <tr>
                                         <th scope="col" className="th-num">번호</th>
@@ -78,20 +99,20 @@ export default function BoardList() {
                                 <tbody>
                                     {boardList.map(board => (
                                         <tr key={board.num}>
-                                            <td>{board.num}</td>
-                                            <td>{board.category}</td>
-                                            <th>
-                                                <a href={`/BoardDetail/${board.num}`}>{board.title}</a>
-                                            </th>
-                                            <td>{board.views}</td>
-                                            <td>{formatDate(board.nowDate)}</td>
-                                        </tr>
+                                        <td>{board.num}</td>
+                                        <td>{board.category}</td>
+                                        <td><a href={`/BoardDetail/${board.num}`} onClick={() => handleTitleClick(board)}>
+                                            {board.title}
+                                        </a></td>
+                                        <td>{board.views}</td>
+                                        <td>{formatDate(board.nowDate)}</td>
+                                    </tr>
                                     ))}
                                 </tbody>
                             </table>
 
                             {/* 글쓰기 버튼 */}
-                            <div style={{ marginBottom: '950px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+                            <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                                 <button onClick={gotoWritePage} style={{ cursor: 'pointer' }}>
                                     <img src='/img/writeBtn.png' alt='writeBtn' width='70%' />
                                 </button>
@@ -104,7 +125,7 @@ export default function BoardList() {
 
                 {/* 페이징 */}
 
-                    <div className="page_wrap" style={{marginTop:'200px'}}>
+                    <div className="page_wrap" style={{marginTop:'700px'}}>
                         <div className="page_nation">
                             <a className="arrow pprev" href="#!"><span className="sr-only">Previous Previous</span></a>
                             <a className="arrow prev" href="#!"><span className="sr-only">Previous</span></a>
@@ -118,6 +139,9 @@ export default function BoardList() {
                         </div>
                         <div style={{ marginBottom: '10%' }} />
                     </div>
+            </div>
+            <div>
+                <Chat/>
             </div>
         </div>
     );

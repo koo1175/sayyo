@@ -12,7 +12,7 @@ import './Search.css';
 import AuthForm from "../AuthForm";
 import Fullfillment from '../AdminPage/Fullfillment';
 import Member from '../AdminPage/Member'
-
+import Search from '../Search'
 
 import Main from "../Main";
 import OrganizationChart from "../OrganizationChart";
@@ -40,12 +40,18 @@ import InfoSeung from '../SiblingFade/Info/seungju';
 import PromiseSeung from '../SiblingFade/Promise/seungju';
 import NewsSeung from '../SiblingFade/News/seungju';
 
+import Inquiry from "../Inquiry";
+import InquiryDetil from "../Inquiry/InquiryDetail";
+import InquiryEdit from "../Inquiry/InquiryEdit";
+import InquiryWrite from "../Inquiry/InquiryWrite";
+
 import BoardWrite from '../Board/board/BoardWrite';
 import BoardDetail from '../Board/board/BoardDetail';
 import BoardEdit from '../Board/board/BoardEdit';
 import BoardList from '../Board/board/BoardList';
 
 import CalendarPage from '../Calendar';
+import NotFoundPage from '../NotFoundPage';
 
 import Test from '../Test';
 import Chat from '../Chat';
@@ -86,19 +92,20 @@ const pageConfigs = [
     { path: '/Member', element: <Member /> },
 ];
 
-
 const localizer = momentLocalizer(moment);
 
 export default function Navigation() {
-
     const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
     const [searches, setSearches] = useState({});
     const [searchText, setSearchText] = useState('');
     const [popularKeywords, setPopularKeywords] = useState([]);
+
     // 인기 검색어 하나씩
     const [currentKeywordIndex, setCurrentKeywordIndex] = useState(0);
+
     // 인기 검색어 전체
     const [isHovered, setIsHovered] = useState(false);
+
     //캘린더
     const [eventTitle, setEventTitle] = useState('');
     const [events, setEvents] = useState([]);
@@ -236,40 +243,7 @@ export default function Navigation() {
                         <Link to="/Community" style={{ textDecoration: 'none', marginLeft: '150px', color: '#444444', fontWeight: 'bolder' }}>커뮤니티</Link>
                         <Link to="/AboutUs" style={{ textDecoration: 'none', marginLeft: '150px', color: '#444444', fontWeight: 'bolder' }}>AboutUs</Link>
                     </div>
-                    <div style={{ position: 'absolute', right: 0 }}>
-                        <span onClick={() => setIsSearchBarVisible(!isSearchBarVisible)}>🔍</span>
-                        {isSearchBarVisible && (
-                            <form onSubmit={handleSearch}>
-                                <input type="text" value={searchText} onChange={e => setSearchText(e.target.value)} />
-                                <button type="submit">검색</button>
-                            </form>
-                        )}
-                        <div
-                            onMouseOver={() => setIsHovered(true)}
-                            onMouseOut={() => setIsHovered(false)}
-                        >
-                            인기 검색어:
-                            <div style={{ height: '25px', overflow: 'hidden' }}>
-                                <TransitionGroup>
-                                    {!isHovered && 
-                                        <CSSTransition
-                                            key={currentKeywordIndex}
-                                            timeout={1000}
-                                            classNames="fade"
-                                            unmountOnExit
-                                        >
-                                            <div>{currentKeywordIndex + 1}. {popularKeywords[currentKeywordIndex]}</div>
-                                        </CSSTransition>
-                                    }
-                                </TransitionGroup>
-                            </div>
-                            {isHovered && <ul style={{ listStyleType: 'none' }}>
-                                {popularKeywords.slice(0, 5).map((keyword, index) => (
-                                    <li key={index}>{index + 1}. {keyword}</li>
-                                ))}
-                            </ul>}
-                        </div>      
-                    </div>
+                    
                 </div>
                 <Link to="/Calendar" style={{ position: 'absolute', left: 0 }}>
                     <div>{eventTitle}</div>
@@ -278,6 +252,7 @@ export default function Navigation() {
                 <Routes>
 
                     <Route path='/MyPage' element={<MyPage />} />
+                    <Route path='/Search' element={<Search />} />
                     <Route path="/Calendar" element={<CalendarPage />} />
                     <Route path="/Main" element={<Main />} />
                     <Route path="/OrganizationChart" element={<OrganizationChart />} />
@@ -303,6 +278,12 @@ export default function Navigation() {
                     <Route path="/PromiseSeung" component={PromiseSeung} />
                     <Route path="/NewsSeung" component={NewsSeung} />
 
+                    <Route path='/Inquiry' element={<Inquiry />} />
+                    <Route path='/InquiryDetail/:num' element={<InquiryDetil />} />
+                    <Route path='/InquiryWrite' element={<InquiryWrite />} />
+                    <Route path='/InquiryEdit/:num' element={<InquiryEdit />} />
+
+
                     <Route path='/BoardList' element={<BoardList />} />
                     <Route path='/BoardDetail/:num' element={<BoardDetail />} />
                     <Route path='/BoardWrite' element={<BoardWrite />} />
@@ -311,6 +292,7 @@ export default function Navigation() {
                     <Route path="/Test" element={<Test />} />
                     <Route path="/Chat" element={<Chat />} />
                     <Route path="/Politician" element={<Politician/>}/>
+                    <Route path="*" element={<NotFoundPage />} />  {/* 이 줄이 404 에러 페이지를 렌더링하는 코드입니다. */}
 
                 </Routes>
                 </ChatProvider>
