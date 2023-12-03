@@ -211,14 +211,6 @@ export default function MapComponent ({ slides }) {
                             </a>
                         </div>
                     ))}
-                    {/* {slides.map((slide, index) => (
-                        <div className="image-container" key={index}>
-                            <a href={slide.link} target="_blank" rel="noreferrer">
-                                <img src={slide.image} alt={slide.title} />
-                                <p className="image-description">{slide.title}</p>
-                            </a>
-                        </div>
-                    ))} */}
                 </Slider>
             </div>
             <h1 style={{ marginLeft: '-300px' }}>Daily Quiz</h1>

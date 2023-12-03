@@ -52,6 +52,10 @@ import Chat from '../Chat';
 import { ChatProvider } from '../ChatContext';
 import Politician from '../Politician';
 
+import Test2 from '../Test2';
+import Map2 from '../Map2';
+import Quiz from '../Quiz';
+import QuizPage from '../Quizpage';
 // 공통 헤더 렌더링 함수
 const renderCommonHeader = (currentDateTime) => (
     <div>
@@ -71,7 +75,7 @@ const renderCommonHeader = (currentDateTime) => (
                     조직도
                 </Link>
                 <Link to="/Board" style={{ textDecoration: 'none', color: '#444444', fontWeight: 'bolder' }}>게시판</Link>
-                <Link to="/Community" style={{ textDecoration: 'none', marginLeft: '250px', marginRight: '-150px', color: '#444444', fontWeight: 'bolder' }}>커뮤니티</Link>
+                <Link to="/Map2" style={{ textDecoration: 'none', marginLeft: '250px', marginRight: '-150px', color: '#444444', fontWeight: 'bolder' }}>커뮤니티</Link>
                 <Link to="/AboutUs" style={{ textDecoration: 'none', marginLeft: '250px', color: '#444444', fontWeight: 'bolder' }}>AboutUs</Link>
                 <span className='admin-clock' style={{ marginLeft: '100px' }}>{currentDateTime.toLocaleDateString()} {currentDateTime.toLocaleTimeString()}</span>
             </div>
@@ -233,7 +237,7 @@ export default function Navigation() {
                             조직도
                         </Link>
                         <Link to="/Board" style={{ textDecoration: 'none', margin: '0px 100px 0px 0px', color: '#444444', fontWeight: 'bolder' }}>게시판</Link>
-                        <Link to="/Community" style={{ textDecoration: 'none', marginLeft: '150px', color: '#444444', fontWeight: 'bolder' }}>커뮤니티</Link>
+                        <Link to="/Test2" style={{ textDecoration: 'none', marginLeft: '150px', color: '#444444', fontWeight: 'bolder' }}>커뮤니티</Link>
                         <Link to="/AboutUs" style={{ textDecoration: 'none', marginLeft: '150px', color: '#444444', fontWeight: 'bolder' }}>AboutUs</Link>
                     </div>
                     <div style={{ position: 'absolute', right: 0 }}>
@@ -311,6 +315,12 @@ export default function Navigation() {
                     <Route path="/Test" element={<Test />} />
                     <Route path="/Chat" element={<Chat />} />
                     <Route path="/Politician" element={<Politician/>}/>
+                    <Route path="/Test2" element={<Test2 />} />
+                    <Route path="/Map2" element={<Map2 />} />
+                    <Route path="/Quiz" element={<Quiz />} />
+                    <Route path="/Quizpage" element={<QuizPage />} />
+
+
 
                 </Routes>
                 </ChatProvider>

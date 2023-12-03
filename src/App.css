@@ -41,3 +41,7 @@
   font-family: "SKYBORI";
   src: url("./fonts/SKYBORI.ttf");
 }
+@font-face {
+  font-family: "부크크명조";
+  src: url("./fonts/부크크명조_굵은글씨.ttf");
+}

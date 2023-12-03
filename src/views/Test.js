@@ -7,7 +7,7 @@ const Test = () => {
   const location = useLocation();
   const text = location.state?.text || '성남';
   const navigate = useNavigate();
-  
+  console.log('Test.js!!')
   useEffect(() => {
     const getData = () => {
       const memberDto = {

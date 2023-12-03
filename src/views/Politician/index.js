@@ -16,19 +16,20 @@ export default function Politician() {
   const location = useLocation();
   const text = location?.state?.text || '기본값'; //Gyeonggi.js에서 받아온 데이터. 시 이름이 들어가 있음
   const navigate = useNavigate();
-  const data = location?.state?.data || '기봉이'; //Test.js에서 받아온 데이터. DB에서 받아온 데이터
-  // console.log('data :',data);
-  useEffect(() => {
-    console.log('Politican.js text값 -> ', text);
-    if (data === '기봉이') {
-      navigate('/Test', { state: { text }, replace: true }); //데이터가 없으면 Test.js로 이동
-    }
-  }, [data]);
+  const data = location?.state?.data || null; //Test.js에서 받아온 데이터. DB에서 받아온 데이터 
+  console.log('data test', data);
 
+  useEffect(() => {
+    if (!data) {
+      console.log('ㄱㅁㄸ');
+      navigate('/Test', { state: { text }, replace: true });
+    }
+  }, []);
+
+  let formattedBirth = '';
   if (data) {
-    //console.log('Politican.js data값 -> ', data);
+    formattedBirth = data.birth ? data.birth.substring(0, 10) : '';
   }
-  let formattedBirth = data.birth ? data.birth.substring(0, 10) : '';
 
   const [selectedButton, setSelectedButton] = useState(null); //클릭된 버튼 빨간색으로 표시
 
@@ -46,6 +47,8 @@ export default function Politician() {
 
 
   const handleClick = (button) => {
+
+
     setSelectedButton(button);
     if (button === '공약') {
       setshowButton1(true); // 공약 버튼 클릭시 총괄현황, 공약가계부, 이행현황 버튼이 나오게
@@ -91,19 +94,6 @@ export default function Politician() {
       setShowImage2(false);
       setShowImage3(false);
     }
-  }
-
-  const youtube = () => {
-    alert('유튜브');
-  }
-  const twitter = () => {
-    alert('트위터');
-  }
-  const kakao = () => {
-    alert('카카오');
-  }
-  const naver = () => {
-    alert('네이버');
   }
 
   const [like, setLike] = useState(false);
@@ -164,6 +154,13 @@ export default function Politician() {
 
   }
 
+  const openLink = (url) => {
+    if(url) {
+      window.open(url, '_blank');
+    } else {
+      alert('링크가 없습니다.');
+    }
+  }
 
 
   return (
@@ -176,21 +173,21 @@ export default function Politician() {
         <div className="overlay-text2">
           테스트테스트테스트 <br /><br />
           <div className="small-text">
-            이름 : {data.name} <br />
-            출생 : {formattedBirth} <br />
+            이름 : {data ? data.name : '로딩 중...'} <br />
+            출생 : {data ? formattedBirth : '로딩 중...'} <br />
             소속 : {text} 시장<br />
-            학력 : {data.education}<br />
-            경력 : {data.career}<br />
+            학력 : {data ? data.education : '로딩 중...'}<br />
+            경력 : {data ? data.career : '로딩 중...'}<br />
           </div>
           <div>
-          <img src={imageSrc} onClick={toggleLike} />
-        </div>
+            <img src={imageSrc} onClick={toggleLike} />
+          </div>
         </div>
 
-        <img src="/img/유튜브로고.png" alt="설명" style={{ position: 'absolute', top: '500px', left: '900px', width: '40px', height: '40px' }} onClick={youtube} />
-        <img src="/img/트위터로고.png" alt="설명" style={{ position: 'absolute', top: '500px', left: '970px', width: '40px', height: '40px' }} onClick={twitter} />
-        <img src="/img/카카오톡로고.png" alt="설명" style={{ position: 'absolute', top: '500px', left: '1040px', width: '40px', height: '40px', borderRadius: '50%' }} onClick={kakao} />
-        <img src="/img/네이버로고.png" alt="설명" style={{ position: 'absolute', top: '500px', left: '1110px', width: '40px', height: '40px', borderRadius: '50%' }} onClick={naver} />
+        <img src="/img/유튜브로고.png" alt="설명" style={{ position: 'absolute', top: '500px', left: '900px', width: '40px', height: '40px' }} onClick={() => openLink(data?.youtube)} />
+        <img src="/img/인스타그램로고.png" alt="설명" style={{ position: 'absolute', top: '500px', left: '970px', width: '40px', height: '40px' }} onClick={() => openLink(data?.instagram)} />
+        <img src="/img/카카오톡로고.png" alt="설명" style={{ position: 'absolute', top: '500px', left: '1040px', width: '40px', height: '40px', borderRadius: '0%' }} onClick={() => openLink(data?.kakao)} />
+        <img src="/img/네이버로고.png" alt="설명" style={{ position: 'absolute', top: '500px', left: '1110px', width: '40px', height: '40px', borderRadius: '0%' }} onClick={() => openLink(data?.blog)} />
       </div>
       <div>
         <button className={`myButton ${selectedButton === '공약' ? 'selected' : ''}`} onClick={() => handleClick('공약')} style={{ position: 'absolute', top: '650px', left: '350px' }}>공약</button>
@@ -198,6 +195,7 @@ export default function Politician() {
         <button className={`myButton ${selectedButton === '댓글' ? 'selected' : ''}`} onClick={() => handleClick('댓글')} style={{ position: 'absolute', top: '650px', left: '750px' }}>댓글</button>
 
         {showButton1 &&
+          
           <div>
             <button className={`myButton2 ${selectedDetailButton === '총괄현황' ? 'detailButton' : ''}`} onClick={() => handleDetailClick('총괄현황')} style={{ position: 'absolute', top: '750px', left: '300px' }}>총괄현황</button>
             <button className={`myButton2 ${selectedDetailButton === '공약가계부' ? 'detailButton' : ''}`} onClick={() => handleDetailClick('공약가계부')} style={{ position: 'absolute', top: '750px', left: '510px' }}>공약가계부</button>
@@ -208,22 +206,22 @@ export default function Politician() {
         {showImage1 && <img src={`/img/${text}1.png`} alt="설명" style={{ position: 'absolute', top: '900px', left: '100px', width: '1000px' }} />}
         {showImage2 && <img src={`/img/${text}2.png`} alt="설명" style={{ position: 'absolute', top: '900px', left: '100px', width: '1000px' }} />}
         {showImage3 && <img src={`/img/${text}3.png`} alt="설명" style={{ position: 'absolute', top: '900px', left: '100px', width: '1000px' }} />}
-        <div style={{marginLeft:'-350px'}}>
-        {showRealTimeArticles &&
-          <ShowRealTimeArticles politicianName={data.name}/>
-        }
+        <div style={{ marginLeft: '-350px' }}>
+          {showRealTimeArticles &&
+            <ShowRealTimeArticles politicianName={data.name} />
+          }
         </div>
 
         {selectedButton === '댓글' &&
-          <div style={{marginLeft:'-450px'}}>
+          <div style={{ marginLeft: '-490px' }}>
             <Reply text={text} />
           </div>
         }
         <div style={{ height: '200px' }} />
       </div>
-        <div>
-          <Chat/>
-        </div>
+      <div>
+        <Chat />
+      </div>
     </div>
   )
 }
