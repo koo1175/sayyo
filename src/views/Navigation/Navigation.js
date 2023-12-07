@@ -85,7 +85,7 @@ const Navigation = () => {
     };
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav" style={{ backgroundColor: '#ffffff' }}>
+        <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav" style={{ backgroundColor: '#ffffff', zIndex: 1 }}>
             <div className="container px-4 px-lg-5"  style={{ display: 'flex', justifyContent: 'center', width: '100%' }} onMouseLeave={handleMouseLeave}>
                 <Link to="/">
                     <img className="navbar-brand" src="img/sayoLogo.png" alt="Logo" width={80} style={{ marginLeft: isSearchOpen ? '20%' : '-300%%' }} />
@@ -129,8 +129,8 @@ const Navigation = () => {
                     {/* 검색어아이콘 */}
                     <SearchIcon className="searchIcon" onClick={handleClick} style={{marginRight: isSearchOpen ? '-18%' : '-5%'}} />
                     {/* 인기검색어 */}
-                    <Popper open={open} anchorEl={anchorEl} placement="bottom-start" style={{ zIndex: -1 }}>
-                        <div className='search' style={{ backgroundColor: '#ffffff', width: '230px', height: '130px', textAlign: 'center', borderRadius: '10px', marginLeft: '-20%' }}>
+                    <Popper open={open} anchorEl={anchorEl} placement="bottom-start" style={{ zIndex: 1 }}>
+                        <div className='search' style={{ backgroundColor: '#ffffff', width: '230px', height: '130px', textAlign: 'center', borderRadius: '10px', marginLeft: '20%' }}>
                         <div style={{ textAlign: 'left', marginLeft: '10px', color: 'gray', padding: '10px' }}>
                             인기 검색어
                         </div>

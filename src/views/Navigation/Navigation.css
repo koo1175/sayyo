@@ -17,12 +17,16 @@
 
 .searchIcon {
     cursor: pointer;
-  }
+}
   
-  .searchIcon:hover {
-    color: #1b6868; /* hover 시의 색상 */
-  }
-  
+.searchIcon:hover {
+color: #1b6868; /* hover 시의 색상 */
+}
+
+.search {
+    font-family: 'S-CoreDream-3Light';
+}
+
 
 .navbar-nav li {
     font-family: 'SCoreDream5';

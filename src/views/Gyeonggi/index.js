@@ -39,11 +39,13 @@ export default function Gyeonggi() {
 
     return (
         <div className="outer" style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'left', gap: '20px'}}>
+            <img src="img/경기도1.png" style={{width: 200, position:'absolute', zIndex:1, top:200, left:1220}} />
+            <img src="img/경기도2.png" style={{position:'absolute', width:80, top:135, left:210, zIndex:1}} />
             <div className='cities' style={{marginLeft:'10%'}}>
             <Element name="section1" className="section">
             <div className='map' style={{ marginLeft:'-15%'}}>
-                <div style={{marginTop:'1%', marginRight:'60%'}}>
-                    <img alt="경기도 text" src={'/img/Gyeonggy-fonts.png'}/>
+                <div style={{marginTop:'1%', marginRight:'58%'}}>
+                    <img alt="경기도 text" src={'/img/Gyeonggy-fonts.png'} style={{width:200}}/>
                 </div>
             <svg className="myPath2" viewBox="0 90 800 800" xmlns="http://www.w3.org/2000/svg" style={{position:'absolute', top:350, left:-250}}>
                 <defs>
@@ -189,7 +191,7 @@ export default function Gyeonggi() {
                 </div>
             </div>
             </Element>
-            <div className='map-list' style={{ textAlign:'center', marginBottom:'100%', marginTop:'5%', marginLeft:'45%'}}>
+            <div className='map-list' style={{ textAlign:'center', marginBottom:'100%', marginTop:'10%', marginLeft:'45%'}}>
             <input 
                 type="text" 
                 style={{width:'50%', height:'5vh', fontSize:'15px', borderRadius:'15px', marginRight:'50%'}}
@@ -219,7 +221,7 @@ export default function Gyeonggi() {
             </div>
             <div className='getIssue'>
                 <Element name="section2" className="section">
-                    <div style={{ marginLeft: '350px', marginTop:'10%'}}>
+                    <div style={{ marginLeft: '350px', marginTop:'-10%'}}>
                         <ShowSlideImage queryText={queryText} />
                     </div>
                 </Element>
