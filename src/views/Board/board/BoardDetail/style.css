@@ -1,15 +1,12 @@
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  border: 1px solid #ccc; /* 표 전체 선 추가 */
-}
-
 section.notice {
   padding: 80px 0;
 }
 
 
 .detial-board-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 1px solid #ccc; /* 표 전체 선 추가 */
   font-size: 13px;
   width: 100%;
   border-top: 3px solid #999; /* 맨 위 선 굵게 설정 */

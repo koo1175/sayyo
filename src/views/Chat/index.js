@@ -12,17 +12,21 @@ export default function Chat() {
     const [inputValue, setInputValue] = useState('');
     const [imgSrc, setImgSrc] = useState(paperPlaneIcon);
 
-    const [isSending, setIsSending] = useState(false); // 메시지 전송 중인지를 나타내는 상태
+    // 위젯의 클릭 상태 저장
+    const [isClicked, setIsClicked] = useState(false);
 
+    const [isSending, setIsSending] = useState(false); // 메시지 전송 중인지를 나타내는 상태
+    const [sessionId, setSessionId] = useState("전설의 엉덩이");
     const toggleChat = () => {
+        setIsClicked(!isClicked);
         setIsChatVisible(prevVisible => !prevVisible);
     };
     const imageStyle = {
-        opacity: isChatVisible ? 0.6 : 1,
+        opacity: isChatVisible ? 1 : 1,
     };
     // 텍스트 유효성 검사 리스트
     const badWords = ['시발', '씨발', 'ㅅㅂ', 'ㅂㅅ', '병신', '이승만', '윤보선', '박정희', '최규하', '전두환', '노태우', '김영삼', '김대중', '노무현', '이명박',
-        '박근혜', '문재인', '윤석열'];
+        '박근혜', '문재인', '윤석열', '존나', '좆', '조까', '바보', '니미', '꺼져'];
 
     const inputRef = useRef(null); // 채팅 입력창에 대한 ref
 
@@ -42,9 +46,12 @@ export default function Chat() {
 
         client.onConnect = function (frame) {
             client.subscribe('/topic/public', function (chatMessage) {
-                console.log(JSON.parse(chatMessage.body).content);
-                const newMessage = JSON.parse(chatMessage.body).content;
-
+                const messageBody = JSON.parse(chatMessage.body);
+                console.log(messageBody.content, messageBody.nickname);
+                const newMessage = {
+                    content: messageBody.content,
+                    nickname: messageBody.nickname
+                };
                 setMessages(prevMessages => [...prevMessages, newMessage]);
 
             });
@@ -79,7 +86,10 @@ export default function Chat() {
                 if (stompClient?.connected) {
                     stompClient.publish({
                         destination: '/app/chat.sendMessage',
-                        body: JSON.stringify({ content: inputValue })
+                        body: JSON.stringify({ 
+                            content: inputValue,
+                            nickname: sessionId // 'yourNickname'을 실제 사용자의 닉네임으로 변경하세요.
+                        })
                     });
                     setInputValue('');
                     setIsSending(true); // 메시지 전송 중으로 상태를 변경
@@ -96,7 +106,7 @@ export default function Chat() {
 
     useEffect(() => {
         if (isSending) { // 메시지 전송 중일 때
-            const timer = setTimeout(() => setIsSending(false), 300); // 3초 후에 메시지 전송 중인 상태를 해제
+            const timer = setTimeout(() => setIsSending(false), 3000); // 3초 후에 메시지 전송 중인 상태를 해제
             return () => clearTimeout(timer); // 컴포넌트가 언마운트되면 타이머 해제
         }
     }, [isSending]);
@@ -117,9 +127,9 @@ export default function Chat() {
 
     return (
         <div>
-            <div style={{ position: 'fixed', bottom: '100px', left: '100px' }}>
-            <img 
-                src='/img/ChatIcon.png'
+            <div className='widget' style={{ position: 'fixed', bottom: '100px', left: '100px' }}>
+            <img
+                src={isClicked ? '/img/ChatIcon-after.png' : '/img/ChatIcon.png' }
                 alt="chat-icon"
                 onClick={toggleChat}
                 width="50"
@@ -130,27 +140,29 @@ export default function Chat() {
             {isChatVisible && (
                 <div className="chat-container" style={{ position: 'fixed', bottom: '170px', left: '50px' }}>
                     <div className="chat-messages" ref={chatBoxRef}>
-                        <div style={{ textAlign: 'left' }}>
+                        <div style={{ textAlign: 'left'}}>
                             {messages.map((message, index) => (
-                                <div
+                                <div className='message'
                                     key={index}
                                     style={{
+                                        
                                         display: 'flex',
-                                        justifyContent: 'flex-start',
-                                        marginTop: '-25px', // 각 메세지 사이의 간격
+                                        justifyContent: message.nickname === sessionId ? 'flex-end' : 'flex-start',
+                                        marginTop: '-5px', // 각 메세지 사이의 간격
                                     }}
                                 >
                                     <p
                                         style={{
+                                            border: message.nickname === sessionId ? '1px solid rgba(212, 212, 212, 0.7)' : '1px solid #cadba4' ,
                                             fontFamily: 'SKYBORI',
-                                            backgroundColor: '#E4F7BA',
+                                            backgroundColor: message.nickname === sessionId ? 'white' : '#E4F7BA',
                                             borderRadius: '10px',
                                             padding: '5px',
                                             paddingLeft: '10px',
                                             paddingRight: '10px',
                                         }}
                                     >
-                                        {message}
+                                        {message.nickname}: {message.content}
                                     </p>
                                 </div>
                             ))}

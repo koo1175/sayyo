@@ -1,5 +1,5 @@
 .cities{
-    background: white;
+    background: url('/public/img/Group-97.png');
     position: relative;
     width: 100%;
     height: 1070px; /* Change this line */
@@ -11,6 +11,7 @@
     background-size: cover;
     margin-top: -5.5%;
 }
+
 
 .cities-list::-webkit-scrollbar{
     width: 10px;

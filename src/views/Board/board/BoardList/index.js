@@ -7,12 +7,17 @@ import Chat from "../../../Chat";
 
 export default function BoardList() {
     const navigate = useNavigate();
-
+    const [currentPage, setCurrentPage] = useState(1);
+    const postsPerPage = 10;
     const gotoWritePage = () => {
         navigate('/BoardWrite');
     };
 
     const [boardList, setBoardList] = useState([]);
+
+    const handlePageClick = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    }
 
     useEffect(() => {
         const fetchBoardList = () => {
@@ -20,7 +25,6 @@ export default function BoardList() {
                 .then(response => {
                     // Sort the list in reverse chronological order
                     const sortedBoardList = response.data.list.sort((a, b) => new Date(b.nowDate) - new Date(a.nowDate));
-    
                     setBoardList(sortedBoardList);
                 })
                 .catch(error => {
@@ -52,19 +56,20 @@ export default function BoardList() {
                 console.error('Error incrementing view count:', error);
             });
     };
+    const addPost = (newPost) => {
+        setBoardList([...boardList, newPost]);
+    }
 
     return (
         <div style={{width:1400}}>
         <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center'}}>
-            <div >
-
+            <div>
                 <section className="notice" >
                     <div className="page-title" >
                         <div className="container2">
                             <h3>공지사항</h3>
                         </div>
                     </div>
-
                     <form style={{ marginTop: '-40px', marginBottom: '20px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                         <select id="myDropdown1" >
                             <option value="none">구분선택</option>
@@ -98,9 +103,9 @@ export default function BoardList() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {boardList.map(board => (
+                                    {boardList.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage).map((board, index) => (
                                         <tr key={board.num}>
-                                        <td>{board.num}</td>
+                                        <td>{boardList.length - index}</td>
                                         <td>{board.category}</td>
                                         <td><a href={`/BoardDetail/${board.num}`} onClick={() => handleTitleClick(board)}>
                                             {board.title}
@@ -130,11 +135,11 @@ export default function BoardList() {
                         <div className="page_nation">
                             <a className="arrow pprev" href="#!"><span className="sr-only">Previous Previous</span></a>
                             <a className="arrow prev" href="#!"><span className="sr-only">Previous</span></a>
-                            <a href="#!" className="active">1</a>
-                            <a href="#!">2</a>
-                            <a href="#!">3</a>
-                            <a href="#!">4</a>
-                            <a href="#!">5</a>
+                            <a href="#!" onClick={() => handlePageClick(1)}>1</a>
+                            <a href="#!" onClick={() => handlePageClick(2)}>2</a>
+                            <a href="#!" onClick={() => handlePageClick(3)}>3</a>
+                            <a href="#!" onClick={() => handlePageClick(4)}>4</a>
+                            <a href="#!" onClick={() => handlePageClick(5)}>5</a>
                             <a className="arrow next" href="#!"><span className="sr-only">next</span></a>
                             <a className="arrow nnext" href="#!"><span className="sr-only">next next</span></a>
                         </div>

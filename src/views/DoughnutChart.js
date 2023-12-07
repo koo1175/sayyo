@@ -29,7 +29,7 @@ function DoughnutChart({ data }) {
 
     return (
         <div style={{ display: 'flex' }}>
-            <div style={{ position: 'relative',marginLeft:7,marginLeft:100 }}>
+            <div style={{ position: 'relative',marginLeft:70 }}>
                 <Doughnut
                     data={chartData}
                     height={250}

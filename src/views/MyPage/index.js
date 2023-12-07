@@ -14,7 +14,7 @@ export default function MyPage () {
   const multiLineText = "'세요' 사이트에서는 개인정보보호정책에 따라 중요정보 접근시 회원의 비밀번호 인증 절차를 수행해야 합니다.\n\n회원정보 수정을 진행하시려면 로그인 시 입력하신 비밀번호로 인증 절차를 수행해 주시기 바랍니다.";
 
   return (
-    <div style={{width:1400, marginTop:'120px', marginLeft:'-75px'}}>
+    <div style={{width:1400, marginTop:'120px', marginLeft:'15%'}}>
     <div className="member-info-container">
       <div className="page-title">
         <div style={{ display: 'flex', justifyContent: 'flex-start', marginLeft: -150}}>

@@ -37,14 +37,17 @@ export default function Reply({ text }) {
     const region = text;
     const [comment, setComment] = useState('');
 
+    const [sessionNickname, setSessionNickname] = useState("배고픈 젤리");
     const [modalIsOpen, setIsOpen] = useState(false);
-    const [selectedNickname, setSelectedNickname] = useState('');
+    const [selectedNickname, setSelectedNickname] = useState("");
+
+    // 댓글 작성자 판별 
+    const [isWriter, setIsWriter] = useState(false);
 
     // 스크롤 바 너비 계산
     function getScrollbarWidth() {
       return window.innerWidth - document.documentElement.clientWidth;
     }
-
 
     function openModal(nickname) {
       setSelectedNickname(nickname);
@@ -58,6 +61,8 @@ export default function Reply({ text }) {
       document.body.style.paddingRight = '0px';
       setIsOpen(false);
     }
+    
+
     async function reportUser(selectedNickname){
       try{
         const response = await axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/member/report', {
@@ -89,12 +94,13 @@ export default function Reply({ text }) {
 
     // MemBoardDto 객체를 생성
     const replyDto = {
-        nickname: "koo",
+        nickname: "배고픈 젤리",
         content: comment,
         region: region
     };
 
     const registReply = () => {
+      console.log(region)
         axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/reply/regist', replyDto, config)
         .then(async response => {
           console.log("댓글 등록 완료 여부:", response.data);
@@ -111,6 +117,38 @@ export default function Reply({ text }) {
       })
     }
     
+    // 댓글 삭제
+    const handleDelete = (index) => {
+      axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/reply/delete', {
+        id: index
+      }, config)
+      .then(async response => {
+        console.log("댓글 삭제 완료 여부:", response.data);
+        alert("댓글이 삭제되었습니다.");
+      })
+      .catch(error => {
+        console.error("댓글 삭제 실패:", error);
+        alert("댓글 삭제에 실패하였습니다.");
+      })
+    };
+
+
+    const isMyComment = async (index) => {
+      const response = await axios.post(`https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/reply/isWriter`,
+          { 
+            nickname: sessionNickname,
+            id: index
+          },
+          config
+      );
+      // 댓글 글쓴이가 맞으면 
+      if(response.data){
+        return true;
+      }else{
+        return false;
+      }
+  }
+
     const handleChange = (e) => {
         setComment(e.target.value);
       };
@@ -153,8 +191,16 @@ export default function Reply({ text }) {
             {comments.slice().reverse().map((comment, index) => (
                 <div style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px', marginTop:'10px', borderRadius: '5px', fontSize:'15px' }} key={index}>
                     <div style={{ display:'flex', marginBottom:'3%'}}>
-                      <h4 style={{ margin: 0, textAlign: 'left', width:'25%' }} onClick={() => openModal(comment.nickname)}>작성자  |  {comment.nickname}</h4>
+                      <h4 style={{ margin: 0, textAlign: 'left', width:'25%', cursor: 'pointer' }} onClick={() => openModal(comment.nickname)}>작성자  |  {comment.nickname}</h4>
                       <p style={{ margin: 0, textAlign: 'left', marginLeft:'10%', color: '#888' }}>{customDateFormat(comment.nowDate)}</p>
+                      <button style={{ marginLeft: 'auto' }} 
+                        onClick={async () => {
+                          if(await isMyComment(comment.id)) {
+                              handleDelete(comment.id);
+                          } else {
+                              alert("댓글 삭제 권한이 없습니다.");
+                          }}}>삭제
+                      </button>
                     </div>
                     <p style={{ margin: 0, textAlign: 'left' }}>{comment.content}</p>
                 </div>

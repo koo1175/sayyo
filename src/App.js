@@ -59,6 +59,10 @@ import QuizPage from './QuizPage';
 import QuizResult from './QuizResult';
 
 import MemberOfTheKoreanCongress from './views/MemberOfTheKoreanCongress';
+import { ChatProvider } from './views/ChatContext';
+
+import NotFoundPage from './views/NotFoundPage';
+import TurningCard from './views/TurningCard';
 
 function App() {
 
@@ -68,6 +72,7 @@ function App() {
       <Navigation /> */}
       <Router>
         <Navigation />
+        <ChatProvider>
         <Routes>
           <Route path="/login/oauth2/callback/kakao" element={<KaKaoHandeler />} />
           <Route path="/login" element={<AuthForm/>} />
@@ -118,9 +123,12 @@ function App() {
           <Route path="/QuizResult" element={<QuizResult />} />
 
           <Route path="/KoreanCongress" element={<MemberOfTheKoreanCongress />} />
+          <Route path="*" element={<NotFoundPage />} />  {/* 이 줄이 404 에러 페이지를 렌더링하는 코드입니다. */}
 
+          <Route path="TurningCard" element={<TurningCard/>} />
 
         </Routes>
+        </ChatProvider>
       </Router>
     </div>
   );

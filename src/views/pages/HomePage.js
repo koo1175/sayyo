@@ -102,7 +102,7 @@ const HomePage = () => {
                 <li><ScrollLink to="section1" spy={true} offset={-window.innerHeight / 2} onSetActive={handleSetActive} style={{ display: 'block', margin: '10px 0', padding: '5px', background: currentSection === 'section1' ? 'white' : 'rgba(211, 211, 211, 0.5)', textDecoration: 'none', textAlign: 'center', borderRadius: '50%', width: '15px', height: '15px' }} smooth={true} duration={100}></ScrollLink></li>
                 <li><ScrollLink to="section2" spy={true} offset={-90} onSetActive={handleSetActive} style={{ display: 'block', margin: '10px 0', padding: '5px', background: currentSection === 'section2' ? 'white' : 'rgba(211, 211, 211, 0.5)', textDecoration: 'none', textAlign: 'center', borderRadius: '50%', width: '15px', height: '15px' }} smooth={true} duration={100}></ScrollLink></li>
                 <li><ScrollLink to="section3" spy={true} offset={-200} onSetActive={handleSetActive} style={{ display: 'block', margin: '10px 0', padding: '5px', background: currentSection === 'section3' ? 'white' : 'rgba(211, 211, 211, 0.5)', textDecoration: 'none', textAlign: 'center', borderRadius: '50%', width: '15px', height: '15px' }} smooth={true} duration={100}></ScrollLink></li>
-                <li><ScrollLink to="section4" spy={true} offset={-90} onSetActive={handleSetActive} style={{ display: 'block', margin: '10px 0', padding: '5px', background: currentSection === 'section4' ? 'white' : 'rgba(211, 211, 211, 0.5)', textDecoration: 'none', textAlign: 'center', borderRadius: '50%', width: '15px', height: '15px' }} smooth={true} duration={100}></ScrollLink></li>
+                <li><ScrollLink to="section4" spy={true} offset={-60} onSetActive={handleSetActive} style={{ display: 'block', margin: '10px 0', padding: '5px', background: currentSection === 'section4' ? 'white' : 'rgba(211, 211, 211, 0.5)', textDecoration: 'none', textAlign: 'center', borderRadius: '50%', width: '15px', height: '15px' }} smooth={true} duration={100}></ScrollLink></li>
             </ul>
         </div>
         <Element name="section1" className="section">
@@ -133,7 +133,7 @@ const HomePage = () => {
         <Element name="section2" className="section">
             <div id="section2" className="section" style={{marginTop:'10%'}}>
                 <section className="about-section text-center" id="about" >
-                    <div className="container px-4 px-lg-5 d-flex" style={{ display:'flex'}}>
+                    <div className="container px-4 px-lg-5 d-flex" style={{ display:'flex', marginLeft:'-15%'}}>
                         <img src='img/page-second-logo1.png' style={{position: 'absolute', marginLeft:'-8%', marginTop:'-8%', width:'180px'}}/>
                         
                         <a href={data[currentIndex]?.link} target="_blank" rel="noopener noreferrer">
@@ -252,7 +252,7 @@ const HomePage = () => {
             <div id="section4" className="section">
                 <section class="signup-section" id="signup">
                     <div class="container px-4 px-lg-5">
-                        <div class="row gx-4 gx-lg-5">
+                        <div class="row gx-4 gx-lg-5" style={{marginTop: '150px'}}>
                             <div class="col-md-10 col-lg-8 mx-auto text-center" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                                 <h1 style={{fontSize:'50px'}}>Are You Ready?</h1>
                                 <img src="/img/loading-unscreen.gif" alt="Loading..." style={{marginTop: '-100px'}}/>

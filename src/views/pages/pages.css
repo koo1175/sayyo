@@ -11238,6 +11238,7 @@ body {
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-size: cover;
+  margin-top: 2%;
 }
 
 .projects-section p {
@@ -11269,6 +11270,7 @@ body {
 .signup-section {
   padding: 10rem 0;
   background:  url("/public/img/page-last.png");
+  height: 900px;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;
