@@ -56,13 +56,15 @@ export default function BoardList() {
     return (
         <div style={{width:1400}}>
         <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center'}}>
-            <div>
+            <div >
+
                 <section className="notice" >
                     <div className="page-title" >
                         <div className="container2">
                             <h3>공지사항</h3>
                         </div>
                     </div>
+
                     <form style={{ marginTop: '-40px', marginBottom: '20px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                         <select id="myDropdown1" >
                             <option value="none">구분선택</option>
@@ -138,6 +140,9 @@ export default function BoardList() {
                         </div>
                         <div style={{ marginBottom: '10%' }} />
                     </div>
+            </div>
+            <div>
+                <Chat/>
             </div>
         </div>
         </div>

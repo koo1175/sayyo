@@ -1,0 +1,93 @@
+/* MemberInfoPage.css */
+.member-info-container {
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .page-title {
+    text-align: center;
+  }
+  
+  .page-title h2 {
+    margin-bottom: 10px;
+  }
+  
+  .page-title hr {
+    border: 1px solid #0E3B64;
+    width: 50%;
+    margin: 0 auto;
+  }
+  
+  .section {
+    margin-top: -35px;
+  }
+  
+  .box {
+    background-color: #F5F5F5;
+    padding: 20px;
+    margin-top: 10px;
+  }
+  
+  .sub-title {
+    color: #0E3B64;
+  }
+  
+  .password-box {
+    background-color: #0E3B64;
+    height: 50px;
+    width: 100%;
+  }
+  
+  .info-box {
+    margin-top: 20px;
+  }
+  
+  .policy-box {
+    background-color: #F5F5F5;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color:#0E3B64;
+    border: 0.5px;
+    border-color: #0E3B64;
+    
+  }
+  
+  .password-input {
+    background-color: #F5F5F5;
+    height: 40px;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .button-box {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .confirm-button {
+    background-color: #0E3B64;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    flex-basis: 30%;
+  }
+  
+  .cancel-button {
+    background-color: #616161;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    flex-basis: 30%;
+  }
+  .cancel-button2 {
+    background-color: #616161;
+    color: white;
+    padding:  2px 7px;
+    border: none;
+    cursor: pointer;
+  }
+  

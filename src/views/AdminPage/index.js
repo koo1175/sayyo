@@ -7,6 +7,7 @@ import './Admin.css';
 import { useNavigate } from 'react-router-dom';
 
 export default function AdminPage() {
+    
     const [chartData, setChartData] = useState({
         labels: Utils.months({ count: 7 }),
         datasets: [
@@ -54,17 +55,20 @@ export default function AdminPage() {
     const [quizzes, setQuizzes] = useState([]);
     const [editIndex, setEditIndex] = useState(null);
 
+    // 퀴즈 관리 부분의 useEffect 수정
     useEffect(() => {
         // Fetch quiz data from the server on component mount
         axios.get('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/question/findAll')
             .then((response) => {
                 // Assuming the response data is an array
-                setQuizzes(response.data.list);
+                const sortedQuizzes = response.data.list.sort((a, b) => a.id - b.id); // 정렬
+                setQuizzes(sortedQuizzes);
             })
             .catch((error) => {
                 console.error('Error fetching quiz data:', error);
             });
     }, []); // Run only on component mount
+
 
     const handleEdit = (index) => {
         setEditIndex(index);
@@ -243,6 +247,9 @@ export default function AdminPage() {
             });
     };
 
+    // 회원 가나다 순 정렬 코드
+    const sortedMembers = [...members].sort((a, b) => a.name.localeCompare(b.name));
+
     /* 이행률 리스트 */
 
     const [topFive, setTopFive] = useState([]);
@@ -258,14 +265,60 @@ export default function AdminPage() {
                 console.error('Error fetching top five data:', error);
             });
     }, []); // Run only on component mount
-    
+
+
+    const handleDeleteFullfill = (event, region) => {
+        event.preventDefault();
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        const regionData = {
+            region: region,
+        };
+
+        axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/fulfillment/delete', regionData, config)
+            .then(response => {
+                console.log('삭제 완료 여부:', response.data);
+
+                // 서버 응답에 따른 동작 추가 가능
+
+                reloadData();
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Error deleting item:', error);
+                console.log('region', region);
+
+                // 에러에 따른 동작 추가 가능
+            });
+    };
+
+
+    const [loading, setLoading] = useState(true);
+
+    const reloadData = () => {
+        axios
+            .get('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/fulfillment/topFive')
+            .then(response => {
+                setTopFive(response.data.list);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error('Error fetching top five data:', error);
+                setLoading(false);
+            });
+    };
 
     return (
         <div className="rounded-bg">
             <div style={{ marginTop: '10px', marginBottom: '-150px', padding: '20px', display: 'flex', justifyContent: 'space-between' }}>
                 <div style={{ flexBasis: '30%', textAlign: 'center' }}>
                     {/* 시장 인증 관리 */}
-                    <div style={{ marginBottom: '20px', marginTop: '50px' }}>
+                    <div style={{ marginBottom: '20px', marginTop: '50px', marginLeft:'-65px' }}>
                         <h3 style={{ color: 'white', fontWeight: 'bold' }}>시장 인증 관리</h3>
                         <table className="rounded-table">
                             <thead>
@@ -322,9 +375,9 @@ export default function AdminPage() {
                 </div>
 
 
-                <div style={{ flexBasis: '30%', textAlign: 'center' }}>
+                <div style={{ flexBasis: '40%', textAlign: 'center' }}>
                     {/* 방문자 현황 그래프 */}
-                    <div style={{ marginTop: '25px' }}>
+                    <div style={{ marginTop: '25px', marginLeft:'-290px', marginRight:'-300px' }}>
                         <h3 style={{ color: 'white', fontWeight: 'bold' }}>방문자 현황</h3>
                         {/* React-ChartJS-2의 Line 컴포넌트 사용 */}
                         <canvas
@@ -341,9 +394,10 @@ export default function AdminPage() {
                 </div>
 
 
-                <div style={{ flexBasis: '30%', textAlign: 'center', marginTop: '50px' }}>
+                <div style={{ flexBasis: '30%', textAlign: 'center', marginTop: '35px' }}>
                     {/* 시장 이행률 */}
-                    <div>
+                    <div style={{marginLeft:'70px', marginRight:'-5px'}}>
+                        {loading && <p></p>}
                         <h3 style={{ color: 'white', fontWeight: 'bold' }}>이행률 순위</h3>
                         <table className="rounded-table">
                             <thead>
@@ -363,7 +417,7 @@ export default function AdminPage() {
                                         <td>{item.region}</td>
                                         <td>{item.fulfillment}%</td>
                                         <td>
-                                            <button className='submit-deny2'>X</button>
+                                            <button onClick={(e) => handleDeleteFullfill(e, item.region)} className='submit-deny2' style={{ fontSize: '15px' }}>&times;</button>
                                         </td>
                                     </tr>
                                 ))}
@@ -385,18 +439,20 @@ export default function AdminPage() {
             </div>
 
             {/* Render QuizForm as a popup if isQuizFormOpen is true */}
-            {isQuizFormOpen && (
-                <div className="popup-overlay">
-                    <QuizForm onClose={handleQuizFormToggle} onRegister={handleQuizRegister} />
-                </div>
-            )}
+            {
+                isQuizFormOpen && (
+                    <div className="popup-overlay">
+                        <QuizForm onClose={handleQuizFormToggle} onRegister={handleQuizRegister} />
+                    </div>
+                )
+            }
 
 
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '50px' }}>
-                <div style={{ flexBasis: '53%', textAlign: 'center' }}>
-                    {/* 회원 승인 */}
-                    <p style={{ color: 'white', fontWeight: 'bold', fontSize: '18px' }}>회원 승인</p>
-                    <table className="rounded-table" style={{ width: '850px', fontSize: '15px' }}>
+                <div style={{ flexBasis: '53%', textAlign: 'center', padding:'10px' }}>
+                    {/* 회원 목록 */}
+                    <p style={{ color: 'white', fontWeight: 'bold', fontSize: '18px' }}>회원 목록</p>
+                    <table className="rounded-table" style={{ width: '720px', fontSize: '12px' }}>
                         <thead>
                             <tr>
                                 <th>아이디</th>
@@ -408,15 +464,15 @@ export default function AdminPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {members.map((member, index) => (
-                                <tr>
+                            {sortedMembers.slice(0, 5).map((member, index) => (
+                                <tr key={member.id}>
                                     <td>{member.id}</td>
                                     <td>{member.name}</td>
                                     <td>{member.nickname}</td>
                                     <td>{member.phone}</td>
                                     <td>{member.address}</td>
                                     <td>
-                                        <button className='submit-deny' onClick={() => handleDeleteMember(member.id)}>삭제</button>
+                                        <button className='submit-deny2'onClick={() => handleDeleteMember(member.id)}>삭제</button>
                                     </td>
                                 </tr>
                             ))}
@@ -425,9 +481,9 @@ export default function AdminPage() {
                 </div>
                 <div style={{ flexBasis: '55%', textAlign: 'center', marginBottom: '50px', marginTop: '-30px' }}>
                     {/* 퀴즈 관리 */}
-                    <div style={{ marginBottom: '20px', marginTop: '50px' }}>
+                    <div style={{ marginBottom: '20px', marginTop: '30px', padding:'10px' }}>
                         <h3 style={{ color: 'white', fontWeight: 'bold' }}>퀴즈 관리</h3>
-                        <table className="rounded-table" style={{ width: '900px' }}>
+                        <table className="rounded-table" style={{ width: '750px', fontSize:'12px' }}>
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -471,6 +527,6 @@ export default function AdminPage() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }

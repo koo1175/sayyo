@@ -17,10 +17,10 @@ const HomePage = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
-        axios.get('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/laws/findNew')
+        axios.get('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/laws/findNewEight')
             .then(response => {
                 console.log(response.data.laws);
-                setData(response.data.laws.slice(0,8));
+                setData(response.data.laws);
             })
             .catch(error => {
                 console.error('There was an error!', error);

@@ -1,80 +1,55 @@
+// MemberInfoPage.js
 import React from 'react';
+import './style.css'; // Import the corresponding CSS file
+import { useNavigate } from 'react-router-dom';
 
-function ContactInfo({ email, phone }) {
-  return (
-    <div style={{ border: '1px solid #000', borderRadius: '10px', padding: '10px', width: '500px', marginTop: '20px' }}>
-      <div style={{ textAlign: 'left' }}>연락처 정보</div>
-      <br /><br />
-      <div style={{ textAlign: 'left' }}>이메일: {email}</div>
-      <hr style={{ margin: '5px 0' }} />
-      <br />
-      <div style={{ textAlign: 'left' }}>휴대전화: {phone}</div>
-      <hr style={{ margin: '5px 0' }} />
-      <br />
-    </div>
-  );
-}
+export default function MyPage () {
 
-function AddressInfo({ streetAddress, detailedAddress }) {
-  return (
-    <div style={{ border: '1px solid #000', borderRadius: '10px', padding: '10px', width: '500px', marginTop: '20px' }}>
-      <div style={{ textAlign: 'left' }}>주소 정보</div>
-      <br /><br />
-      <div style={{ textAlign: 'left' }}>도로명 주소: {streetAddress}</div>
-      <hr style={{ margin: '5px 0' }} />
-      <br />
-      <div style={{ textAlign: 'left' }}>상세 주소: {detailedAddress}</div>
-      <hr style={{ margin: '5px 0' }} />
-      <br />
-    </div>
-  );
-}
+  const navigate = useNavigate();
 
-function Mypage({ name, birthdate, gender, email, phone, streetAddress, detailedAddress }) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '50vh' }}>
-      {/* 맨 위에 사용자의 이름 표시 */}
-      <div style={{ textAlign: 'center', fontSize: '20px', fontWeight: 'bold', marginBottom: '20px' }}>{name}님의 정보</div>
-
-      {/* 첫 번째 섹션: 기본 정보 */}
-      <div style={{ border: '1px solid #000', borderRadius: '10px', padding: '10px', width: '500px' }}>
-        <div style={{ textAlign: 'left' }}>기본정보</div>
-        <br /><br />
-        <div style={{ textAlign: 'left' }}>이름: {name}</div>
-        <hr style={{ margin: '5px 0' }} />
-        <br />
-        <div style={{ textAlign: 'left' }}>생년월일: {birthdate}</div>
-        <hr style={{ margin: '5px 0' }} />
-        <br />
-        <div style={{ textAlign: 'left' }}>성별: {gender}</div>
-        <hr style={{ margin: '5px 0' }} />
-        <br />
-      </div>
-
-      {/* 두 번째 섹션: 연락처 정보 */}
-      <ContactInfo email={email} phone={phone} />
-
-      {/* 세 번째 섹션: 주소 정보 */}
-      <AddressInfo streetAddress={streetAddress} detailedAddress={detailedAddress} />
-    </div>
-  );
-}
-
-export default function App() {
-  // 예제 데이터
-  const userData = {
-    name: '김지민',
-    birthdate: '2000-01-01',
-    gender: '비공개',
-    email: 'example@example.com',
-    phone: '010-1234-5678',
-    streetAddress: '서울특별시 강남구 삼성로 123',
-    detailedAddress: '아파트 456동 789호',
+  const gotoMyPageDetail = () => {
+    navigate(`/MyPageDetail`);
   };
 
+  const multiLineText = "'세요' 사이트에서는 개인정보보호정책에 따라 중요정보 접근시 회원의 비밀번호 인증 절차를 수행해야 합니다.\n\n회원정보 수정을 진행하시려면 로그인 시 입력하신 비밀번호로 인증 절차를 수행해 주시기 바랍니다.";
+
   return (
-    <div style={{ marginTop: '5vw' }}>
-      <Mypage {...userData} />
+    <div style={{width:1400, marginTop:'120px', marginLeft:'-75px'}}>
+    <div className="member-info-container">
+      <div className="page-title">
+        <div style={{ display: 'flex', justifyContent: 'flex-start', marginLeft: -150}}>
+        <h2>회원정보관리</h2>
+        </div>
+        <hr style={{width:950, marginLeft:-150}} />
+      </div>
+      <div className="section">
+      <div style={{ display: 'flex', justifyContent: 'flex-start', marginLeft: -150, marginTop:-70}}>
+        <h3>회원 정보 수정 - 회원 인증</h3>
+        </div>
+          <div className="password-box" style={{textAlign:'center', color:'white', fontWeight:'bold', fontSize:'18px', paddingTop:10, height: 40, width: 950, marginLeft:-150}}>비밀번호</div>
+          <br/> 
+        <div className="sub-title" style={{display: 'flex', justifyContent: 'flex-start', marginLeft: -150, fontSize:20, fontWeight:'bold'}}>비밀번호 인증</div>
+      </div>
+
+      <div className="info-box">
+        <div className="policy-box" style={{ width:900, marginLeft:-150, border: '0.5px solid #d9d9d9'}}>
+          <div style={{display: 'flex', justifyContent: 'flex-start', color:'#0E3B64', fontWeight:'bold', fontSize:18}}>개인정보보호정책에 따른 인증절차 강화 안내</div>
+          <div style={{display: 'flex', justifyContent: 'flex-start', backgroundColor:'white', width:900, height:80, marginLeft:-20, marginTop:15, padding:20, borderTop: '0.5px solid #d9d9d9'}}>
+          <div style={{whiteSpace: 'pre-wrap', textAlign:'left',}}>{multiLineText}</div>
+          </div>
+        </div>
+        <br/>
+        <div className="password-input" style={{ width:900, height:100, marginLeft:-150, border: '0.5px solid #d9d9d9', padding:20}}>        
+         <div style={{marginTop:30, fontWeight:'bold'}}> 비밀번호 입력 <input type='password' style={{marginLeft:10 ,width:300, height:30, fontSize:20}}>
+           </input></div>
+        </div>
+        <div className="button-box">
+          <button className="confirm-button" onClick={gotoMyPageDetail} style={{ marginLeft:160}}>확인</button>
+          <button className="cancel-button" style={{ marginLeft: 10 ,marginRight:70}}>취소</button>
+        </div>
+      </div>
+    </div>
     </div>
   );
-}
+};
+

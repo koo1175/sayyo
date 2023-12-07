@@ -15,7 +15,7 @@ export default function Gyeonggi() {
         if (hash) {
           // 해시 값이 있으면 해당 섹션으로 스크롤합니다.
             scroller.scrollTo(hash.slice(1), {
-            duration: 500,
+            duration: 600,
             smooth: true,
             });
         }
