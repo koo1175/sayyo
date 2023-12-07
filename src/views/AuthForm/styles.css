@@ -14,3 +14,7 @@
 .authButton.authVerified {
   background-color: #4399FF;
 }
+
+.email-input {
+  z-index: 1;
+}

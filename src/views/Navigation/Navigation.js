@@ -129,7 +129,7 @@ const Navigation = () => {
                     {/* 검색어아이콘 */}
                     <SearchIcon className="searchIcon" onClick={handleClick} style={{marginRight: isSearchOpen ? '-18%' : '-5%'}} />
                     {/* 인기검색어 */}
-                    <Popper open={open} anchorEl={anchorEl} placement="bottom-start" style={{ zIndex: 10000 }}>
+                    <Popper open={open} anchorEl={anchorEl} placement="bottom-start" style={{ zIndex: -1 }}>
                         <div className='search' style={{ backgroundColor: '#ffffff', width: '230px', height: '130px', textAlign: 'center', borderRadius: '10px', marginLeft: '-20%' }}>
                         <div style={{ textAlign: 'left', marginLeft: '10px', color: 'gray', padding: '10px' }}>
                             인기 검색어
@@ -143,7 +143,7 @@ const Navigation = () => {
                     </Popper>
                     </>
                     {!isSearchOpen && (isLoggedIn ? 
-                    <Button variant="contained" onClick={handleLogout} style={{marginLeft:'10%', marginRight:'-20%', backgroundColor:'#2DA7A7'}}>
+                    <Button variant="contained" onClick={handleLogout} style={{marginLeft:'10%', marginRight:'-20%', backgroundColor:'#2DA7A7', width:'77px'}}>
                         Logout
                     </Button>
                     :

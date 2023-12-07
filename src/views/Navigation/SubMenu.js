@@ -52,7 +52,7 @@ const SubMenu = ({ isVisible }) => {
                 }}
             >
                 {/* 서브메뉴 내용 */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '18px', marginTop:'2%', marginLeft:'50%', width:'760px'}}>
+                <div className='subMenu' style={{ display: 'flex', justifyContent: 'space-between', fontSize: '18px', marginTop:'2%', marginLeft:'50%', width:'760px'}}>
                     <div className='subNav' style={{ flexBasis: '16%' }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     · 국회의원
                     <Link to="/">

@@ -66,7 +66,7 @@ function LoginForm() {
   
 
   return (
-    <div style={{ marginTop: 200, marginLeft: 395, textAlign: 'center' }}>
+    <div style={{ marginTop: 200, marginLeft: -40, textAlign: 'center' }}>
       <form style={{ display: "inline" }}>
         <input type="text" placeholder='아이디' value={id} onChange={e => setId(e.target.value)} style={{ height: '30px' }} />
         <br />
@@ -452,7 +452,7 @@ export default function AuthForm() {
 
 
   return (
-    <div style={{ position: 'relative', marginTop: '-200px', transform: 'scale(1.2)', marginLeft: '30%' }}>
+    <div style={{ position: 'relative', marginTop: '-150px', transform: 'scale(1.2)', marginLeft: '33%' }}>
 
       {/* White form in front of the gray square */}
       <animated.div
@@ -465,7 +465,7 @@ export default function AuthForm() {
           borderRadius: 30,
         }}
       >
-        <div style={{ position: 'absolute', top: '30%', left: '45%', transform: 'translate(-50%, -50%)', fontSize: '1em' }}>
+        <div style={{ position: 'absolute', top: '30%', left: '47%', transform: 'translate(-50%, -50%)', fontSize: '1em' }}>
           {/* Render registration form if isLogin is false */}
           {isLogin && <LoginForm />}
           {!isLogin && <RegisterForm />}
@@ -511,7 +511,7 @@ export default function AuthForm() {
       </animated.div>
 
       {/* Toggle between login and sign-up buttons */}
-      <button onClick={handleClick} style={{ marginTop: 10, marginLeft: 470, cursor: 'pointer' }}>
+      <button onClick={handleClick} style={{ marginTop: 8, marginLeft: 20, cursor: 'pointer' }}>
         {isLogin ? '회원가입 하러가기' : '로그인 하러가기'}
       </button>
     </div>
