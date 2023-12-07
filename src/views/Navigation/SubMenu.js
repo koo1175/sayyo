@@ -27,7 +27,7 @@ const SubMenu = ({ isVisible }) => {
 
     const gotoBoardList = () => {
         navigate(`/`);
-        scroller.scrollTo('section3', { smooth: true, duration: 100 }); // 이 부분이 추가되었습니다.
+        scroller.scrollTo('section3', { smooth: true, duration: 100, offset: -200 }); // 이 부분이 추가되었습니다.
     };
 
     return (
