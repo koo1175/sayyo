@@ -16,7 +16,6 @@ const HomePage = () => {
     const [data, setData] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
 
-
     useEffect(() => {
         axios.get('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/laws/findNew')
             .then(response => {

@@ -54,19 +54,13 @@ const SubMenu = ({ isVisible }) => {
                 {/* 서브메뉴 내용 */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '18px', marginTop:'2%', marginLeft:'50%', width:'760px'}}>
                     <div className='subNav' style={{ flexBasis: '16%' }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                    국회의원
+                    · 국회의원
                     <Link to="/">
-                            <div className='subNav' rel="noopener noreferrer" target="_blank" style={{ flexBasis: '16%', marginTop:'15%' }} onMouseEnter={(e) => e.target.style.color = 'blue'} onMouseLeave={(e) => e.target.style.color = 'black'} onClick={gotoBoardList}>지역시장</div>
+                            <div className='subNav' rel="noopener noreferrer" target="_blank" style={{ flexBasis: '16%', marginTop:'15%' }} onMouseEnter={(e) => e.target.style.color = 'blue'} onMouseLeave={(e) => e.target.style.color = 'black'} onClick={gotoBoardList}>· 지역시장</div>
                     </Link>
                 </div>
-                    <div className='subNav' style={{ flexBasis: '16%' }} onMouseEnter={(e) => e.target.style.color = 'blue'} onMouseLeave={(e) => e.target.style.color = 'black'} onClick={gotoAboutUs}>
-                        공지사항
-                    </div>
-                    <div className='subNav' style={{ flexBasis: '16%' }} onMouseEnter={(e) => e.target.style.color = 'blue'} onMouseLeave={(e) => e.target.style.color = 'black'}>
-                        About Us
-                    </div>
-                    <div className='subNav' style={{ flexBasis: '16%' }} onMouseEnter={(e) => e.target.style.color = 'blue'} onMouseLeave={(e) => e.target.style.color = 'black'} onClick={gotoMyPage}>
-                        고객센터
+                    <div className='subNav' style={{ flexBasis: '16%', marginRight:'2%' }} onMouseEnter={(e) => e.target.style.color = 'blue'} onMouseLeave={(e) => e.target.style.color = 'black'} onClick={gotoMyPage}>
+                        · 고객센터
                     </div>
                 </div>
             </div>

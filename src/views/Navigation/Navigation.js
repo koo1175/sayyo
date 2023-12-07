@@ -106,7 +106,7 @@ const Navigation = () => {
                             <li className="nav-item">
                                 <div style={{ display: 'flex', alignItems: 'center', marginLeft: '70px', marginRight: isSearchOpen ? '1%' : 0 }}>
                                     <img src="img/person.png" alt="Profile" style={{ marginRight: '-20%' }} />
-                                    <a className="nav-link" href="#signup">내정보</a>
+                                    <a className="nav-link" href="/MyPage">내정보</a>
                                 </div>
                             </li>
                         </ul>
