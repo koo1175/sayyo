@@ -7,7 +7,7 @@ import BookApp2 from '../Book/BookApp2';
 export default function MemberOfTheKoreanCongress() {
 
     return (
-        <div style={{ width: 1400, height: 2900, marginTop: 100, marginLeft: -110 }}>
+        <div style={{ width: 1400, height: 2900, marginTop: '10%', marginLeft: '11%' }}>
             <div style={{ fontFamily: '부크크명조_굵은글씨', background: '#0E3B64', marginBottom: 50, padding: 7, fontSize: 30, color: 'white', width: 1250, marginLeft: 120 }}>
                 제 21대 국회의원
             </div>

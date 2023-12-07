@@ -58,6 +58,8 @@ import Quiz from './Quiz';
 import QuizPage from './QuizPage';
 import QuizResult from './QuizResult';
 
+import MemberOfTheKoreanCongress from './views/MemberOfTheKoreanCongress';
+
 function App() {
 
   return (
@@ -114,6 +116,10 @@ function App() {
           <Route path="/Quiz" element={<Quiz />} />
           <Route path="/Quizpage" element={<QuizPage />} />
           <Route path="/QuizResult" element={<QuizResult />} />
+
+          <Route path="/KoreanCongress" element={<MemberOfTheKoreanCongress />} />
+
+
         </Routes>
       </Router>
     </div>

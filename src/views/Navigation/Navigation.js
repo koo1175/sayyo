@@ -85,7 +85,7 @@ const Navigation = () => {
     };
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav" style={{ backgroundColor: '#ffffff', zIndex: 1 }}>
+        <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav" style={{ backgroundColor: '#ffffff', zIndex: 2 }}>
             <div className="container px-4 px-lg-5"  style={{ display: 'flex', justifyContent: 'center', width: '100%' }} onMouseLeave={handleMouseLeave}>
                 <Link to="/">
                     <img className="navbar-brand" src="img/sayoLogo.png" alt="Logo" width={80} style={{ marginLeft: isSearchOpen ? '20%' : '-300%%' }} />

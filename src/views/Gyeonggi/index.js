@@ -191,7 +191,7 @@ export default function Gyeonggi() {
                 </div>
             </div>
             </Element>
-            <div className='map-list' style={{ textAlign:'center', marginBottom:'100%', marginTop:'10%', marginLeft:'45%'}}>
+            <div className='map-list' style={{ textAlign:'center', marginBottom:'100%', marginTop:'12%', marginLeft:'45%'}}>
             <input 
                 type="text" 
                 style={{width:'50%', height:'5vh', fontSize:'15px', borderRadius:'15px', marginRight:'50%'}}
