@@ -15,35 +15,54 @@ export default function BoardList() {
     const [boardList, setBoardList] = useState([]);
 
     useEffect(() => {
-        // 서버에서 게시글 목록을 가져오는 함수
         const fetchBoardList = () => {
             axios.get('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/memBoard/findAll')
                 .then(response => {
-                    console.log(response.data); // 확인용
-
-                    // list 키의 값을 사용
-                    setBoardList(response.data.list);
+                    // Sort the list in reverse chronological order
+                    const sortedBoardList = response.data.list.sort((a, b) => new Date(b.nowDate) - new Date(a.nowDate));
+    
+                    setBoardList(sortedBoardList);
                 })
                 .catch(error => {
                     console.error('게시글 목록을 불러오는 중 오류 발생:', error);
                 });
         };
-
+    
         fetchBoardList();
     }, []); // 컴포넌트가 마운트될 때만 실행
+    
 
+    const handleTitleClick = (board) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        axios.post(
+            'https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/memBoard/updateViews',
+            { num: board.num }, // 수정: 서버로 보낼 데이터를 객체로 감싸서 전달
+            config
+        )
+            .then(response => {
+                console.log('조회수 카운팅 완료 여부:', response.data);
+                navigate(`/BoardDetail/${board.num}`);
+            })
+            .catch(error => {
+                console.error('Error incrementing view count:', error);
+            });
+    };
 
     return (
-        <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
-            <div >
-
+        <div style={{width:1400}}>
+        <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center'}}>
+            <div>
                 <section className="notice" >
                     <div className="page-title" >
                         <div className="container2">
                             <h3>공지사항</h3>
                         </div>
                     </div>
-
                     <form style={{ marginTop: '-40px', marginBottom: '20px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                         <select id="myDropdown1" >
                             <option value="none">구분선택</option>
@@ -79,14 +98,14 @@ export default function BoardList() {
                                 <tbody>
                                     {boardList.map(board => (
                                         <tr key={board.num}>
-                                            <td>{board.num}</td>
-                                            <td>{board.category}</td>
-                                            <th>
-                                                <a href={`/BoardDetail/${board.num}`}>{board.title}</a>
-                                            </th>
-                                            <td>{board.views}</td>
-                                            <td>{formatDate(board.nowDate)}</td>
-                                        </tr>
+                                        <td>{board.num}</td>
+                                        <td>{board.category}</td>
+                                        <td><a href={`/BoardDetail/${board.num}`} onClick={() => handleTitleClick(board)}>
+                                            {board.title}
+                                        </a></td>
+                                        <td>{board.views}</td>
+                                        <td>{formatDate(board.nowDate)}</td>
+                                    </tr>
                                     ))}
                                 </tbody>
                             </table>
@@ -105,7 +124,7 @@ export default function BoardList() {
 
                 {/* 페이징 */}
 
-                    <div className="page_wrap" style={{marginTop:'700px'}}>
+                    <div className="page_wrap" style={{marginTop:'500px'}}>
                         <div className="page_nation">
                             <a className="arrow pprev" href="#!"><span className="sr-only">Previous Previous</span></a>
                             <a className="arrow prev" href="#!"><span className="sr-only">Previous</span></a>
@@ -120,9 +139,7 @@ export default function BoardList() {
                         <div style={{ marginBottom: '10%' }} />
                     </div>
             </div>
-            <div>
-                <Chat/>
-            </div>
+        </div>
         </div>
     );
 }

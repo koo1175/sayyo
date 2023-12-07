@@ -66,7 +66,8 @@ export default function BoardEdit() {
     }
 
     return (
-        <div style={{marginLeft:'150px',marginTop:'100px', textAlign:'left'}}> 
+        <div style={{width:1400}}>
+        <div style={{marginLeft:'250px',marginTop:'100px', textAlign:'left'}}> 
             <div style={{backgroundColor:"#ECECEC",width:'800px',height:'100px',borderTop:'3px solid gray'}}>
                 <h2 style={{marginLeft:'30px',marginTop:'35px',color:'#6A6A6A'}}>게시글 수정</h2>
                 <h5 style={{marginLeft:'600px',marginTop:'-45px',color:'#6A6A6A'}}>
@@ -93,6 +94,7 @@ export default function BoardEdit() {
                 <p style={{marginLeft:150}}>Copyright ⓒ 2023 Dike Engineering & Construction Corporation, All rights Reserved</p>
                 <p style={{marginLeft:300}}>Dike 정책 | 개인정보처리 방침 | 고객센터</p>
             </div> */}
+        </div>
         </div>
     )
 }

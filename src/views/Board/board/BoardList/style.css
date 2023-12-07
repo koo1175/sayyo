@@ -1,9 +1,9 @@
-table {
+.board-table {
     border-collapse: collapse;
     border-spacing: 0;
   }
   section.notice {
-    padding: 80px 0;
+    padding: 0;
 
   }
   
@@ -58,7 +58,6 @@ table {
     border-right: 0px;
     border-bottom: 1px solid #ccc;
     margin-top: -1200px;
-    margin-left: 150px;
   }
   
   .board-table a {
@@ -95,7 +94,6 @@ table {
   }
   
   .board-table tbody th {
-    padding-left: 28px;
     padding-right: 14px;
     border-top: 1px solid #e7e7e7;
     text-align: left;

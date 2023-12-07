@@ -16,24 +16,24 @@ svg{
     width:1000px;
 }
 
-.image-container img {
+/* .image-container img {
     width: 275px;
     height: 250px;
     /* max-width: 100%;
     max-height: 100%; */  
-    object-fit: cover;
+    /* object-fit: cover;
     margin-top: 20px; 
-    margin-left: 45px;
-}
+    margin-left: 45px; */
+/* } */ 
 
-.center .slick-current .image-container img {
+/* .center .slick-current .image-container img {
     width: 450px;
     height: 300px;
     z-index: 2;
     margin-top: 0; /* 가운데 이미지에는 공간을 추가하지 않습니다. */
-    margin-left: -45px; /* 가운데 이미지의 왼쪽 여백을 조정합니다. */
-    margin-right: 0px; /* 가운데 이미지의 오른쪽 여백을 조정합니다. */
-}
+    /* margin-left: -45px; 가운데 이미지의 왼쪽 여백을 조정합니다. */
+    /* margin-right: 0px; 가운데 이미지의 오른쪽 여백을 조정합니다. */
+/* } */ 
 .image-description {
     display: none; /* 기본적으로 모든 설명을 숨깁니다. */
 

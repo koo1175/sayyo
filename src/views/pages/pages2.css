@@ -1,0 +1,166 @@
+﻿.icon {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.icon:hover {
+    color: rgba(0, 0, 0, 1);
+}
+
+.plusIcon {
+    color: #484848;
+    transition: color 0.3s ease-in-out;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.plusIcon:hover {
+    color: #4BBDCC;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SCoreDream7';
+    font-weight: 700; 
+    font-style: normal; 
+    src: url(https://cdn.jsdelivr.net/gh/webfontworld/SCoreDream/SCoreDream7.woff2) format('woff2'),
+         url(https://cdn.jsdelivr.net/gh/webfontworld/SCoreDream/SCoreDream7.woff) format('woff');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'SCoreDream5';
+    font-weight: 500; 
+    font-style: normal; 
+    src: url(https://cdn.jsdelivr.net/gh/webfontworld/SCoreDream/SCoreDream5.woff2) format('woff2'),
+         url(https://cdn.jsdelivr.net/gh/webfontworld/SCoreDream/SCoreDream5.woff) format('woff');
+    font-display: swap;
+}
+
+
+.YM {
+    position: absolute;
+    top: 20%;
+    left: 24%;
+    transform: translate(-50%, -50%);
+    letter-spacing: -0.07em;
+    z-index: 1;
+    font-family: 'S-CoreDream-3Light';
+}
+
+.DD {
+    position: absolute;
+    top: 30%;
+    left: 24%;
+    transform: translate(-50%, -50%);
+    letter-spacing: -0.07em;
+    z-index: 1;
+    font-size: 150%;
+}
+
+.소관부처 {
+    position: absolute;
+    top: 20%;
+    left: 72%;
+    transform: translate(-50%, -50%);
+    letter-spacing: -0.07em;
+    z-index: 1;
+    font-size: 100%;
+}
+
+.title {
+    position: absolute;
+    top: 51%;
+    left: 48%;
+    transform: translate(-50%, -50%);
+    letter-spacing: -0.07em;
+    z-index: 1;
+    font-size: 150%;
+    width: 60%;
+}
+
+.법정종류 {
+    position: absolute;
+    top: 73%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    letter-spacing: -0.07em;
+    z-index: 1;
+    font-size: 120%;
+}
+
+.container p{
+    color: black;
+}
+
+
+.hoverEffect {
+    transition: 0.3s;
+}
+
+.hoverEffect:hover {
+    transform: translateY(-10px);
+    transition: 0.3s;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.button {
+    font-family: 'S-CoreDream-3Light';
+    margin: 10%;
+    text-align: center;
+}
+
+.btn-hover {
+    width: 280px;
+    font-size: 25px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    height: 70px;
+    text-align:center;
+    border: none;
+    background-size: 300% 100%;
+    border-radius: 50px;
+    -moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:hover {
+    background-position: 100% 0;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:focus {
+    outline: none;
+}
+.btn-hover.color-1 {
+    box-shadow: 0 4px 15px 0 #7b7b7b;
+}
+
+.slide {
+    transition: transform 0.5s ease-in-out;
+}
+
+.slide-left {
+    transform: translateX(-100%);
+}
+
+.slide-right {
+    transform: translateX(100%);
+}

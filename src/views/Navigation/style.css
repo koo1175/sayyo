@@ -1,0 +1,6 @@
+﻿.admin-clock {
+    font-size: 25px;
+    font-weight: var(--weight-bold);
+    color:gray;
+    text-align: center;
+}

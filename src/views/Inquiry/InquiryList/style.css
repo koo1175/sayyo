@@ -1,0 +1,8 @@
+.inquiry-list hr{
+    border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, #4dccb02c, #4dccb0, #4dccb02c);
+}
+.tb-list tr{
+    margin-top: 1%;
+}

@@ -6,7 +6,7 @@ import axios from 'axios';
 
 
 const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#FF00DD', '#6B66FF', '#5CD1E5'];
-const colors2 = ['#FFBB28', '#FF8042'];
+const colors2 = ['#88A9FF', '#D2B6FF'];
 
 export default function Test2() {
     const [data1, setData1] = useState([]);
@@ -20,37 +20,37 @@ export default function Test2() {
                     {
                         name: "10대",
                         // num: response.data['10']
-                        num: 180
+                        num: response.data['10']
                     },
                     {
                         name: "20대",
-                        num: 150
+                        num: response.data['20']
                     },
                     {
                         name: "30대",
-                        num: 200
+                        num: response.data['30']
                     },
                     {
                         name: "40대",
-                        num: 250
+                        num: response.data['40']
                     },
                     {
                         name: "50대",
-                        num: 200
+                        num: response.data['50']
                     },
                     {
                         name: "60대",
                         // num: response.data['60']
-                        num: 357
+                        num: response.data['60']
 
                     },
                     {
                         name: "70대",
-                        num: 387
+                        num: response.data['70']
                     },
                     {
                         name: "80대",
-                        num: 380
+                        num: response.data['80']
                     },
                 ];
 

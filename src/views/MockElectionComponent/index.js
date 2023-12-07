@@ -14,17 +14,17 @@ export default function MockElectionComponent() {
 
   const [isButtonClicked, setIsButtonClicked] = useState(false); //투표현황보기 상태 저장
 
-  const openPopup = () => {
-    const memberId = "zxc"; // TODO: 실제 사용자 아이디로 변경
-    const votedDto = {
-      title: "제 02대 몰입형 선거 모의투표", // TODO: 투표 항목 제목으로 변경
-      memberId: memberId,
-    };
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
+  const openPopup = () => {
+    const memberId = "koo1175@naver.com"; // TODO: 실제 사용자 아이디로 변경
+    const votedDto = {
+      title: "제 02대 몰입형 선거", // TODO: 투표 항목 제목으로 변경
+      memberId: memberId,
     };
 
     // 서버에 투표 여부 전송
@@ -55,14 +55,12 @@ export default function MockElectionComponent() {
 
   const openResultPopup = () => {
     setPopupOpen(false);
-
-
     const votingData = {
-      title: '제 2대 몰입형 선거',
-      memberId: 'zxc',
+      title: '제 02대 몰입형 선거',
+      memberId: 'koo1175@naver.com',
       num: selectedButton
     };
-    axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/voting/voted', votingData)
+    axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/voting/voted', votingData, config)
       .then(response => {
         if (response.data === 1) {
           alert('투표가 성공적으로 완료되었습니다.');

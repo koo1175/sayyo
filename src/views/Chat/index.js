@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef,useContext  } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import './Chat.css';
@@ -8,13 +8,18 @@ import { ChatContext } from '../ChatContext';
 
 export default function Chat() {
     const [stompClient, setStompClient] = useState(null);
-    const { messages, setMessages } = useContext(ChatContext);    
+    const { messages, setMessages, isChatVisible, setIsChatVisible } = useContext(ChatContext);
     const [inputValue, setInputValue] = useState('');
     const [imgSrc, setImgSrc] = useState(paperPlaneIcon);
 
     const [isSending, setIsSending] = useState(false); // 메시지 전송 중인지를 나타내는 상태
 
-
+    const toggleChat = () => {
+        setIsChatVisible(prevVisible => !prevVisible);
+    };
+    const imageStyle = {
+        opacity: isChatVisible ? 0.6 : 1,
+    };
     // 텍스트 유효성 검사 리스트
     const badWords = ['시발', '씨발', 'ㅅㅂ', 'ㅂㅅ', '병신', '이승만', '윤보선', '박정희', '최규하', '전두환', '노태우', '김영삼', '김대중', '노무현', '이명박',
         '박근혜', '문재인', '윤석열'];
@@ -67,7 +72,7 @@ export default function Chat() {
         if (inputValue.trim() === "") {
             return; // 입력값이 없는 경우 함수를 빠져나감
         }
-        if (!isSending ) { // 메시지 전송 중이 아닐 때만 메시지를 전송
+        if (!isSending) { // 메시지 전송 중이 아닐 때만 메시지를 전송
 
             if (!containsBadWords(inputValue)) {
                 // Send a message if the WebSocket connection is active
@@ -111,46 +116,60 @@ export default function Chat() {
     };
 
     return (
-        <div className="chat-container" style={{ position: 'fixed', bottom: '50px', left: '50px' }}>
-            <div className="chat-messages" ref={chatBoxRef}>
-                <div style={{ textAlign: 'left' }}>
-                    {messages.map((message, index) => (
-                        <div
-                            key={index}
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'flex-start',
-                                marginTop: '-25px', // 각 메세지 사이의 간격
-                            }}
-                        >
-                            <p
-                                style={{
-                                    fontFamily: 'SKYBORI',
-                                    backgroundColor: '#E4F7BA',
-                                    borderRadius: '10px',
-                                    padding: '5px',
-                                    paddingLeft:'10px',
-                                    paddingRight:'10px',
-                                }}
-                            >
-                                {message}
-                            </p>
+        <div>
+            <div style={{ position: 'fixed', bottom: '100px', left: '100px' }}>
+            <img 
+                src='/img/ChatIcon.png'
+                alt="chat-icon"
+                onClick={toggleChat}
+                width="50"
+                height="50"
+                style={imageStyle}
+            />
+            </div>
+            {isChatVisible && (
+                <div className="chat-container" style={{ position: 'fixed', bottom: '170px', left: '50px' }}>
+                    <div className="chat-messages" ref={chatBoxRef}>
+                        <div style={{ textAlign: 'left' }}>
+                            {messages.map((message, index) => (
+                                <div
+                                    key={index}
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'flex-start',
+                                        marginTop: '-25px', // 각 메세지 사이의 간격
+                                    }}
+                                >
+                                    <p
+                                        style={{
+                                            fontFamily: 'SKYBORI',
+                                            backgroundColor: '#E4F7BA',
+                                            borderRadius: '10px',
+                                            padding: '5px',
+                                            paddingLeft: '10px',
+                                            paddingRight: '10px',
+                                        }}
+                                    >
+                                        {message}
+                                    </p>
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    </div>
+                    <div className="chat-input">
+                        <input ref={inputRef} type="text" value={inputValue} onChange={handleInputChange} onKeyPress={handleKeyPress} />
+                        <img
+                            src={imgSrc}
+                            alt="send"
+                            onClick={sendMessage}
+                            onMouseOver={() => setImgSrc(paperPlaneHoverIcon)}
+                            onMouseOut={() => setImgSrc(paperPlaneIcon)}
+                            width="30"
+                            height="30"
+                        />
+                    </div>
                 </div>
-            </div>
-            <div className="chat-input">
-                <input ref={inputRef} type="text" value={inputValue} onChange={handleInputChange} onKeyPress={handleKeyPress}  />
-                <img
-                    src={imgSrc}
-                    alt="send"
-                    onClick={sendMessage}
-                    onMouseOver={() => setImgSrc(paperPlaneHoverIcon)}
-                    onMouseOut={() => setImgSrc(paperPlaneIcon)}
-                    width="30"
-                    height="30"
-                />
-            </div>
+            )}
         </div>
     );
 

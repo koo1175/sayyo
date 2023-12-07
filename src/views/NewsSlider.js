@@ -3,20 +3,15 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './NewsSlider.css';
+import { IoIosArrowBack , IoIosArrowForward  } from "react-icons/io";
 
 function CustomNextArrow(props) {
     const { className, style, onClick } = props;
     return (
-        <div
+        <IoIosArrowBack 
             className={className}
             style={{
                 ...style,
-                display: 'block',
-                left:'830px',
-                width: '70px', // 화살표의 너비를 조절합니다.
-                height: '70px', // 화살표의 높이를 조절합니다.
-                background: `url('/img/arrow_next64.png') no-repeat center center`, // 이미지 파일 경로를 지정합니다.
-                backgroundSize: 'cover',
             }}
             onClick={onClick}
         />
@@ -26,7 +21,7 @@ function CustomNextArrow(props) {
 function CustomPrevArrow(props) {
     const { className, style, onClick } = props;
     return (
-        <div
+        <IoIosArrowForward
             className={className}
             style={{
                 ...style,
@@ -34,7 +29,6 @@ function CustomPrevArrow(props) {
                 left:'-100px',
                 width: '70px', // 화살표의 너비를 조절합니다.
                 height: '70px', // 화살표의 높이를 조절합니다.
-                background: `url('/img/arrow_prev64.png') no-repeat center center`, // 이미지 파일 경로를 지정합니다.
                 backgroundSize: 'cover',
 
             }}
@@ -58,36 +52,41 @@ function NewsSlider({ newsData, newsData2, newsData3 }) {
     };
 
     return (
-        <div style={{ width: '800px', marginLeft: '200px' }}>
-            <h2 style={{ textAlign: 'center' }}>지역소식</h2>
+        <div className='newsSlider' style={{ width: '831px', marginLeft: '200px' }}>
+            <h1 className='tt' style={{ textAlign: 'left', color:'#ffffff', marginBottom:'5%' }}>지역소식</h1>
             <Slider {...settings}>
                 {newsData.map((newsItem, index) => (
-                    <div key={index} style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <a href={newsItem.link} target="_blank" rel="noopener noreferrer" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <img src={newsItem.image} alt={newsItem.title} style={{ width: '90%', height: '150px', borderRadius: '10px' }} />
-                            <p style={{ textAlign: 'center', marginTop: '10px' }}>{newsItem.title}</p>
+                    <div className='regionS' key={index}>
+                        <a className='a-tag' href={newsItem.link} target="_blank" rel="noopener noreferrer">
+                            <div>
+                                <p style={{ fontSize:'15px', fontWeight:'bold', textAlign: 'left', marginTop: '10px' }}>{newsItem.title}</p>
+                                <p style={{ fontSize:'15px', textAlign: 'left', marginTop: '10px' }}>{newsItem.content.length > 40 ? newsItem.content.substring(0, 40) + '...' : newsItem.content}</p>
+                                <p style={{ fontSize:'10px', textAlign: 'left', marginTop: '80px' }}>{newsItem.magazine} {newsItem.wrotetime}</p>
+                            </div>
                         </a>
                     </div>
                 ))}
             </Slider>
-            <h2 style={{ textAlign: 'center' }}>사건사고</h2>
+            <h1 className='tt' style={{  textAlign: 'left', color:'#ffffff', marginBottom:'5%'  }}>사건사고</h1>
             <Slider {...settings}>
                 {newsData2.map((newsItem, index) => (
-                    <div key={index} style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <a href={newsItem.link} target="_blank" rel="noopener noreferrer" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <img src={newsItem.image} alt={newsItem.title} style={{ width: '90%', height: '150px', borderRadius: '10px' }} />
+                    <div className='regionS' key={index}>
+                        <a className='a-tag' id="a-tag2" href={newsItem.link} target="_blank" rel="noopener noreferrer" >
+                            
                             <p style={{ textAlign: 'center', marginTop: '10px' }}>{newsItem.title}</p>
+                            <img src={newsItem.image} alt={newsItem.title} style={{ width: '92px', height: '92px', borderRadius: '10px', marginTop:'5%' }} />
+                            
                         </a>
                     </div>
                 ))}
             </Slider>
-            <h2 style={{ textAlign: 'center' }}>지역행사</h2>
+            <h1 className='tt' style={{  textAlign: 'left', color:'#ffffff', marginBottom:'5%'  }}>지역행사</h1>
             <Slider {...settings}>
                 {newsData3.map((newsItem, index) => (
-                    <div key={index} style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <a href={newsItem.link} target="_blank" rel="noopener noreferrer" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <img src={newsItem.image} alt={newsItem.title} style={{ width: '90%', height: '150px', borderRadius: '10px' }} />
+                    <div key={index} className='regionS'>
+                        <a className='a-tag' id="a-tag2" href={newsItem.link} target="_blank" rel="noopener noreferrer">
                             <p style={{ textAlign: 'center', marginTop: '10px' }}>{newsItem.title}</p>
+                            <img src={newsItem.image} alt={newsItem.title} style={{ width: '92px', height: '92px', borderRadius: '10px', marginTop:'5%' }} />
                         </a>
                     </div>
                 ))}

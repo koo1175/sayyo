@@ -62,7 +62,8 @@ export default function BoardWrite() {
    
 
     return (
-        <div style={{ marginLeft: '150px', marginTop: '100px', textAlign: 'left' }}>
+        <div style={{width:1400}}>
+        <div style={{ marginLeft: '250px', marginTop: '100px', textAlign: 'left' }}>
             <div style={{ backgroundColor: "#ECECEC", width: '800px', height: '100px', borderTop: '3px solid gray' }}>
                 <h2 style={{ marginLeft: '30px', marginTop: '35px', color: '#6A6A6A' }}>게시글 작성</h2>
                 <h5 style={{ marginLeft: '600px', marginTop: '-45px', color: '#6A6A6A' }}>
@@ -85,6 +86,7 @@ export default function BoardWrite() {
                 <button onClick={Register} style={{ backgroundColor: '#7FBDF6', color: 'white', fontWeight: 'bold', borderRadius: '5px', padding: '10px 20px' }}>작성</button>
             </div>
             <div style={{ height: '150px' }} />
+        </div>
         </div>
     )
 }

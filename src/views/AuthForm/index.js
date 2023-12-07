@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -10,7 +10,7 @@ import CheckNo from '../../img/pw-check-no.png';
 import './styles.css';
 import NickNameData from '../Nickname/NicknameData.json'
 import MakeNickname from '../../img/make_nickname.png'
-
+import Spinner from '../../img/loading.gif'
 
 
 function LoginForm() {
@@ -38,6 +38,12 @@ function LoginForm() {
       return;
     }
   
+    // 로그인 데이터 객체
+    const loginDto = {
+      id: id,
+      pw: password
+    };
+  
     try {
       const response = await axios.post(
         'https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/member/login', loginDto, config
@@ -45,7 +51,8 @@ function LoginForm() {
   
       if (response.data) {
         alert("로그인 성공");
-        navigate('/Main');
+        sessionStorage.setItem("loginId", id);
+        navigate('/');
         window.location.reload();
       } else {
         alert("로그인 실패");
@@ -55,6 +62,8 @@ function LoginForm() {
       alert("에러");
     }
   };
+  
+  
 
   return (
     <div style={{ marginTop: 200, marginLeft: 395, textAlign: 'center' }}>
@@ -88,10 +97,13 @@ function RegisterForm() {
   const [zoneCode, setZoneCode] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
 
-  const [name, setName] = useState('');
+  const [name, setName] = useState(''); 
   //주민등록번호
+  const [registNumFirst, setRegistNumFirst] = useState(''); // 주민등록번호 앞자리
+  const [registNumSecond, setRegistNumSecond] = useState(''); // 주민등록번호 뒷자리
   const [registNum, setRegistNum] = useState('');
   const [registNumValid, setRegistNumValid] = useState(false);
+  const [registNumEntered, setRegistNumEntered] = useState(false);
 
   const [verificationCode, setVerificationCode] = useState('');
   const [serverCode, setServerCode] = useState('');
@@ -99,8 +111,10 @@ function RegisterForm() {
   const [isVerified, setIsVerified] = useState(false);
   // 휴대폰 번호 유효성 상태를 저장하는 state
   const [phoneValid, setPhoneValid] = useState(false);
-
-
+  //로딩
+  const [loading, setLoading] = useState(false);
+  const isAllFieldEntered = email && password && passwordConfirm && phone && nickname && address && zoneCode && name && registNumFirst && registNumSecond && verificationCode;
+  const sessionStorage = window.sessionStorage;
 
   const memberDto = {
     id: email,
@@ -109,13 +123,29 @@ function RegisterForm() {
     name: name,
     phone: phone,
     address: address,
-    registNum: registNum
+    registNum: registNumFirst + registNumSecond
   }
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
   }
+
+  const Loading = () => {
+    return (
+        <div>
+          <img src={Spinner} alt="로딩" width="50%"/>
+          <div style={{fontsize : "10px"}}>잠시만 기다려주세요.</div>
+        </div>
+
+    );
+  }
+
+  useEffect(() => {
+    handleRegistNumChange();
+  }, [registNumFirst, registNumSecond]);
+
 
   const handleEmailChange = (e) => {
     const { value } = e.target;
@@ -158,8 +188,8 @@ function RegisterForm() {
     setModalOpen(false); // 주소 선택 후 모달 닫기
   }
 
-  const handleRegistNumChange = (e) => {
-    const { value } = e.target;
+  const handleRegistNumChange = () => {
+    const value = registNumFirst +'-'+ registNumSecond;
     const registNumReg = /^\d{6}-[1234]\d{6}$/; // 주민등록번호 정규 표현식
     setRegistNum(value);
 
@@ -178,6 +208,27 @@ function RegisterForm() {
       setRegistNumValid(false);
     }
   };
+  
+
+  //주민등록번호
+  const handleRegistNumFirstChange = (e) => {
+    const { value } = e.target;
+    if (value.length <= 6) { // 주민등록번호 앞자리는 6자리
+      setRegistNumFirst(value);
+      setRegistNumEntered(value.length > 0); // 값이 있으면 registNumEntered를 true로 설정
+    }
+  };
+
+  const handleRegistNumSecondChange = (e) => {
+    const { value } = e.target;
+    if (value.length <= 7) { // 주민등록번호 뒷자리는 7자리
+      setRegistNumSecond(value);
+      setRegistNumEntered(value.length > 0); // 값이 있으면 registNumEntered를 true로 설정
+    }
+  };
+
+
+
     // 닉네임을 생성하는 함수
     const generateNickName = () => {
       const determiner = NickNameData.determiners[
@@ -204,8 +255,10 @@ function RegisterForm() {
       alert("이메일을 입력해주세요.");
       return;
     }
-
-    axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/mail', emailDto, config)
+  
+    setLoading(true); // 로딩 시작
+  
+    axios.post('http://localhost:8083/mail', emailDto, config)
       .then((response) => {
         alert("인증번호 발송");
         setServerCode(response.data);
@@ -213,11 +266,15 @@ function RegisterForm() {
       })
       .catch((error) => {
         console.error('There was an error!', error);
+      })
+      .finally(() => {
+        setLoading(false); // 로딩 종료
       });
   };
+  
 
   const verifyCode = () => {
-    axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/mail/verify', emailDto, config)
+    axios.post('http://localhost:8083/mail/verify', emailDto, config)
       .then((response) => {
         if (response.data.toString() === verificationCode) {
           alert("인증이 완료되었습니다.");
@@ -230,11 +287,33 @@ function RegisterForm() {
         console.error('There was an error!', error);
       });
   };
+  
 
   const handleRegister = (e) => {
-    axios.post('https://port-0-spring-boot-sayyo-server-147bpb2mlmecwrp7.sel5.cloudtype.app/member/regist', memberDto, config)
+    axios.post('http://localhost:8083/member/regist', memberDto, config)
       .then(response => {
         alert("회원가입 성공");
+        // 회원가입 성공 후 모든 상태 초기화
+        setEmail('');
+        setPassword('');
+        setPasswordConfirm('');
+        setPasswordValid(false);
+        setPasswordCheck(false);
+        setPhone('');
+        setNickname('');
+        setAddress('');
+        setZoneCode('');
+        setName('');
+        setRegistNumFirst('');
+        setRegistNumSecond('');
+        setRegistNum('');
+        setRegistNumValid(false);
+        setRegistNumEntered(false);
+        setVerificationCode('');
+        setServerCode('');
+        setDisplayCode(false);
+        setIsVerified(false);
+        setPhoneValid(false);
       })
       .catch(error => {
         alert("회원가입 실패");
@@ -243,7 +322,10 @@ function RegisterForm() {
   };
 
   return (
-    <div style={{ marginTop: 220, marginLeft: -300, textAlign: 'center' }}>
+    <div style={{ marginTop: 220, marginLeft: '-200%', textAlign: 'center' }}>
+    {loading ? (
+      <Loading />
+    ) : (
       <form onSubmit={handleRegister} style={{ display: 'inline' }}>
         {/* 이메일 인증 부분 추가 */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -301,7 +383,7 @@ function RegisterForm() {
           </div>
           <br />
           <div>
-            <input type="text" placeholder='주소' value={address} readOnly style={{ height: '30px', marginLeft: '60px' }} />
+          <input type="text" placeholder='주소' value={address} onChange={e => setAddress(e.target.value)} readOnly style={{ height: '30px', marginLeft: '60px' }} />
             <button type="button" onClick={() => setModalOpen(true)} className={`authButton ${isVerified ? 'authVerified' : ''}`}>검색</button>
           </div>
           <br />
@@ -327,18 +409,19 @@ function RegisterForm() {
             <DaumPostcode onComplete={handleComplete} width="100%" height="100%" />
           </Modal>
           <div>
-            <input type="text" placeholder='주민등록번호' value={registNum} onChange={handleRegistNumChange}
-              style={{ height: '30px', marginLeft: registNumValid || (registNum !== '' && !registNumValid) ? '30px' : '0px' }} />
-            {registNumValid && <img src={CheckOk} height={20} width={20} style={{ marginLeft: '10px' }} />} {/* 주민등록번호 형식 일치 시 이미지 */}
-            {!registNumValid && registNum !== '' && <img src={CheckNo} height={20} width={20} style={{ marginLeft: '5px' }} />} {/* 주민등록번호 형식 불일치 시 이미지 */}
+            <input type="text" placeholder='주민등록번호 앞자리' value={registNumFirst} onChange={handleRegistNumFirstChange} maxLength={6} style={{ height: '30px', width: '80px', marginLeft: '25px' }} />
+            -
+            <input type="password" placeholder='주민등록번호 뒷자리' value={registNumSecond} onChange={handleRegistNumSecondChange} maxLength={7} style={{ height: '30px', width: '80px', marginLeft: '0px' }} />
+            {registNumValid ? <img src={CheckOk} height={20} width={20} style={{ marginLeft: '10px' }} /> : <img src={CheckNo} height={20} width={20} style={{ marginLeft: '5px' }} />} 
           </div>
           <div style={{ fontSize: '0.8em', marginLeft: '17px' }}>
             {registNumValid ? '유효한 주민등록번호입니다.' : '주민등록번호 형식이 잘못되었습니다. (예: 123456-1234567)'}
           </div>
         </div>
         <br />
-        <button type="button" onClick={handleRegister} className={`authButton ${isVerified ? 'authVerified' : ''}`}>회원가입</button>
+        <button type="button" onClick={handleRegister} className={`authButton ${isVerified ? 'authVerified' : ''}`} disabled={!isAllFieldEntered}>회원가입</button>
       </form>
+      )}
     </div>
   );
 }
@@ -367,9 +450,9 @@ export default function AuthForm() {
     });
   };
 
- 
+
   return (
-    <div style={{ position: 'relative', marginTop: '-200px', transform: 'scale(1.1)' }}>
+    <div style={{ position: 'relative', marginTop: '-200px', transform: 'scale(1.2)', marginLeft: '30%' }}>
 
       {/* White form in front of the gray square */}
       <animated.div

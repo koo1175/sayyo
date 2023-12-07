@@ -51,7 +51,7 @@ export default function CalendarPage() {
 
 
     return (
-        <div style={{ height: 500, marginTop: 20 }}>
+        <div style={{ height: 500, marginTop: 20, backgroundColor: '#FFFFFF' }}>
             <BigCalendar  // 수정된 부분
                 localizer={localizer}
                 events={events}

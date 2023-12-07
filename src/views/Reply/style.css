@@ -1,0 +1,67 @@
+﻿body::-webkit-scrollbar {
+    display: none;
+}
+
+.btnBlue{
+    background-color: #007BFF;
+}
+  
+
+.btnBlue:hover {
+box-shadow: #0b5bb1;
+}
+
+.chat-list::-webkit-scrollbar{
+    width: 10px;
+  }
+  
+/* 스크롤바 막대 설정*/
+.chat-list::-webkit-scrollbar-thumb{
+    background-color: rgba(173, 173, 173, 0.8);
+    /* 스크롤바 둥글게 설정    */
+    border-radius: 20px; 
+}
+
+/* 스크롤바 뒷 배경 설정*/
+.chat-list::-webkit-scrollbar-track{
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.modal{
+    margin-top: 50%;
+    width: 15%;
+    height: auto;
+    margin: auto;
+    position: absolute;
+    top: 70%;
+    left: 30%;
+    background-color: #ffffff;
+    border: 1px solid #585858;
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.modal p{
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+.modal div{
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+.ReactModal__Overlay {
+    background-color: transparent !important;
+  }
+
+  #modal-btn-1{
+    border-radius: 15px;
+    margin-left: 10px;
+  }
+
+  #modal-btn-2{
+    margin-left: 10px;
+    border-radius: 15px;
+  }
+    

@@ -1,10 +1,9 @@
-.container {
-  /* display: flex; */
+/* .container {
+  display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 500px;
-  margin-left: 600px;
-}
+
+} */
 .myButton {
   background-color: white; /* White */
   border: none;
@@ -55,13 +54,13 @@
   background: linear-gradient(to right, #FF4848,#E548FF, #476FFF); /* Gradient background */
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3); /* Shadow */
 }
-.background-image {
+/* .background-image {
   width: 1400px;
   height: 450px; 
   position: absolute;
   top: 150px;
   left: -100px;
-}
+} */
 .overlay-text {
   position: absolute;
   top: 200px;
@@ -71,13 +70,12 @@
   font-size: 40px; 
 }
 .overlay-text2 {
-  position: absolute;
-  top: 200px;
-  left: 500px;
+
+
   color: black; 
   background: rgba(255, 255, 255, 0.5);
   border-radius: 10px; /* 모서리를 둥글게 */
-  padding: 10px; /* 텍스트와 배경 사이에 패딩 추가 */  
+  padding: 5px; /* 텍스트와 배경 사이에 패딩 추가 */  
   border: 1px solid black; /* 모서리에 검은색 선 추가 */
 
   font-family: 'Nanum Gothic', sans-serif;
@@ -88,13 +86,13 @@
   text-align: left;
 }
 
-.button {
+/* .button {
   width: 100px;
   height: 50px;
   display: flex; /* inline-block 대신 flex를 사용 */
-  justify-content: center; /* 가로 방향 중앙 정렬 */
-  align-items: center; /* 세로 방향 중앙 정렬 */
-  padding: 10px 30px;
+  /* justify-content: center; 가로 방향 중앙 정렬 */
+  /* align-items: center; 세로 방향 중앙 정렬 */
+  /* padding: 10px 30px;
   color: white;
   background-color: #007BFF;
   border-radius: 5px;
@@ -103,11 +101,11 @@
   font-weight: bold;
   user-select: none;
   margin-top: 50px;
-}
+} */
 
-.button:hover {
+/* .button:hover {
   background-color: #0056b3;
-}
+} */
 
 textarea {
   width: 300px;  /* 원하는 너비로 설정 */
@@ -119,4 +117,61 @@ textarea {
 form {
   display: flex; /* form 요소를 flex container로 만듭니다. */
   justify-content: space-between; /* textarea와 버튼 사이에 가능한 많은 공간을 두도록 합니다. */
+}
+
+.slide-in-from-left {
+  position: absolute;
+  animation: slide-in 2s forwards;
+  top: 200px; 
+  left: -400px; 
+}
+
+@keyframes slide-in {
+  to {
+    left: 50px;
+  }
+}
+
+.logo {
+  transition: transform 0.4s; 
+  width: 40px;
+  height: 40px;
+  margin: 10px;
+}
+
+.logo:hover {
+  transform: scale(1.3); 
+}
+
+.sub-buttons {
+  display: none;
+  position: absolute;
+  top: 100%; 
+}
+
+.button:hover .sub-buttons {
+  display: block;
+}
+
+
+.hover-image {
+  display: flex;
+  position: absolute;
+  top: 420px;
+  left: 860px;
+  width: 100px;
+}
+
+.testButton {
+  background-color: #0C81D2;
+  color: #DFF9FF;
+  border-radius: 40px;
+  padding: 10px;
+  font-size: 16px;
+  transition: 0.3s;
+  cursor: pointer;
+  height: 170px;
+  width: 150px;
+  box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+  margin-left: 20px;
 }

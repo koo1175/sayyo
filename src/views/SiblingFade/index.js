@@ -81,15 +81,6 @@ export default function SiblingFade() {
 
       <div>
         <img
-          alt="heeyeon"
-          src="/img/heeyeon.png"
-          style={{ width: '200px', height: '266px' }}
-          onClick={() => handleImageClick("heeyeon")}
-        />
-      </div>
-
-      <div>
-        <img
           alt="youngsil"
           src="/img/youngsil.png"
           style={{ width: '200px', height: '266px' }}
@@ -103,6 +94,15 @@ export default function SiblingFade() {
           src="/img/seungju.png"
           style={{ width: '200px', height: '266px' }}
           onClick={() => handleImageClick("seungju")}
+        />
+      </div>
+
+      <div>
+        <img
+          alt="heeyeon"
+          src="/img/heeyeon.png"
+          style={{ width: '200px', height: '266px' }}
+          onClick={() => handleImageClick("heeyeon")}
         />
       </div>
 
