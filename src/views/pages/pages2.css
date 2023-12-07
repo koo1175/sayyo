@@ -114,10 +114,11 @@
     box-sizing: border-box;
 }
 
-.button {
+#section3 .button {
     font-family: 'S-CoreDream-3Light';
     margin: 10%;
     text-align: center;
+
 }
 
 .btn-hover {

@@ -24,15 +24,16 @@ body {
   margin: auto;
 }
 
+
+/* Presentational Styles */
+/* html { display: flex; height: 100%; } */
+
 button {
   background-color: white;
   border: none;
   font-size: 1em;
   font-weight: bolder;
 }
-
-/* Presentational Styles */
-/* html { display: flex; height: 100%; } */
 
 .sibling-fade {
   display: flex;

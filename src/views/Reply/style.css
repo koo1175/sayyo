@@ -4,6 +4,11 @@
 
 .btnBlue{
     background-color: #007BFF;
+    width: 130px;
+    height: 60px;
+    display: flex; /* inline-block 대신 flex를 사용 */
+    justify-content: center; /* 가로 방향 중앙 정렬 */
+    align-items: center; /* 세로 방향 중앙 정렬 */
 }
   
 
@@ -33,14 +38,14 @@ box-shadow: #0b5bb1;
     height: auto;
     margin: auto;
     position: absolute;
-    top: 70%;
-    left: 30%;
+    top: 50%;
+    left: 50%;
     background-color: #ffffff;
     border: 1px solid #585858;
     transform: translate(-50%, -50%);
     border-radius: 15px;
     padding: 10px;
-    z-index: 3;
+    z-index: 10;
 }
 
 .modal p{
