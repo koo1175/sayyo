@@ -220,8 +220,11 @@ const HomePage = () => {
                 <section class="projects-section bg-light" id="projects">
                     <div className="container px-4 px-lg-5 button" style={{marginTop:'-2%', marginLeft:'20%'}}>
                         <button className="btn-hover color-1" style={{marginRight:'5%' , backgroundImage: 'linear-gradient(to right, #b7b7b7, #808080, #555555, #0181C9, #0181C9, #C2002F, #54AE6C)'}}>서울특별시</button>
-                        <Link to="/Gyeonggi">
-                            <button className="btn-hover color-1" style={{marginRight:'5%' , backgroundImage: 'linear-gradient(to right, #b7b7b7, #555555, #2A9837, #104094)' }}>경기도</button>
+                        <Link to="/Gyeonggi#section1">
+                        <button 
+                            className="btn-hover color-1" 
+                            style={{marginRight:'5%', backgroundImage: 'linear-gradient(to right, #b7b7b7, #555555, #2A9837, #104094)' }}
+                        >경기도</button>
                         </Link>
                         <button className="btn-hover color-1"style={{backgroundImage: 'linear-gradient(to right, #b7b7b7, #555555, #E60A34, #6E6D70)' }} >강원특별자치도</button>
                     </div>

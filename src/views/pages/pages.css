@@ -11082,7 +11082,7 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;
-  background-size: auto; /* 배경 이미지 크기를 원래대로 설정 */
+  background-size: 1900px /* 배경 이미지 크기를 원래대로 설정 */
 }
 
 .masthead h1, .masthead .h1 {

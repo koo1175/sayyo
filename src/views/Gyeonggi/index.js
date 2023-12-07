@@ -1,17 +1,26 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import './Gyeonggi.css';
 import { useNavigate } from 'react-router-dom';
 import ShowSlideImage from '../ShowSlideImage';
-import Chat from "../Chat";
-import styled from "styled-components";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // carousel 스타일 지정
-import { IoIosArrowBack , IoIosArrowForward  } from "react-icons/io";
-import { Link } from 'react-router-dom';
 import { Link as ScrollLink, Element, scroller } from 'react-scroll';
 
 export default function Gyeonggi() {
     const navigate = useNavigate();
     const [queryText, setQueryText] = useState("경기도");
+
+    useEffect(() => {
+        const hash = window.location.hash; // URL의 해시 값을 가져옵니다.
+        
+        if (hash) {
+          // 해시 값이 있으면 해당 섹션으로 스크롤합니다.
+            scroller.scrollTo(hash.slice(1), {
+            duration: 500,
+            smooth: true,
+            });
+        }
+    }, []);
+
     const handleClick = (path, text) => {
         navigate(path, { state: { text } });
     }
@@ -31,11 +40,12 @@ export default function Gyeonggi() {
     return (
         <div className="outer" style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'left', gap: '20px'}}>
             <div className='cities' style={{marginLeft:'10%'}}>
+            <Element name="section1" className="section">
             <div className='map' style={{ marginLeft:'-15%'}}>
-                <div style={{marginTop:'1%', marginRight:'70%'}}>
+                <div style={{marginTop:'1%', marginRight:'60%'}}>
                     <img alt="경기도 text" src={'/img/Gyeonggy-fonts.png'}/>
                 </div>
-            <svg className="myPath2" viewBox="-10 90 1700 1750" xmlns="http://www.w3.org/2000/svg">
+            <svg className="myPath2" viewBox="0 90 800 800" xmlns="http://www.w3.org/2000/svg" style={{position:'absolute', top:350, left:-250}}>
                 <defs>
                     <filter id="dropshadow">
                         <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
@@ -178,7 +188,8 @@ export default function Gyeonggi() {
                     시장님 페이지 바로가기 →
                 </div>
             </div>
-            <div className='map-list' style={{ textAlign:'center', marginBottom:'100%', marginTop:'-25%', marginLeft:'45%'}}>
+            </Element>
+            <div className='map-list' style={{ textAlign:'center', marginBottom:'100%', marginTop:'5%', marginLeft:'45%'}}>
             <input 
                 type="text" 
                 style={{width:'50%', height:'5vh', fontSize:'15px', borderRadius:'15px', marginRight:'50%'}}
@@ -207,13 +218,18 @@ export default function Gyeonggi() {
             </div>
             </div>
             <div className='getIssue'>
-            <Element name="section1" className="section">
-                <div style={{ marginRight: '200px', marginTop:'10%'}}>
-                    <ShowSlideImage queryText={queryText} />
-                </div>
-            </Element>
+                <Element name="section2" className="section">
+                    <div style={{ marginRight: '200px', marginTop:'10%'}}>
+                        <ShowSlideImage queryText={queryText} />
+                    </div>
+                </Element>
             </div>
-            <div style={{ height: '100px' }} />
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <footer class="footer bg-white small text-center text-black-50">
+                    <div class="container px-4 px-lg-5">Copyright &copy; Your Website 2023</div>
+                </footer>
+            </div>
         </div>
+
     )
 }
