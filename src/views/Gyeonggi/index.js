@@ -219,7 +219,7 @@ export default function Gyeonggi() {
             </div>
             <div className='getIssue'>
                 <Element name="section2" className="section">
-                    <div style={{ marginRight: '200px', marginTop:'10%'}}>
+                    <div style={{ marginLeft: '350px', marginTop:'10%'}}>
                         <ShowSlideImage queryText={queryText} />
                     </div>
                 </Element>
