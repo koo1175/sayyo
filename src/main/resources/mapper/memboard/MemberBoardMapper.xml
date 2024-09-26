@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pj.sayyo.model.memBoard.mapper.MemBoardMapper">
+
+    <insert id="regist" parameterType="com.pj.sayyo.model.memBoard.dto.MemBoardDto">
+        INSERT INTO MEMBOARD(MEMBER_ID, NUM, TITLE, CONTENT, NOW_DATE)
+        VALUES (#{id}, #{num},
+                #{title}, #{content}, #{currentDate})
+    </insert>
+
+    <select id="findAll"
+            resultType="com.pj.sayyo.model.memBoard.dto.MemBoardDto">
+        SELECT MEMBER_ID, NUM, TITLE, CONTENT, NOW_DATE
+        FROM MEMBOARD
+    </select>
+
+    <update id="modify" parameterType="com.pj.sayyo.model.memBoard.dto.MemBoardDto">
+        UPDATE MEMBOARD
+        SET TITLE = #{title}, CONTENT = #{content}
+        WHERE NUM = #{num}
+    </update>
+
+    <delete id="delete" parameterType="com.pj.sayyo.model.memBoard.dto.MemBoardDto">
+        DELETE MEMBOARD
+        WHERE NUM = #{num}
+    </delete>
+
+    <select id="findSearch" parameterType="com.pj.sayyo.model.memBoard.dto.MemBoardDto" resultType="com.pj.sayyo.model.memBoard.dto.MemBoardDto">
+        SELECT (ID, NUM, TITLE, CONTENT, NOW_DATE)
+        FROM MEMBOARD
+        WHERE MEMBER_ID = #{id} AND NUM = #{num}
+    </select>
+
+</mapper>
